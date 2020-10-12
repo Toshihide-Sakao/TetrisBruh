@@ -11,6 +11,7 @@ public class playerController2 : MonoBehaviour
     float fallSpeed = 0.8f;
     float OriginalFallSpeed;
     GameObject scriptReader;
+    GameObject spawner;
     Vector3 rotationPoint = new Vector3(0, 0, 0);
     int width = 10;
     int rotateNumber = 0;
@@ -28,6 +29,7 @@ public class playerController2 : MonoBehaviour
     KeyCode left = KeyCode.LeftArrow;
     KeyCode down = KeyCode.DownArrow;
     KeyCode rotateRight = KeyCode.UpArrow;
+    KeyCode holdKey = KeyCode.C;
 
     // ------ NOT USED YET -------
     // KeyCode rotateLeft = KeyCode.Z;
@@ -38,6 +40,9 @@ public class playerController2 : MonoBehaviour
     {
         //Find Script Reader for exporting positions
         scriptReader = GameObject.Find("scriptReader");
+
+        //Find Spawner for holding
+        spawner = GameObject.Find("Spawner");
 
         //Record fallspeed so it is reversable
         OriginalFallSpeed = fallSpeed;
@@ -59,6 +64,7 @@ public class playerController2 : MonoBehaviour
         brickRight = CheckCollisionXRight();
 
         //Methods for tetrimino
+        Hold();
         Mover();
         Rotater();
         Faller();
@@ -139,6 +145,14 @@ public class playerController2 : MonoBehaviour
         if (brickBelow)
         {
             StopThemFall();
+        }
+    }
+
+    void Hold()
+    {
+        if (Input.GetKeyDown(holdKey))
+        {
+            spawner.GetComponent<spawnerController>().HoldTetrimino();
         }
     }
 
