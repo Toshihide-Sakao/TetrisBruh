@@ -5,6 +5,9 @@ using UnityEngine;
 public class playerController2 : MonoBehaviour
 {
     float fallTimer;
+    float rightTimer;
+    float leftTimer;
+    public float moveSpeed = 0.1f;
     float fallSpeed = 0.8f;
     float OriginalFallSpeed;
     GameObject scriptReader;
@@ -48,6 +51,8 @@ public class playerController2 : MonoBehaviour
     {
         //Adds time to timer for falling
         fallTimer += Time.deltaTime;
+        rightTimer += Time.deltaTime;
+        leftTimer += Time.deltaTime;
 
         brickBelow = CheckCollisionY();
         brickLeft = CheckCollisionXLeft();
@@ -62,15 +67,17 @@ public class playerController2 : MonoBehaviour
     //Method for moving on the x axis
     void Mover()
     {
-        if (Input.GetKeyDown(right))
+        if (Input.GetKey(right) && rightTimer > moveSpeed)
         {
             if (!brickRight)
                 transform.position += Vector3.right;
+                rightTimer = 0;
         }
-        if (Input.GetKeyDown(left))
+        if (Input.GetKey(left) && leftTimer > moveSpeed)
         {
             if (!brickLeft)
                 transform.position += Vector3.left;
+                leftTimer = 0;
         }
     }
 
