@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+//using UnityEngine.UI;
 
 public class scoring : MonoBehaviour
 {
     public GameObject scriptReader;
     int totalScore = 0;
-    public Text totalScoreText;
+    //public Text totalScoreText;
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +26,7 @@ public class scoring : MonoBehaviour
             totalScore += lineScore(1, rows);
         }
 
-        totalScoreText.text = "ok";
+        //totalScoreText.text = "ok";
     }
     
     int hardDropScore() 
