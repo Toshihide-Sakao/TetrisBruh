@@ -25,7 +25,7 @@ public class scoring : MonoBehaviour
         {
             totalScore += lineScore(1, rows);
         }
-        scoreText.text = totalScore.ToString();
+        scoreText.text = "Score: " + totalScore.ToString();
     }
     
     int hardDropScore() 

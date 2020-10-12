@@ -83,7 +83,7 @@ public class spawnerController : MonoBehaviour
         {
             if (!HaveHold)
             {
-                currentTetrimino.transform.position = new Vector3(-5, 15, 0);
+                currentTetrimino.transform.position = new Vector3(-2, 15, 0);
                 currentTetrimino.transform.rotation = originalRotationValue;
 
                 tetriminoInHold = currentTetrimino;
@@ -99,7 +99,7 @@ public class spawnerController : MonoBehaviour
                 SwitchGameObjects();
                 SwitchInts();
 
-                tetriminoInHold.transform.position = new Vector3(-5, 15, 0);
+                tetriminoInHold.transform.position = new Vector3(-2, 15, 0);
                 tetriminoInHold.transform.rotation = originalRotationValue;
 
                 currentTetrimino.transform.position = spawnPos[tetrimino];
