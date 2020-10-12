@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class positionTracker : MonoBehaviour
 {
@@ -37,6 +38,11 @@ public class positionTracker : MonoBehaviour
             count = 0;
             for (int i = 0; i < positions.Count; i++)
             {
+                if (RoundPosition(positions[i].position).y >= 20)
+                {
+                    Debug.Log("GAMEOVER!");
+                    SceneManager.LoadScene("Menu");
+                }
                 if ( RoundPosition(positions[i].position).y  == yRow)
                 {
                     count++;

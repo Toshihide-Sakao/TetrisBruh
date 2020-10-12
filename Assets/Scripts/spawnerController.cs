@@ -43,9 +43,7 @@ public class spawnerController : MonoBehaviour
             assignNextObjs();
             currentTetrimino = Instantiate(tetriminos[tetrimino]);
             currentTetrimino.transform.position = spawnPos[tetrimino];
-
             Debug.Log($"spawn position: {spawnPos[tetrimino]}, tetrimino: {currentTetrimino}");
-
             JustMadeHold = false;
         }
         isFalling = currentTetrimino.GetComponent<playerController2>().isActiveAndEnabled;
