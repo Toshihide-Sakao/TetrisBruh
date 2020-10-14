@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class playerController2 : MonoBehaviour
+public class neuralController : MonoBehaviour
 {
     float fallTimer;
     float rightTimer;
