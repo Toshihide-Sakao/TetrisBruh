@@ -14,6 +14,7 @@ public class spawnerControllerNeural : MonoBehaviour
     public bool JustMadeHold = false;
     public GameObject tetriminoInHold;
     public int tetriminoInHoldInt;
+    public int populationSize;
 
     public Quaternion originalRotationValue;
 
@@ -32,6 +33,20 @@ public class spawnerControllerNeural : MonoBehaviour
             new Vector2(5f, 18.5f), //T
             new Vector2(5f, 19f)  //Z
         };
+
+        for (int i = 0; i < populationSize; i++)
+        {
+            assignNextObjs();
+            currentTetrimino = Instantiate(tetriminos[tetrimino]);
+            currentTetrimino.transform.position = spawnPos[tetrimino];
+            Debug.Log($"spawn position: {spawnPos[tetrimino]}, tetrimino: {currentTetrimino}");
+
+
+
+            Bot car = (Instantiate(prefab, new Vector3(0, 1.6f, -16), new Quaternion(0, 0, 1, 0))).GetComponent<Bot>();//create botes
+            car.network = networks[i];//deploys network to each learner
+            cars.Add(car);
+        }
 
     }
 
