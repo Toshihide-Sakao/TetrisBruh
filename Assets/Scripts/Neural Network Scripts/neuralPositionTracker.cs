@@ -6,22 +6,26 @@ using UnityEngine.SceneManagement;
 public class neuralPositionTracker : MonoBehaviour
 {
     int count = 0;
-    List<Transform> positions = new List<Transform>();
+    List<List<Transform>> positions = new List<List<Transform>>();
 
     //For point system
     public bool completedRow;
     int numberOfCompletedRows;
     public int rowsForPoint;
 
-    public void SetPositions(List<Transform> newPositions)
+    public void SetPositions(List<List<Transform>> newPositions)
     {
-        for (int i = 0; i < newPositions.Count; i++)
+        for (int j = 0; j < newPositions.Count; j++)
         {
-            positions.Add(newPositions[i]);
+            for (int i = 0; i < newPositions[j].Count; i++)
+            {
+                positions[j].Add(newPositions[j][i]);
+            }
         }
+
     }
 
-    public List<Transform> GetPositions()
+    public List<List<Transform>> GetPositions()
     {
         return positions;
     }
@@ -32,64 +36,67 @@ public class neuralPositionTracker : MonoBehaviour
         numberOfCompletedRows = 0;
 
         float yRow = 0.5f;
-        while (yRow != 21.5f)
+
+        for (int j = 0; j < positions.Count; j++)
         {
-            int gg = 0;
-            count = 0;
-            for (int i = 0; i < positions.Count; i++)
+            while (yRow != 21.5f)
             {
-                if (RoundPosition(positions[i].position).y >= 20)
+                int gg = 0;
+                count = 0;
+                for (int i = 0; i < positions[j].Count; i++)
                 {
-                    Debug.Log("GAMEOVER!");
-                    SceneManager.LoadScene("Menu");
-                }
-                if ( RoundPosition(positions[i].position).y  == yRow)
-                {
-                    count++;
-                    //Debug.Log("count: " + count + " row: " + yRow + " gg: " + gg);
-                }
-            }
-            if (count >= 10)
-            {
-                completedRow = true;
-                Debug.Log("Row complete, row: " + yRow);
-                for (int i = 0; i < positions.Count; i++)
-                {
-                    if (RoundPosition(positions[i].position).y == yRow)
+                    if (RoundPosition(positions[j][i].position).y >= 20)
                     {
-                        //Debug.Log("removing row: " + yRow);
-                        Destroy(positions[i].gameObject);
+                        Debug.Log("GAMEOVER!");
+                        SceneManager.LoadScene("Menu");
+                    }
+                    if (RoundPosition(positions[j][i].position).y == yRow)
+                    {
+                        count++;
+                        //Debug.Log("count: " + count + " row: " + yRow + " gg: " + gg);
                     }
                 }
-                while (gg != positions.Count)
+                if (count >= 10)
                 {
-                    //Debug.Log("gg is going hard");
-                    for (int i = 0; i < positions.Count; i++)
+                    completedRow = true;
+                    Debug.Log("Row complete, row: " + yRow);
+                    for (int i = 0; i < positions[j].Count; i++)
                     {
-                        if (RoundPosition(positions[i].position).y == yRow)
+                        if (RoundPosition(positions[j][i].position).y == yRow)
                         {
-                            //Debug.Log("removing list" + " y positions:" + yRow + "  y: " + RoundPosition(positions[i].position).y);
-                            positions.RemoveAt(i);
-                            gg = 0;
+                            //Debug.Log("removing row: " + yRow);
+                            Destroy(positions[j][i].gameObject);
                         }
                     }
-                    gg++;
-                }
-                for (int i = 0; i < positions.Count; i++)
-                {
-                    if (RoundPosition(positions[i].position).y > yRow)
+                    while (gg != positions.Count)
                     {
-                        //Debug.Log("moving");
-                        positions[i].transform.position += Vector3.down;
+                        //Debug.Log("gg is going hard");
+                        for (int i = 0; i < positions[j].Count; i++)
+                        {
+                            if (RoundPosition(positions[j][i].position).y == yRow)
+                            {
+                                //Debug.Log("removing list" + " y positions:" + yRow + "  y: " + RoundPosition(positions[i].position).y);
+                                positions.RemoveAt(i);
+                                gg = 0;
+                            }
+                        }
+                        gg++;
                     }
+                    for (int i = 0; i < positions[j].Count; i++)
+                    {
+                        if (RoundPosition(positions[j][i].position).y > yRow)
+                        {
+                            //Debug.Log("moving");
+                            positions[j][i].transform.position += Vector3.down;
+                        }
+                    }
+                    numberOfCompletedRows++;
                 }
-                numberOfCompletedRows++;
-            }
-            yRow++;
+                yRow++;
 
-            rowsForPoint = numberOfCompletedRows;
+                rowsForPoint = numberOfCompletedRows;
+            }
         }
-        
     }
 
     Vector3 RoundPosition(Vector3 pos)
