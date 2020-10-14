@@ -9,7 +9,7 @@ public class neuralPositionTracker : MonoBehaviour
     int count = 0;
     List<List<Transform>> positions = new List<List<Transform>>();
     bool[] gameOvers;
-
+    spawnerControllerNeural spawnerController = new spawnerControllerNeural();
     //For point system
     public bool completedRow;
     int numberOfCompletedRows;
@@ -18,6 +18,15 @@ public class neuralPositionTracker : MonoBehaviour
     private void Start() 
     {
         gameOvers = new bool[positions.Count];
+    }
+
+    public void InitiatePosition(int population)
+    {
+        positions = new List<List<Transform>>();
+        for (int i = 0; i < population; i++)
+        {
+            positions.Add(new List<Transform>());
+        }
     }
 
     public void SetPositions(List<List<Transform>> newPositions)
@@ -29,8 +38,12 @@ public class neuralPositionTracker : MonoBehaviour
                 positions[j].Add(newPositions[j][i]);
             }
         }
-
+        for (int i = 0; i < positions.Count; i++)
+        {
+            Debug.Log(positions[i].Count);
+        }
     }
+
 
     public List<List<Transform>> GetPositions()
     {
@@ -52,15 +65,22 @@ public class neuralPositionTracker : MonoBehaviour
                 count = 0;
                 for (int i = 0; i < positions[j].Count; i++)
                 {
+                    if (gameOvers.All(x => x))
+                    {
+                        for (int a = 0; a < positions.Count; a++)
+                        {
+                            for (int b = 0; b < positions[a].Count; b++)
+                            {
+                                GameObject.Destroy(positions[a][b].gameObject);//if there are Prefabs in the scene this will get rid of them
+                            }
+                        }
+                        spawnerController.SortNetworks();
+                        spawnerController.CreateBots();
+                    }
                     if (RoundPosition(positions[j][i].position).y >= 20)
                     {
                         Debug.Log("GAMEOVER! for " + j);
                         gameOvers[j] = true;
-
-                        if (gameOvers.All(x => x))
-                        {
-
-                        }
                     }
                     if (RoundPosition(positions[j][i].position).y == yRow)
                     {

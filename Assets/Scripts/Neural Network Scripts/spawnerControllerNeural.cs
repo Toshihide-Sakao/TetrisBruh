@@ -7,7 +7,7 @@ public class spawnerControllerNeural : MonoBehaviour
     public List<GameObject> tetriminos;
     public List<Vector2> spawnPos;
     public bool isFalling = false;
-    public Bot currentTetrimino;
+    public GameObject currentTetrimino;
     int tetrimino = 0;
     public bool HaveHold = false;
     public bool BackFromHold = false;
@@ -18,6 +18,9 @@ public class spawnerControllerNeural : MonoBehaviour
     private List<Bot> bots = new List<Bot>();
     public List<NeuralNetwork> networks;
     public int[] layers = new int[3] { 5, 3, 2 };//initializing network to the right size
+
+    [Range(0.0001f, 1f)] public float MutationChance = 0.01f;
+    [Range(0f, 1f)] public float MutationStrength = 0.5f;
 
     public Quaternion originalRotationValue;
 
@@ -38,22 +41,35 @@ public class spawnerControllerNeural : MonoBehaviour
         };
 
         InitNetworks();
+        CreateBots();
+    }
+
+    public void CreateBots()
+    {
+        neuralPositionTracker positionTracker = new neuralPositionTracker();
+        positionTracker.InitiatePosition(populationSize);
+        List<List<Transform>> populationList = new List<List<Transform>>();
+        for (int j = 0; j < populationSize; j++)
+        {
+            populationList.Add(new List<Transform>());
+        }
 
         for (int i = 0; i < populationSize; i++)
         {
             assignNextObjs();
-            currentTetrimino = Instantiate(tetriminos[tetrimino], spawnPos[tetrimino], new Quaternion(0, 0, 0, 0)).GetComponent<Bot>();//create botes
+            currentTetrimino = Instantiate(tetriminos[tetrimino], spawnPos[tetrimino], new Quaternion(0, 0, 0, 0));//create botes
 
             //Debug.Log($"spawn position: {spawnPos[tetrimino]}, tetrimino: {currentTetrimino}");
 
             //Bot car = (Instantiate(prefab, new Vector3(0, 1.6f, -16), ).GetComponent<Bot>();
             // Debug.Log(currentTetrimino.network);
-            currentTetrimino.network = networks[i];//deploys network to each learner
-            bots.Add(currentTetrimino);
+            //currentTetrimino.network = networks[i];//deploys network to each learner
+            //bots.Add(currentTetrimino);
+
+            populationList[i].Add(currentTetrimino.transform);
         }
-
+        positionTracker.SetPositions(populationList);
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -101,6 +117,21 @@ public class spawnerControllerNeural : MonoBehaviour
             NeuralNetwork net = new NeuralNetwork(layers);
             net.Load("Assets/Save.txt");//on start load the network save
             networks.Add(net);
+        }
+    }
+
+    public void SortNetworks()
+    {
+        for (int i = 0; i < populationSize; i++)
+        {
+            bots[i].UpdateFitness();//gets bots to set their corrosponding networks fitness
+        }
+        networks.Sort();
+        networks[populationSize - 1].Save("Assets/Save.txt");//saves networks weights and biases to file, to preserve network performance
+        for (int i = 0; i < populationSize / 2; i++)
+        {
+            networks[i] = networks[i + populationSize / 2].copy(new NeuralNetwork(layers));
+            networks[i].Mutate((int)(1 / MutationChance), MutationStrength);
         }
     }
 
