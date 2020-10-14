@@ -46,6 +46,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -153,6 +154,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -260,6 +262,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -332,9 +335,9 @@ GameObject:
   - component: {fileID: 5105616224016664069}
   - component: {fileID: -6211894614874338679}
   - component: {fileID: 5424916046453447646}
-  - component: {fileID: 4920422607995885132}
+  - component: {fileID: 7098623638385970103}
   m_Layer: 0
-  m_Name: O Tetrimino
+  m_Name: O TetriminoN
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -405,7 +408,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &4920422607995885132
+--- !u!114 &7098623638385970103
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -414,10 +417,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8339619277915236661}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a05446c9a20311a4e9e169d91196c6fa, type: 3}
+  m_Script: {fileID: 11500000, guid: 28c229151a740d4478558ebd30b721fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fallSpeed: 0.3
+  moveSpeed: 0.1
+  index: 0
 --- !u!1 &8776717530146199301
 GameObject:
   m_ObjectHideFlags: 0
@@ -464,6 +468,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

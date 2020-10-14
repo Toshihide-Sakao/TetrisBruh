@@ -46,6 +46,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -153,6 +154,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -225,9 +227,9 @@ GameObject:
   - component: {fileID: 6413681026173495255}
   - component: {fileID: 999791074532501379}
   - component: {fileID: 1274496229437061489}
-  - component: {fileID: 721394182907228980}
+  - component: {fileID: 5442583704748559565}
   m_Layer: 0
-  m_Name: L Tetrimino
+  m_Name: L TetriminoN
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -303,7 +305,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &721394182907228980
+--- !u!114 &5442583704748559565
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -312,10 +314,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2541637584390192737}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a05446c9a20311a4e9e169d91196c6fa, type: 3}
+  m_Script: {fileID: 11500000, guid: 28c229151a740d4478558ebd30b721fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fallSpeed: 0.3
+  moveSpeed: 0.1
+  index: 0
 --- !u!1 &3534724523428680080
 GameObject:
   m_ObjectHideFlags: 0
@@ -362,6 +365,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -469,6 +473,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

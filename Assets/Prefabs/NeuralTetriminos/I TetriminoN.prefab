@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8978495536598732472}
   - component: {fileID: 8524046701203980226}
   - component: {fileID: 567260586486257434}
-  - component: {fileID: 6858819416671930894}
+  - component: {fileID: 3369391372533760782}
   m_Layer: 0
   m_Name: I TetriminoN
   m_TagString: Untagged
@@ -84,7 +84,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &6858819416671930894
+--- !u!114 &3369391372533760782
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -93,10 +93,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3472917273537510151}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a05446c9a20311a4e9e169d91196c6fa, type: 3}
+  m_Script: {fileID: 11500000, guid: 28c229151a740d4478558ebd30b721fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0.1
+  index: 0
 --- !u!1 &4515632270020540397
 GameObject:
   m_ObjectHideFlags: 0

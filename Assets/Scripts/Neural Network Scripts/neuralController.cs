@@ -15,7 +15,7 @@ public class neuralController : MonoBehaviour
     Vector3 rotationPoint = new Vector3(0, 0, 0);
     int width = 10;
     int rotateNumber = 0;
-
+    public int index; 
     float timerTrigger = 0;
     bool brickBelow;
     bool brickLeft;
@@ -162,7 +162,10 @@ public class neuralController : MonoBehaviour
 
         if (timerTrigger > 0.5f)
         {
+
             ExportPosition();
+            spawnerControllerNeural spawner = new spawnerControllerNeural();
+            spawner.SpawnNewTetrimino(index);
             enabled = false;
 
             timerTrigger = 0;
@@ -355,15 +358,16 @@ public class neuralController : MonoBehaviour
     //Export positions to scriptreader
     void ExportPosition()
     {
-        positionTracker positionScript = scriptReader.GetComponent<positionTracker>();
+        neuralPositionTracker positionTracker = new neuralPositionTracker();
         List<Transform> positions = new List<Transform>();
+
         foreach (Transform children in transform)
         {
             children.transform.position = RoundPosition(children.transform.position);
             //Debug.Log(children.transform.position);
             positions.Add(children.transform);
         }
-        positionScript.SetPositions(positions);
+        positionTracker.SetPositionsForIndex(positions, index);
     }
 
     Vector3 RoundPosition(Vector3 pos)

@@ -6,7 +6,7 @@ public class spawnerControllerNeural : MonoBehaviour
 {
     public List<GameObject> tetriminos;
     public List<Vector2> spawnPos;
-    public bool isFalling = false;
+    //public bool isFalling = false;
     public GameObject currentTetrimino;
     int tetrimino = 0;
     public bool HaveHold = false;
@@ -15,6 +15,7 @@ public class spawnerControllerNeural : MonoBehaviour
     public GameObject tetriminoInHold;
     public int tetriminoInHoldInt;
     public int populationSize;
+    public bool[] isFalling;
     private List<Bot> bots = new List<Bot>();
     public List<NeuralNetwork> networks;
     public int[] layers = new int[3] { 5, 3, 2 };//initializing network to the right size
@@ -29,6 +30,17 @@ public class spawnerControllerNeural : MonoBehaviour
     {
         originalRotationValue = transform.rotation;
 
+        // tetriminos = new List<GameObject>()
+        // {
+        //     GameObject.Find("I TetriminoN"),
+        //     GameObject.Find("J TetriminoN"),
+        //     GameObject.Find("L TetriminoN"),
+        //     GameObject.Find("O TetriminoN"),
+        //     GameObject.Find("S TetriminoN"),
+        //     GameObject.Find("T TetriminoN"),
+        //     GameObject.Find("Z TetriminoN"),
+        // };
+
         spawnPos = new List<Vector2>()
         {
             new Vector2(5f, 19), //I
@@ -39,6 +51,8 @@ public class spawnerControllerNeural : MonoBehaviour
             new Vector2(5f, 18.5f), //T
             new Vector2(5f, 19f)  //Z
         };
+
+        isFalling = new bool[populationSize];
 
         InitNetworks();
         CreateBots();
@@ -67,29 +81,41 @@ public class spawnerControllerNeural : MonoBehaviour
             //bots.Add(currentTetrimino);
 
             populationList[i].Add(currentTetrimino.transform);
+            isFalling[i] = currentTetrimino.GetComponent<neuralController>().isActiveAndEnabled;
+            currentTetrimino.GetComponent<neuralController>().index = i;
+
+            Debug.Log(populationList.Count);
         }
         positionTracker.SetPositions(populationList);
     }
     // Update is called once per frame
     void Update()
     {
-        // if (!isFalling)
+        // for (int i = 0; i < populationSize; i++)
         // {
         //     assignNextObjs();
-        //     currentTetrimino = Instantiate(tetriminos[tetrimino], spawnPos[tetrimino], new Quaternion(0, 0, 0, 0)).GetComponent<Bot>();
-        //     //Debug.Log($"spawn position: {spawnPos[tetrimino]}, tetrimino: {currentTetrimino}");
-        //     JustMadeHold = false;
+        //     currentTetrimino = Instantiate(tetriminos[tetrimino], spawnPos[tetrimino], new Quaternion(0, 0, 0, 0));
+        //     //JustMadeHold = false;
         // }
-        //isFalling = currentTetrimino.GetComponent<playerController2>().isActiveAndEnabled;
+    }
+
+    public void SpawnNewTetrimino(int index)
+    {
+        assignNextObjs();
+        Debug.Log(spawnPos);
+        Debug.Log(tetriminos);
+        //PROBLEM tetriminos and spawnpos is null
+        currentTetrimino = Instantiate(tetriminos[tetrimino], spawnPos[tetrimino], new Quaternion(0, 0, 0, 0));
+        currentTetrimino.GetComponent<neuralController>().index = index;
     }
 
     void assignNextObjs()
     {
         if (tetrimino == 0)
         {
-            int random = Random.Range(0, 2);
-            tetriminos.Sort((a, b) => 1 - 2 * random);
-            spawnPos.Sort((a, b) => 1 - 2 * random);
+            // int random = Random.Range(0, 2);
+            // tetriminos.Sort((a, b) => 1 - 2 * random);
+            // spawnPos.Sort((a, b) => 1 - 2 * random);
         }
         if (tetrimino == 6)
         {

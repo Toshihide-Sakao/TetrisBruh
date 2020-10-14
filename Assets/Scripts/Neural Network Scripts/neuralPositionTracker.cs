@@ -7,7 +7,7 @@ using System.Linq;
 public class neuralPositionTracker : MonoBehaviour
 {
     int count = 0;
-    List<List<Transform>> positions = new List<List<Transform>>();
+    static List<List<Transform>> positions = new List<List<Transform>>();
     bool[] gameOvers;
     spawnerControllerNeural spawnerController = new spawnerControllerNeural();
     //For point system
@@ -27,6 +27,9 @@ public class neuralPositionTracker : MonoBehaviour
         {
             positions.Add(new List<Transform>());
         }
+
+        Debug.Log("initiate running");
+        Debug.Log(positions.Count);
     }
 
     public void SetPositions(List<List<Transform>> newPositions)
@@ -40,7 +43,24 @@ public class neuralPositionTracker : MonoBehaviour
         }
         for (int i = 0; i < positions.Count; i++)
         {
-            Debug.Log(positions[i].Count);
+            
+        }
+        Debug.Log("okkk" + positions.Count);
+    }
+
+    public void SetPositionsForIndex(List<Transform> newPositions, int index)
+    {
+        for (int i = 0; i < newPositions.Count; i++)
+        {
+            Debug.Log("index " + index);
+            Debug.Log(positions.Count);
+            foreach (var item in positions)
+            {
+                Debug.Log(item);
+            }
+            Debug.Log(positions[index]);
+
+            positions[index].Add(newPositions[i]);
         }
     }
 
