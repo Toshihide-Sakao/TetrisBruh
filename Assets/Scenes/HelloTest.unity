@@ -386,7 +386,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 691980886}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9fd0a7be28e7fc8458d5200b870c12b6, type: 3}
   m_Name: 
@@ -578,6 +578,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1096971754}
   - component: {fileID: 1096971753}
+  - component: {fileID: 1096971755}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
@@ -592,7 +593,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1096971752}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f83ca45f36664e4aa5847b5bde0b387, type: 3}
   m_Name: 
@@ -628,6 +629,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1096971755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1096971752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7811cd203df318247b3bdf1b7eca5cff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tetriminos:
+  - {fileID: 3472917273537510151, guid: 85c4eeccf17296d418ccf47784e1738f, type: 3}
+  - {fileID: 298588709365964609, guid: 03527b64631855641ae564c3c53a3cdf, type: 3}
+  - {fileID: 2541637584390192737, guid: 4aaaddeb3fdb8694184dbe556a1968a0, type: 3}
+  - {fileID: 8339619277915236661, guid: a0f730275d333504da4c65196b0474f5, type: 3}
+  - {fileID: 3027427333084210654, guid: 87c557fa61744e34ca4ad577bdf79e18, type: 3}
+  - {fileID: 1331712239093310938, guid: a5112d1cc1bdf074f97c890a5a0a9b24, type: 3}
+  - {fileID: 3258572757495915661, guid: fd809fb48c31e084898a7683c1478425, type: 3}
+  spawnPos: []
+  isFalling: 0
+  currentTetrimino: {fileID: 0}
+  HaveHold: 0
+  BackFromHold: 0
+  JustMadeHold: 0
+  tetriminoInHold: {fileID: 0}
+  tetriminoInHoldInt: 0
+  populationSize: 5
+  layers: 050000000300000002000000
+  originalRotationValue: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1246871914
 GameObject:
   m_ObjectHideFlags: 0
