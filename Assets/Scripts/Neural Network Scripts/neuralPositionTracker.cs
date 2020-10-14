@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class positionTracker : MonoBehaviour
+public class neuralPositionTracker : MonoBehaviour
 {
     int count = 0;
     List<Transform> positions = new List<Transform>();
