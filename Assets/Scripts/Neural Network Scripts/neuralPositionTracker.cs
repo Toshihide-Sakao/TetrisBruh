@@ -2,16 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class neuralPositionTracker : MonoBehaviour
 {
     int count = 0;
     List<List<Transform>> positions = new List<List<Transform>>();
+    bool[] gameOvers;
 
     //For point system
     public bool completedRow;
     int numberOfCompletedRows;
     public int rowsForPoint;
+
+    private void Start() 
+    {
+        gameOvers = new bool[positions.Count];
+    }
 
     public void SetPositions(List<List<Transform>> newPositions)
     {
@@ -47,8 +54,13 @@ public class neuralPositionTracker : MonoBehaviour
                 {
                     if (RoundPosition(positions[j][i].position).y >= 20)
                     {
-                        Debug.Log("GAMEOVER!");
-                        SceneManager.LoadScene("Menu");
+                        Debug.Log("GAMEOVER! for " + j);
+                        gameOvers[j] = true;
+
+                        if (gameOvers.All(x => x))
+                        {
+
+                        }
                     }
                     if (RoundPosition(positions[j][i].position).y == yRow)
                     {
