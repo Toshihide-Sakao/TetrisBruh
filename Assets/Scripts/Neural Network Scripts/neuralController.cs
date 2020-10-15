@@ -164,8 +164,7 @@ public class neuralController : MonoBehaviour
         {
 
             ExportPosition();
-            spawnerControllerNeural spawner = new spawnerControllerNeural();
-            spawner.SpawnNewTetrimino(index);
+            spawner.GetComponent<spawnerControllerNeural>().SpawnNewTetrimino(index);
             enabled = false;
 
             timerTrigger = 0;
