@@ -9,7 +9,7 @@ public class neuralPositionTracker : MonoBehaviour
     int count = 0;
     static List<List<Transform>> positions = new List<List<Transform>>();
     bool[] gameOvers;
-    spawnerControllerNeural spawnerController = new spawnerControllerNeural();
+    static spawnerControllerNeural spawnerController = new spawnerControllerNeural();
     //For point system
     public bool completedRow;
     int numberOfCompletedRows;

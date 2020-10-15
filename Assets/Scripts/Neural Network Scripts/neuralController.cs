@@ -381,7 +381,7 @@ public class neuralController : MonoBehaviour
     bool CheckCollisionY()
     {
         GameObject botCollision = GameObject.Find("BottomCollision");
-        List<Transform> positions = scriptReader.GetComponent<positionTracker>().GetPositions();
+        List<List<Transform>> positions = new neuralPositionTracker().GetPositions();
 
         foreach (Transform children in transform)
         {
@@ -389,9 +389,9 @@ public class neuralController : MonoBehaviour
 
             Vector3 newPos = children.transform.position + Vector3.down;
 
-            for (int i = 0; i < positions.Count; i++)
+            for (int i = 0; i < positions[index].Count; i++)
             {
-                if (newPos == positions[i].position)
+                if (newPos == positions[index][i].position)
                 {
                     //Debug.Log("something below me");
                     return true;
@@ -408,14 +408,14 @@ public class neuralController : MonoBehaviour
     }
     bool CheckCollisionXLeft()
     {
-        List<Transform> positions = scriptReader.GetComponent<positionTracker>().GetPositions();
+        List<List<Transform>> positions = new neuralPositionTracker().GetPositions();
         foreach (Transform children in transform)
         {
             Vector3 newPos = children.transform.position + Vector3.left;
             bool inRange = newPos.x >= 0.9f;
-            for (int i = 0; i < positions.Count; i++)
+            for (int i = 0; i < positions[index].Count; i++)
             {
-                if (newPos == positions[i].position)
+                if (newPos == positions[index][i].position)
                 {
                     //Debug.Log("collision left");
                     return true;
@@ -433,14 +433,14 @@ public class neuralController : MonoBehaviour
 
     bool CheckCollisionXRight()
     {
-        List<Transform> positions = scriptReader.GetComponent<positionTracker>().GetPositions();
+        List<List<Transform>> positions = new neuralPositionTracker().GetPositions();
         foreach (Transform children in transform)
         {
             Vector3 newPos = children.transform.position + Vector3.right;
             bool inRange = newPos.x <= width;
-            for (int i = 0; i < positions.Count; i++)
+            for (int i = 0; i < positions[index].Count; i++)
             {
-                if (newPos == positions[i].position)
+                if (newPos == positions[index][i].position)
                 {
                     //Debug.Log("collision right");
                     return true;
@@ -457,14 +457,14 @@ public class neuralController : MonoBehaviour
 
     bool CheckCollisionX(int moveX)
     {
-        List<Transform> positions = scriptReader.GetComponent<positionTracker>().GetPositions();
+        List<List<Transform>> positions = scriptReader.GetComponent<neuralPositionTracker>().GetPositions();
         foreach (Transform children in transform)
         {
             Vector3 newPos = children.transform.position + new Vector3(moveX, 0, 0);
             bool inRange = newPos.x >= 0.9f;
-            for (int i = 0; i < positions.Count; i++)
+            for (int i = 0; i < positions[index].Count; i++)
             {
-                if (newPos == positions[i].position)
+                if (newPos == positions[index][i].position)
                 {
                     //Debug.Log("collision left");
                     return true;
