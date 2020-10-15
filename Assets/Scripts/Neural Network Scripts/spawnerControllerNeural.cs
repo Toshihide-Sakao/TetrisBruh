@@ -80,7 +80,6 @@ public class spawnerControllerNeural : MonoBehaviour
             //currentTetrimino.network = networks[i];//deploys network to each learner
             //bots.Add(currentTetrimino);
 
-            populationList[i].Add(currentTetrimino.transform);
             isFalling[i] = currentTetrimino.GetComponent<neuralController>().isActiveAndEnabled;
             currentTetrimino.GetComponent<neuralController>().index = i;
 

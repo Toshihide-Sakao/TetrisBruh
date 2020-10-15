@@ -162,7 +162,6 @@ public class neuralController : MonoBehaviour
 
         if (timerTrigger > 0.5f)
         {
-
             ExportPosition();
             spawner.GetComponent<spawnerControllerNeural>().SpawnNewTetrimino(index);
             enabled = false;
