@@ -103,7 +103,6 @@ public class spawnerControllerNeural : MonoBehaviour
         assignNextObjs();
         //Debug.Log(spawnPos);
         //Debug.Log(tetriminos);
-        //PROBLEM tetriminos and spawnpos is null
         currentTetrimino = Instantiate(tetriminos[tetrimino], spawnPos[tetrimino], new Quaternion(0, 0, 0, 0));
         currentTetrimino.GetComponent<neuralController>().index = index;
     }

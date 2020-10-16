@@ -8,16 +8,16 @@ public class neuralPositionTracker : MonoBehaviour
 {
     int count = 0;
     static List<List<Transform>> positions = new List<List<Transform>>();
-    bool[] gameOvers;
+    static bool[] gameOvers;
     static spawnerControllerNeural spawnerController = new spawnerControllerNeural();
     //For point system
-    public bool completedRow;
-    int numberOfCompletedRows;
-    public int rowsForPoint;
+    public static bool[] completedRow;
+    static int[] numberOfCompletedRows;
+    public static int[] rowsForPoint;
 
-    private void Start() 
+    private void Start()
     {
-        gameOvers = new bool[positions.Count];
+        
     }
 
     public void InitiatePosition(int population)
@@ -27,6 +27,25 @@ public class neuralPositionTracker : MonoBehaviour
         {
             positions.Add(new List<Transform>());
         }
+
+        
+        gameOvers = new bool[positions.Count];
+
+        //for scoring ---------------------------
+        completedRow = new bool[positions.Count];
+        for (int i = 0; i < positions.Count; i++)
+        {
+            completedRow[i] = false;
+        }
+
+        numberOfCompletedRows = new int[positions.Count];
+        for (int i = 0; i < positions.Count; i++)
+        {
+            numberOfCompletedRows[i] = 0;
+        }
+
+        rowsForPoint = new int[positions.Count];
+        //------------------------------------------
 
         // Debug.Log("initiate running");
         // Debug.Log(positions.Count);
@@ -43,7 +62,7 @@ public class neuralPositionTracker : MonoBehaviour
         }
         for (int i = 0; i < positions.Count; i++)
         {
-            
+
         }
         //Debug.Log("okkk" + positions.Count);
     }
@@ -72,13 +91,15 @@ public class neuralPositionTracker : MonoBehaviour
 
     private void Update()
     {
-        completedRow = false;
-        numberOfCompletedRows = 0;
 
-        float yRow = 0.5f;
 
         for (int j = 0; j < positions.Count; j++)
         {
+            completedRow[j] = false;
+            numberOfCompletedRows[j] = 0;
+
+            float yRow = 0.5f;
+
             while (yRow != 21.5f)
             {
                 int gg = 0;
@@ -110,7 +131,7 @@ public class neuralPositionTracker : MonoBehaviour
                 }
                 if (count >= 10)
                 {
-                    completedRow = true;
+                    completedRow[j] = true;
                     Debug.Log("Row complete, row: " + yRow);
                     for (int i = 0; i < positions[j].Count; i++)
                     {
@@ -122,6 +143,11 @@ public class neuralPositionTracker : MonoBehaviour
                     }
                     while (gg != positions.Count)
                     {
+                        Debug.Log("gg: " + gg);
+                        Debug.Log("j: " + j);
+                        Debug.Log("position count: " + positions.Count);
+                        Debug.Log("positon j.count: " + positions[j].Count);
+                        
                         //Debug.Log("gg is going hard");
                         for (int i = 0; i < positions[j].Count; i++)
                         {
@@ -142,11 +168,11 @@ public class neuralPositionTracker : MonoBehaviour
                             positions[j][i].transform.position += Vector3.down;
                         }
                     }
-                    numberOfCompletedRows++;
+                    numberOfCompletedRows[j]++;
                 }
                 yRow++;
 
-                rowsForPoint = numberOfCompletedRows;
+                rowsForPoint[j] = numberOfCompletedRows[j];
             }
         }
     }
@@ -160,8 +186,4 @@ public class neuralPositionTracker : MonoBehaviour
         return pos;
     }
 
-    public int RecordForPoints()
-    {
-        return numberOfCompletedRows;
-    }
 }

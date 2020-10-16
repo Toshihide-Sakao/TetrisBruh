@@ -15,7 +15,7 @@ public class neuralController : MonoBehaviour
     Vector3 rotationPoint = new Vector3(0, 0, 0);
     int width = 10;
     int rotateNumber = 0;
-    public int index; 
+    public int index;
     float timerTrigger = 0;
     bool brickBelow;
     bool brickLeft;
@@ -77,13 +77,13 @@ public class neuralController : MonoBehaviour
         {
             if (!brickRight)
                 transform.position += Vector3.right;
-                rightTimer = 0;
+            rightTimer = 0;
         }
         if (Input.GetKey(left) && leftTimer > moveSpeed)
         {
             if (!brickLeft)
                 transform.position += Vector3.left;
-                leftTimer = 0;
+            leftTimer = 0;
         }
     }
 
@@ -105,7 +105,7 @@ public class neuralController : MonoBehaviour
                 }
 
                 transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), -90);
-                
+
                 if (RotateBack())
                 {
                     Debug.Log("Returned Rotation");
@@ -199,10 +199,10 @@ public class neuralController : MonoBehaviour
         Debug.Log("Started Rotation check");
         foreach (Transform children in transform)
         {
-            List<Transform> positions = scriptReader.GetComponent<positionTracker>().GetPositions();
-            for (int i = 0; i < positions.Count; i++)
+            List<List<Transform>> positions = scriptReader.GetComponent<neuralPositionTracker>().GetPositions();
+            for (int i = 0; i < positions[index].Count; i++)
             {
-                if (children.transform.position == positions[i].position)
+                if (children.transform.position == positions[index][i].position)
                 {
                     return true;
                 }
@@ -223,11 +223,11 @@ public class neuralController : MonoBehaviour
 
         foreach (Transform children in transform)
         {
-            List<Transform> positions = scriptReader.GetComponent<positionTracker>().GetPositions();
-            for (int i = 0; i < positions.Count; i++)
+            List<List<Transform>> positions = scriptReader.GetComponent<neuralPositionTracker>().GetPositions();
+            for (int i = 0; i < positions[index].Count; i++)
             {
                 //Checking left brick
-                if (children.transform.position == positions[i].position && brickLeft == true)
+                if (children.transform.position == positions[index][i].position && brickLeft == true)
                 {
                     Debug.Log("Same pos " + rotateNumber + " name: " + thingToRotate);
 
@@ -251,7 +251,7 @@ public class neuralController : MonoBehaviour
                     //Debug
                     Debug.Log("Collided with brick " + newPos.x);
                 }
-                if (children.transform.position == positions[i].position && brickRight == true)
+                if (children.transform.position == positions[index][i].position && brickRight == true)
                 {
                     Debug.Log("Same pos right " + rotateNumber + " name: " + thingToRotate);
 
@@ -312,8 +312,8 @@ public class neuralController : MonoBehaviour
             {
 
                 //Fixing position
-                newPos.y = -(Mathf.Round(children.transform.position.y - 0.1f) );
-                
+                newPos.y = -(Mathf.Round(children.transform.position.y - 0.1f));
+
 
                 //Debug
                 Debug.Log("Fixed Down children y: " + children.transform.position.y);
@@ -330,7 +330,6 @@ public class neuralController : MonoBehaviour
     //Export positions to scriptreader
     void ExportPosition()
     {
-        neuralPositionTracker positionTracker = new neuralPositionTracker();
         List<Transform> positions = new List<Transform>();
 
         foreach (Transform children in transform)
@@ -339,7 +338,7 @@ public class neuralController : MonoBehaviour
             //Debug.Log(children.transform.position);
             positions.Add(children.transform);
         }
-        positionTracker.SetPositionsForIndex(positions, index);
+        scriptReader.GetComponent<neuralPositionTracker>().SetPositionsForIndex(positions, index);
     }
 
     Vector3 RoundPosition(Vector3 pos)
@@ -354,13 +353,18 @@ public class neuralController : MonoBehaviour
     bool CheckCollisionY()
     {
         GameObject botCollision = GameObject.Find("BottomCollision");
-        List<List<Transform>> positions = new neuralPositionTracker().GetPositions();
+        List<List<Transform>> positions = scriptReader.GetComponent<neuralPositionTracker>().GetPositions();
 
         foreach (Transform children in transform)
         {
             //Debug.Log("checking for something below me");
 
             Vector3 newPos = children.transform.position + Vector3.down;
+
+            Debug.Log("what tetrimino: " + this);
+            Debug.Log("index: " + index);
+            Debug.Log("position count: " + positions.Count);
+            Debug.Log("positon j.count: " + positions[index].Count);
 
             for (int i = 0; i < positions[index].Count; i++)
             {
