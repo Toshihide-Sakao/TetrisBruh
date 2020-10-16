@@ -28,8 +28,8 @@ public class neuralPositionTracker : MonoBehaviour
             positions.Add(new List<Transform>());
         }
 
-        Debug.Log("initiate running");
-        Debug.Log(positions.Count);
+        // Debug.Log("initiate running");
+        // Debug.Log(positions.Count);
     }
 
     public void SetPositions(List<List<Transform>> newPositions)
@@ -45,20 +45,20 @@ public class neuralPositionTracker : MonoBehaviour
         {
             
         }
-        Debug.Log("okkk" + positions.Count);
+        //Debug.Log("okkk" + positions.Count);
     }
 
     public void SetPositionsForIndex(List<Transform> newPositions, int index)
     {
         for (int i = 0; i < newPositions.Count; i++)
         {
-            Debug.Log("index " + index);
-            Debug.Log(positions.Count);
-            foreach (var item in positions)
-            {
-                Debug.Log(item);
-            }
-            Debug.Log(positions[index]);
+            // Debug.Log("index " + index);
+            // Debug.Log(positions.Count);
+            // foreach (var item in positions)
+            // {
+            //     Debug.Log(item);
+            // }
+            // Debug.Log(positions[index]);
 
             positions[index].Add(newPositions[i]);
         }

@@ -310,10 +310,13 @@ public class neuralController : MonoBehaviour
 
             if (children.transform.position.y < 0)
             {
+
                 //Fixing position
-                newPos.y = -(children.transform.position.y);
+                newPos.y = -(Mathf.Round(children.transform.position.y - 0.1f) );
+                
 
                 //Debug
+                Debug.Log("Fixed Down children y: " + children.transform.position.y);
                 Debug.Log("Fixed Down Side " + children.name + " " + newPos.y + " " + children.transform.position);
             }
         }
