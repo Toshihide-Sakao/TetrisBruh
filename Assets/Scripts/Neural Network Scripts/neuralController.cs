@@ -91,7 +91,7 @@ public class neuralController : MonoBehaviour
     void Rotater()
     {
         // O tetrimino will not be rotated
-        if (!(this.name == "O Tetrimino(Clone)"))
+        if (!(this.name == "O TetriminoN(Clone)"))
         {
             if (Input.GetKeyDown(rotateRight))
             {
@@ -243,7 +243,7 @@ public class neuralController : MonoBehaviour
                     newPos.x = 1;
 
                     //If there are more than one square outside. Then check which is the furthest in
-                    if (thingToRotate == "I Tetrimino(Clone)" && rotateNumber == 1)
+                    if (thingToRotate == "I TetriminoN(Clone)" && rotateNumber == 1)
                     {
                         Debug.Log("bruh ok okok");
                         newPos.x = 2;
@@ -282,7 +282,7 @@ public class neuralController : MonoBehaviour
                     newPos.x = -1;
 
                     //If there are more than one square outside. Then check which is the furthest in
-                    if (thingToRotate == "I Tetrimino(Clone)" && rotateNumber == 3)
+                    if (thingToRotate == "I TetriminoN(Clone)" && rotateNumber == 3)
                     {
                         Debug.Log("bruh ok okok");
                         newPos.x = -2;
@@ -482,11 +482,11 @@ public class neuralController : MonoBehaviour
     //Allocate rotation point for right tetrimino
     Vector3 AllocateRotationPoint()
     {
-        if (this.name == "I Tetrimino(Clone)")
+        if (this.name == "I TetriminoN(Clone)")
             return new Vector3(-0.5f, 1, 0);
-        else if (this.name == "S Tetrimino(Clone)")
+        else if (this.name == "S TetriminoN(Clone)")
             return new Vector3(0, -0.5f, 0);
-        else if (this.name == "O Tetrimino(Clone)" || this.name == "T Tetrimino(Clone)")
+        else if (this.name == "O TetriminoN(Clone)" || this.name == "T TetriminoN(Clone)")
             return new Vector3(0, 0, 0);
         else
             return new Vector3(0, 0.5f, 0);
