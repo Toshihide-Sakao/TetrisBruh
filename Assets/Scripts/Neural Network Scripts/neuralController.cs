@@ -15,7 +15,7 @@ public class neuralController : MonoBehaviour
     Vector3 rotationPoint = new Vector3(0, 0, 0);
     int width = 10;
     int rotateNumber = 0;
-    public int index;
+    public int index = 0;
     float timerTrigger = 0;
     bool brickBelow;
     bool brickLeft;
@@ -108,13 +108,13 @@ public class neuralController : MonoBehaviour
 
                 if (RotateBack())
                 {
-                    Debug.Log("Returned Rotation");
+                    //Debug.Log("Returned Rotation");
                     transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), -270);
                 }
                 else
                 {
                     transform.position += FixRotate();
-                    Debug.Log("fixed rotation: " + FixRotate());
+                    //Debug.Log("fixed rotation: " + FixRotate());
                 }
 
                 Debug.Log("after rotate pos: " + transform.position);
@@ -196,7 +196,7 @@ public class neuralController : MonoBehaviour
 
     bool RotateBack()
     {
-        Debug.Log("Started Rotation check");
+        //Debug.Log("Started Rotation check");
         foreach (Transform children in transform)
         {
             List<List<Transform>> positions = scriptReader.GetComponent<neuralPositionTracker>().GetPositions();
@@ -229,14 +229,14 @@ public class neuralController : MonoBehaviour
                 //Checking left brick
                 if (children.transform.position == positions[index][i].position && brickLeft == true)
                 {
-                    Debug.Log("Same pos " + rotateNumber + " name: " + thingToRotate);
+                    //Debug.Log("Same pos " + rotateNumber + " name: " + thingToRotate);
 
                     newPos.x = 1;
 
                     //If there are more than one square outside. Then check which is the furthest in
                     if (thingToRotate == "I TetriminoN(Clone)" && rotateNumber == 1)
                     {
-                        Debug.Log("bruh ok okok");
+                        //Debug.Log("bruh ok okok");
                         newPos.x = 2;
                     }
 
@@ -249,18 +249,18 @@ public class neuralController : MonoBehaviour
 
 
                     //Debug
-                    Debug.Log("Collided with brick " + newPos.x);
+                    //Debug.Log("Collided with brick " + newPos.x);
                 }
                 if (children.transform.position == positions[index][i].position && brickRight == true)
                 {
-                    Debug.Log("Same pos right " + rotateNumber + " name: " + thingToRotate);
+                    //Debug.Log("Same pos right " + rotateNumber + " name: " + thingToRotate);
 
                     newPos.x = -1;
 
                     //If there are more than one square outside. Then check which is the furthest in
                     if (thingToRotate == "I TetriminoN(Clone)" && rotateNumber == 3)
                     {
-                        Debug.Log("bruh ok okok");
+                        //Debug.Log("bruh ok okok");
                         newPos.x = -2;
                     }
 
@@ -270,7 +270,7 @@ public class neuralController : MonoBehaviour
 
                     //Store current value so it is comparable. Used for code above
                     oldPos.x = newPos.x;
-                    Debug.Log("Collided with brick right " + newPos.x);
+                    //Debug.Log("Collided with brick right " + newPos.x);
                 }
             }
 
@@ -288,7 +288,7 @@ public class neuralController : MonoBehaviour
                 oldPos.x = newPos.x;
 
                 //Debug
-                Debug.Log("Fixed Left Side " + newPos.x);
+                //Debug.Log("Fixed Left Side " + newPos.x);
             }
 
             //Checking right side
@@ -305,7 +305,7 @@ public class neuralController : MonoBehaviour
                 oldPos.x = newPos.x;
 
                 //Debug
-                Debug.Log("Fixed Right Side " + newPos.x);
+                //Debug.Log("Fixed Right Side " + newPos.x);
             }
 
             if (children.transform.position.y < 0)
@@ -316,8 +316,8 @@ public class neuralController : MonoBehaviour
 
 
                 //Debug
-                Debug.Log("Fixed Down children y: " + children.transform.position.y);
-                Debug.Log("Fixed Down Side " + children.name + " " + newPos.y + " " + children.transform.position);
+                //Debug.Log("Fixed Down children y: " + children.transform.position.y);
+                //Debug.Log("Fixed Down Side " + children.name + " " + newPos.y + " " + children.transform.position);
             }
         }
 
@@ -361,10 +361,9 @@ public class neuralController : MonoBehaviour
 
             Vector3 newPos = children.transform.position + Vector3.down;
 
-            Debug.Log("what tetrimino: " + this);
-            Debug.Log("index: " + index);
-            Debug.Log("position count: " + positions.Count);
-            Debug.Log("positon j.count: " + positions[index].Count);
+            // Debug.Log("what tetrimino: " + this);
+            // Debug.Log("index: " + index);
+            // Debug.Log("positon j.count: " + positions[index].Count);
 
             for (int i = 0; i < positions[index].Count; i++)
             {

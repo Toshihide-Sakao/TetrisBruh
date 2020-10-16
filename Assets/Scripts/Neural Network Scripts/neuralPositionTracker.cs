@@ -141,12 +141,11 @@ public class neuralPositionTracker : MonoBehaviour
                             Destroy(positions[j][i].gameObject);
                         }
                     }
-                    while (gg != positions.Count)
+                    while (gg != positions[j].Count)
                     {
-                        Debug.Log("gg: " + gg);
-                        Debug.Log("j: " + j);
-                        Debug.Log("position count: " + positions.Count);
-                        Debug.Log("positon j.count: " + positions[j].Count);
+                        // Debug.Log("gg: " + gg);
+                        // Debug.Log("j: " + j);
+                        // Debug.Log("positon j.count: " + positions[j].Count);
                         
                         //Debug.Log("gg is going hard");
                         for (int i = 0; i < positions[j].Count; i++)
@@ -154,7 +153,7 @@ public class neuralPositionTracker : MonoBehaviour
                             if (RoundPosition(positions[j][i].position).y == yRow)
                             {
                                 //Debug.Log("removing list" + " y positions:" + yRow + "  y: " + RoundPosition(positions[i].position).y);
-                                positions.RemoveAt(i);
+                                positions[j].RemoveAt(i);
                                 gg = 0;
                             }
                         }
