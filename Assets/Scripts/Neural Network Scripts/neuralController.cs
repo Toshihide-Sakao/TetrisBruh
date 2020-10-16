@@ -114,6 +114,7 @@ public class neuralController : MonoBehaviour
                 else
                 {
                     transform.position += FixRotate();
+                    Debug.Log("fixed rotation: " + FixRotate());
                 }
 
                 Debug.Log("after rotate pos: " + transform.position);
@@ -229,16 +230,6 @@ public class neuralController : MonoBehaviour
                 if (children.transform.position == positions[i].position && brickLeft == true)
                 {
                     Debug.Log("Same pos " + rotateNumber + " name: " + thingToRotate);
-                    // if (brickLeft == true || (thingToRotate == "I Tetrimino(Clone)" && CheckCollisionX(-2) && rotateNumber == 3))
-                    // {
-                    //     Debug.Log("I Tetrimino not brick Left or brick left");
-                    //     newPos.x = 1;
-                    // }
-                    // else if (brickLeft == true || (thingToRotate == "I Tetrimino(Clone)" && CheckCollisionX(2) && rotateNumber == 1))
-                    // {
-                    //     Debug.Log("I Tetrimino not Brick right or brick right");
-                    //     newPos.x = -1;
-                    // }
 
                     newPos.x = 1;
 
@@ -248,11 +239,6 @@ public class neuralController : MonoBehaviour
                         Debug.Log("bruh ok okok");
                         newPos.x = 2;
                     }
-                    // else if (thingToRotate == "I Tetrimino(Clone)" && rotateNumber == 3 && brickRight == true)
-                    // {
-                    //     Debug.Log("bruh ok okok ok ok");
-                    //     newPos.x = -2;
-                    // }
 
                     //If there are more than one square outside. Then check which is the furthest in
                     if (oldPos.x > newPos.x)
@@ -268,16 +254,6 @@ public class neuralController : MonoBehaviour
                 if (children.transform.position == positions[i].position && brickRight == true)
                 {
                     Debug.Log("Same pos right " + rotateNumber + " name: " + thingToRotate);
-                    // if (brickLeft == true || (thingToRotate == "I Tetrimino(Clone)" && CheckCollisionX(-2) && rotateNumber == 3))
-                    // {
-                    //     Debug.Log("I Tetrimino not brick Left or brick left");
-                    //     newPos.x = 1;
-                    // }
-                    // else if (brickLeft == true || (thingToRotate == "I Tetrimino(Clone)" && CheckCollisionX(2) && rotateNumber == 1))
-                    // {
-                    //     Debug.Log("I Tetrimino not Brick right or brick right");
-                    //     newPos.x = -1;
-                    // }
 
                     newPos.x = -1;
 
@@ -287,11 +263,6 @@ public class neuralController : MonoBehaviour
                         Debug.Log("bruh ok okok");
                         newPos.x = -2;
                     }
-                    // else if (thingToRotate == "I Tetrimino(Clone)" && rotateNumber == 3 && brickRight == true)
-                    // {
-                    //     Debug.Log("bruh ok okok ok ok");
-                    //     newPos.x = -2;
-                    // }
 
                     //If there are more than one square outside. Then check which is the furthest in
                     if (oldPos.x < newPos.x)

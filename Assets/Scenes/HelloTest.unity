@@ -656,7 +656,7 @@ MonoBehaviour:
   JustMadeHold: 0
   tetriminoInHold: {fileID: 0}
   tetriminoInHoldInt: 0
-  populationSize: 5
+  populationSize: 1
   isFalling: 
   layers: 050000000300000002000000
   MutationChance: 0.01
