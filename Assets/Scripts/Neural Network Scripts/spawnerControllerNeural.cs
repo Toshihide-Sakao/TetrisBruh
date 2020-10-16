@@ -83,7 +83,7 @@ public class spawnerControllerNeural : MonoBehaviour
             isFalling[i] = currentTetrimino.GetComponent<neuralController>().isActiveAndEnabled;
             currentTetrimino.GetComponent<neuralController>().index = i;
 
-            Debug.Log(populationList.Count);
+            //Debug.Log(populationList.Count);
         }
         positionTracker.SetPositions(populationList);
     }
@@ -101,9 +101,8 @@ public class spawnerControllerNeural : MonoBehaviour
     public void SpawnNewTetrimino(int index)
     {
         assignNextObjs();
-        Debug.Log(spawnPos);
-        Debug.Log(tetriminos);
-        //PROBLEM tetriminos and spawnpos is null
+        //Debug.Log(spawnPos);
+        //Debug.Log(tetriminos);
         currentTetrimino = Instantiate(tetriminos[tetrimino], spawnPos[tetrimino], new Quaternion(0, 0, 0, 0));
         currentTetrimino.GetComponent<neuralController>().index = index;
     }
