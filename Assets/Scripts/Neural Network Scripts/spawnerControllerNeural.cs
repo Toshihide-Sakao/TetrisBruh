@@ -62,12 +62,13 @@ public class spawnerControllerNeural : MonoBehaviour
 
     public void CreateBots()
     {
-        scriptReader.GetComponent<neuralPositionTracker>().InitiatePosition(populationSize);
-        List<List<Transform>> populationList = new List<List<Transform>>();
-        for (int j = 0; j < populationSize; j++)
-        {
-            populationList.Add(new List<Transform>());
-        }
+        var positionTracker = scriptReader.GetComponent<neuralPositionTracker>();
+        positionTracker.InitiatePosition(populationSize);
+        List<List<Transform>> populationList = positionTracker.GetPositions();
+        // for (int j = 0; j < populationSize; j++)
+        // {
+        //     populationList.Add(new List<Transform>());
+        // }
 
         for (int i = 0; i < populationSize; i++)
         {
@@ -86,7 +87,7 @@ public class spawnerControllerNeural : MonoBehaviour
 
             //Debug.Log(populationList.Count);
         }
-        scriptReader.GetComponent<neuralPositionTracker>().SetPositions(populationList);
+        positionTracker.SetPositions(populationList);
     }
     // Update is called once per frame
     void Update()
