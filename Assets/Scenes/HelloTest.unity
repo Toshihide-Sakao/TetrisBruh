@@ -407,7 +407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeframe: 15
-  populationSize: 100
+  populationSize: 10
   prefab: {fileID: 0}
   layers: 050000000300000002000000
   MutationChance: 0.01

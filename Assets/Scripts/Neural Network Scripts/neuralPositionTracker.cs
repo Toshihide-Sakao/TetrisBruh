@@ -17,7 +17,7 @@ public class neuralPositionTracker : MonoBehaviour
 
     private void Start()
     {
-        
+
     }
 
     public void InitiatePosition(int population)
@@ -28,7 +28,7 @@ public class neuralPositionTracker : MonoBehaviour
             positions.Add(new List<Transform>());
         }
 
-        
+
         gameOvers = new bool[positions.Count];
 
         //for scoring ---------------------------
@@ -53,16 +53,16 @@ public class neuralPositionTracker : MonoBehaviour
 
     public void SetPositions(List<List<Transform>> newPositions)
     {
+        if (gameOvers.All(x => x))
+        {
+            positions = new List<List<Transform>>();
+        }
         for (int j = 0; j < newPositions.Count; j++)
         {
             for (int i = 0; i < newPositions[j].Count; i++)
             {
                 positions[j].Add(newPositions[j][i]);
             }
-        }
-        for (int i = 0; i < positions.Count; i++)
-        {
-
         }
         //Debug.Log("okkk" + positions.Count);
     }
@@ -91,8 +91,11 @@ public class neuralPositionTracker : MonoBehaviour
 
     private void Update()
     {
+        CheckPositions();
+    }
 
-
+    void CheckPositions()
+    {
         for (int j = 0; j < positions.Count; j++)
         {
             completedRow[j] = false;
@@ -100,30 +103,39 @@ public class neuralPositionTracker : MonoBehaviour
 
             float yRow = 0.5f;
 
-            while (yRow != 21.5f)
+            while (yRow != 21.5f && gameOvers[j] != true)
             {
                 int gg = 0;
                 count = 0;
+                Debug.Log("J: " + j);
+                Debug.Log(positions[j].Count);
                 for (int i = 0; i < positions[j].Count; i++)
                 {
                     if (gameOvers.All(x => x))
                     {
+                        Debug.Log("starting destroy");
                         for (int a = 0; a < positions.Count; a++)
                         {
                             for (int b = 0; b < positions[a].Count; b++)
                             {
+                                Debug.Log("destroying tetriminos");
                                 GameObject.Destroy(positions[a][b].gameObject);//if there are Prefabs in the scene this will get rid of them
                             }
                         }
-                        spawnerController.SortNetworks();
+                        //spawnerController.SortNetworks();
+                        //positions = new List<List<Transform>>();
                         spawnerController.CreateBots();
+                        
+                        Debug.Log("positions.coiunt" + positions.Count);
+                        return;
+
                     }
-                    if (RoundPosition(positions[j][i].position).y >= 20)
+                    else if (RoundPosition(positions[j][i].position).y >= 20)
                     {
                         Debug.Log("GAMEOVER! for " + j);
                         gameOvers[j] = true;
                     }
-                    if (RoundPosition(positions[j][i].position).y == yRow)
+                    else if (RoundPosition(positions[j][i].position).y == yRow)
                     {
                         count++;
                         //Debug.Log("count: " + count + " row: " + yRow + " gg: " + gg);
@@ -146,7 +158,7 @@ public class neuralPositionTracker : MonoBehaviour
                         // Debug.Log("gg: " + gg);
                         // Debug.Log("j: " + j);
                         // Debug.Log("positon j.count: " + positions[j].Count);
-                        
+
                         //Debug.Log("gg is going hard");
                         for (int i = 0; i < positions[j].Count; i++)
                         {
@@ -174,6 +186,11 @@ public class neuralPositionTracker : MonoBehaviour
                 rowsForPoint[j] = numberOfCompletedRows[j];
             }
         }
+    }
+
+    public bool GetGameOver(int index)
+    {
+        return gameOvers[index];
     }
 
     Vector3 RoundPosition(Vector3 pos)

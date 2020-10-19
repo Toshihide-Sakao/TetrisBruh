@@ -163,8 +163,13 @@ public class neuralController : MonoBehaviour
 
         if (timerTrigger > 0.5f)
         {
-            ExportPosition();
-            spawner.GetComponent<spawnerControllerNeural>().SpawnNewTetrimino(index);
+
+            if (!scriptReader.GetComponent<neuralPositionTracker>().GetGameOver(index))
+            {
+                ExportPosition();
+                spawner.GetComponent<spawnerControllerNeural>().SpawnNewTetrimino(index);
+
+            }
             enabled = false;
 
             timerTrigger = 0;
@@ -362,23 +367,28 @@ public class neuralController : MonoBehaviour
             Vector3 newPos = children.transform.position + Vector3.down;
 
             // Debug.Log("what tetrimino: " + this);
-            // Debug.Log("index: " + index);
-            // Debug.Log("positon j.count: " + positions[index].Count);
+            Debug.Log("index: " + index);
+            Debug.Log("position count: " + positions.Count);
+            Debug.Log("ositions[index] count: " + positions[index].Count);
 
-            for (int i = 0; i < positions[index].Count; i++)
+            if (positions.Count != 0)
             {
-                if (newPos == positions[index][i].position)
+                for (int i = 0; i < positions[index].Count; i++)
                 {
-                    //Debug.Log("something below me");
+                    if (newPos == positions[index][i].position)
+                    {
+                        //Debug.Log("something below me");
+                        return true;
+                    }
+                }
+
+                if (botCollision.transform.position.y >= newPos.y)
+                {
+                    //Debug.Log("botCollision below me");
                     return true;
                 }
             }
 
-            if (botCollision.transform.position.y >= newPos.y)
-            {
-                //Debug.Log("botCollision below me");
-                return true;
-            }
         }
         return false;
     }
@@ -389,20 +399,24 @@ public class neuralController : MonoBehaviour
         {
             Vector3 newPos = children.transform.position + Vector3.left;
             bool inRange = newPos.x >= 0.9f;
-            for (int i = 0; i < positions[index].Count; i++)
+            if (positions.Count != 0)
             {
-                if (newPos == positions[index][i].position)
+                for (int i = 0; i < positions[index].Count; i++)
                 {
-                    //Debug.Log("collision left");
+                    if (newPos == positions[index][i].position)
+                    {
+                        //Debug.Log("collision left");
+                        return true;
+                    }
+                }
+                if (!inRange)
+                {
+                    //Debug.Log(children.transform.position);
+                    //Debug.Log("collision left wall");
                     return true;
                 }
             }
-            if (!inRange)
-            {
-                //Debug.Log(children.transform.position);
-                //Debug.Log("collision left wall");
-                return true;
-            }
+
         }
         return false;
     }
@@ -414,19 +428,23 @@ public class neuralController : MonoBehaviour
         {
             Vector3 newPos = children.transform.position + Vector3.right;
             bool inRange = newPos.x <= width;
-            for (int i = 0; i < positions[index].Count; i++)
+            if (positions.Count != 0)
             {
-                if (newPos == positions[index][i].position)
+                for (int i = 0; i < positions[index].Count; i++)
                 {
-                    //Debug.Log("collision right");
+                    if (newPos == positions[index][i].position)
+                    {
+                        //Debug.Log("collision right");
+                        return true;
+                    }
+                }
+                if (!inRange)
+                {
+                    //Debug.Log("collision right wall");
                     return true;
                 }
             }
-            if (!inRange)
-            {
-                //Debug.Log("collision right wall");
-                return true;
-            }
+
         }
         return false;
     }

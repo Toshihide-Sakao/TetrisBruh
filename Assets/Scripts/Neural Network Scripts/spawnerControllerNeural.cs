@@ -19,6 +19,7 @@ public class spawnerControllerNeural : MonoBehaviour
     private List<Bot> bots = new List<Bot>();
     public List<NeuralNetwork> networks;
     public int[] layers = new int[3] { 5, 3, 2 };//initializing network to the right size
+    GameObject scriptReader;
 
     [Range(0.0001f, 1f)] public float MutationChance = 0.01f;
     [Range(0f, 1f)] public float MutationStrength = 0.5f;
@@ -28,6 +29,7 @@ public class spawnerControllerNeural : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        scriptReader = GameObject.Find("scriptReader");
         originalRotationValue = transform.rotation;
 
         // tetriminos = new List<GameObject>()
@@ -60,8 +62,7 @@ public class spawnerControllerNeural : MonoBehaviour
 
     public void CreateBots()
     {
-        neuralPositionTracker positionTracker = new neuralPositionTracker();
-        positionTracker.InitiatePosition(populationSize);
+        scriptReader.GetComponent<neuralPositionTracker>().InitiatePosition(populationSize);
         List<List<Transform>> populationList = new List<List<Transform>>();
         for (int j = 0; j < populationSize; j++)
         {
@@ -85,7 +86,7 @@ public class spawnerControllerNeural : MonoBehaviour
 
             //Debug.Log(populationList.Count);
         }
-        positionTracker.SetPositions(populationList);
+        scriptReader.GetComponent<neuralPositionTracker>().SetPositions(populationList);
     }
     // Update is called once per frame
     void Update()
