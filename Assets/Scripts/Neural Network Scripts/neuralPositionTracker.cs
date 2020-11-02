@@ -78,8 +78,10 @@ public class neuralPositionTracker : MonoBehaviour
             //     Debug.Log(item);
             // }
             // Debug.Log(positions[index]);
-
-            positions[index].Add(newPositions[i]);
+            if (positions.Any())
+            {
+                positions[index].Add(newPositions[i]);
+            }
         }
     }
 
@@ -91,8 +93,20 @@ public class neuralPositionTracker : MonoBehaviour
 
     private void Update()
     {
+        Tracker();
+    }
 
+    Vector3 RoundPosition(Vector3 pos)
+    {
+        pos.x = Mathf.Round(pos.x * 10) / 10f;
+        pos.y = Mathf.Round(pos.y * 10) / 10f;
+        pos.z = Mathf.Round(pos.z * 10) / 10f;
 
+        return pos;
+    }
+
+    void Tracker()
+    {
         for (int j = 0; j < positions.Count; j++)
         {
             completedRow[j] = false;
@@ -104,26 +118,29 @@ public class neuralPositionTracker : MonoBehaviour
             {
                 int gg = 0;
                 count = 0;
+                if (gameOvers.All(x => x))
+                {
+                    Debug.Log("gameover for all");
+                    for (int a = 0; a < positions.Count; a++)
+                    {
+                        for (int b = 0; b < positions[a].Count; b++)
+                        {
+                            GameObject.Destroy(positions[a][b].gameObject);//if there are Prefabs in the scene this will get rid of them
+                        }
+                        positions[a].Clear();
+                    }
+                    //spawnerController.SortNetworks();
+                    spawnerController.CreateBots();
+                    return;
+                }
                 for (int i = 0; i < positions[j].Count; i++)
                 {
-                    if (gameOvers.All(x => x))
-                    {
-                        for (int a = 0; a < positions.Count; a++)
-                        {
-                            for (int b = 0; b < positions[a].Count; b++)
-                            {
-                                GameObject.Destroy(positions[a][b].gameObject);//if there are Prefabs in the scene this will get rid of them
-                            }
-                        }
-                        spawnerController.SortNetworks();
-                        spawnerController.CreateBots();
-                    }
                     if (RoundPosition(positions[j][i].position).y >= 20)
                     {
                         Debug.Log("GAMEOVER! for " + j);
                         gameOvers[j] = true;
                     }
-                    if (RoundPosition(positions[j][i].position).y == yRow)
+                    else if (RoundPosition(positions[j][i].position).y == yRow)
                     {
                         count++;
                         //Debug.Log("count: " + count + " row: " + yRow + " gg: " + gg);
@@ -146,7 +163,7 @@ public class neuralPositionTracker : MonoBehaviour
                         // Debug.Log("gg: " + gg);
                         // Debug.Log("j: " + j);
                         // Debug.Log("positon j.count: " + positions[j].Count);
-                        
+
                         //Debug.Log("gg is going hard");
                         for (int i = 0; i < positions[j].Count; i++)
                         {
@@ -175,14 +192,4 @@ public class neuralPositionTracker : MonoBehaviour
             }
         }
     }
-
-    Vector3 RoundPosition(Vector3 pos)
-    {
-        pos.x = Mathf.Round(pos.x * 10) / 10f;
-        pos.y = Mathf.Round(pos.y * 10) / 10f;
-        pos.z = Mathf.Round(pos.z * 10) / 10f;
-
-        return pos;
-    }
-
 }

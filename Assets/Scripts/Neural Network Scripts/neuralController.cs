@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class neuralController : MonoBehaviour
@@ -164,7 +165,15 @@ public class neuralController : MonoBehaviour
         if (timerTrigger > 0.5f)
         {
             ExportPosition();
-            spawner.GetComponent<spawnerControllerNeural>().SpawnNewTetrimino(index);
+            while (true)
+            {
+                Debug.Log("I AM STUCK HELP");
+                if (GameObject.Find("scriptReader").GetComponent<neuralPositionTracker>().GetPositions()[index].Any())
+                {
+                    spawner.GetComponent<spawnerControllerNeural>().SpawnNewTetrimino(index);
+                    break;
+                }
+            }
             enabled = false;
 
             timerTrigger = 0;
@@ -365,12 +374,15 @@ public class neuralController : MonoBehaviour
             // Debug.Log("index: " + index);
             // Debug.Log("positon j.count: " + positions[index].Count);
 
-            for (int i = 0; i < positions[index].Count; i++)
+            if (GameObject.Find("scriptReader").GetComponent<neuralPositionTracker>().GetPositions().Any())
             {
-                if (newPos == positions[index][i].position)
+                for (int i = 0; i < positions[index].Count; i++)
                 {
-                    //Debug.Log("something below me");
-                    return true;
+                    if (newPos == positions[index][i].position)
+                    {
+                        //Debug.Log("something below me");
+                        return true;
+                    }
                 }
             }
 
@@ -389,12 +401,16 @@ public class neuralController : MonoBehaviour
         {
             Vector3 newPos = children.transform.position + Vector3.left;
             bool inRange = newPos.x >= 0.9f;
-            for (int i = 0; i < positions[index].Count; i++)
+
+            if (GameObject.Find("scriptReader").GetComponent<neuralPositionTracker>().GetPositions().Any())
             {
-                if (newPos == positions[index][i].position)
+                for (int i = 0; i < positions[index].Count; i++)
                 {
-                    //Debug.Log("collision left");
-                    return true;
+                    if (newPos == positions[index][i].position)
+                    {
+                        //Debug.Log("collision left");
+                        return true;
+                    }
                 }
             }
             if (!inRange)
@@ -414,12 +430,15 @@ public class neuralController : MonoBehaviour
         {
             Vector3 newPos = children.transform.position + Vector3.right;
             bool inRange = newPos.x <= width;
-            for (int i = 0; i < positions[index].Count; i++)
+            if (GameObject.Find("scriptReader").GetComponent<neuralPositionTracker>().GetPositions().Any())
             {
-                if (newPos == positions[index][i].position)
+                for (int i = 0; i < positions[index].Count; i++)
                 {
-                    //Debug.Log("collision right");
-                    return true;
+                    if (newPos == positions[index][i].position)
+                    {
+                        //Debug.Log("collision right");
+                        return true;
+                    }
                 }
             }
             if (!inRange)
