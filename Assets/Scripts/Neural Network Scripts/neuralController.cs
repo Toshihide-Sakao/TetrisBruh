@@ -165,14 +165,11 @@ public class neuralController : MonoBehaviour
         if (timerTrigger > 0.5f)
         {
             ExportPosition();
-            while (true)
+            Debug.Log("gameoverxs " + scriptReader.GetComponent<neuralPositionTracker>().GetGameOver(index));
+            if (true) //not gameover
             {
-                Debug.Log("I AM STUCK HELP");
-                if (GameObject.Find("scriptReader").GetComponent<neuralPositionTracker>().GetPositions()[index].Any())
-                {
-                    spawner.GetComponent<spawnerControllerNeural>().SpawnNewTetrimino(index);
-                    break;
-                }
+                Debug.Log("spawned for " + index);
+                spawner.GetComponent<spawnerControllerNeural>().SpawnNewTetrimino(index);
             }
             enabled = false;
 
@@ -374,7 +371,7 @@ public class neuralController : MonoBehaviour
             // Debug.Log("index: " + index);
             // Debug.Log("positon j.count: " + positions[index].Count);
 
-            if (GameObject.Find("scriptReader").GetComponent<neuralPositionTracker>().GetPositions().Any())
+            if (scriptReader.GetComponent<neuralPositionTracker>().GetPositions().Any())
             {
                 for (int i = 0; i < positions[index].Count; i++)
                 {
@@ -396,13 +393,13 @@ public class neuralController : MonoBehaviour
     }
     bool CheckCollisionXLeft()
     {
-        List<List<Transform>> positions = new neuralPositionTracker().GetPositions();
+        List<List<Transform>> positions = scriptReader.GetComponent<neuralPositionTracker>().GetPositions();
         foreach (Transform children in transform)
         {
             Vector3 newPos = children.transform.position + Vector3.left;
             bool inRange = newPos.x >= 0.9f;
 
-            if (GameObject.Find("scriptReader").GetComponent<neuralPositionTracker>().GetPositions().Any())
+            if (scriptReader.GetComponent<neuralPositionTracker>().GetPositions().Any())
             {
                 for (int i = 0; i < positions[index].Count; i++)
                 {
@@ -425,12 +422,12 @@ public class neuralController : MonoBehaviour
 
     bool CheckCollisionXRight()
     {
-        List<List<Transform>> positions = new neuralPositionTracker().GetPositions();
+        List<List<Transform>> positions = scriptReader.GetComponent<neuralPositionTracker>().GetPositions();
         foreach (Transform children in transform)
         {
             Vector3 newPos = children.transform.position + Vector3.right;
             bool inRange = newPos.x <= width;
-            if (GameObject.Find("scriptReader").GetComponent<neuralPositionTracker>().GetPositions().Any())
+            if (scriptReader.GetComponent<neuralPositionTracker>().GetPositions().Any())
             {
                 for (int i = 0; i < positions[index].Count; i++)
                 {

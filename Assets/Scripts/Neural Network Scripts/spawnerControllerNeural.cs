@@ -60,8 +60,8 @@ public class spawnerControllerNeural : MonoBehaviour
 
     public void CreateBots()
     {
-        neuralPositionTracker positionTracker = new neuralPositionTracker();
-        positionTracker.InitiatePosition(populationSize);
+        GameObject scriptReader = GameObject.Find("scriptReader");
+        scriptReader.GetComponent<neuralPositionTracker>().InitiatePosition(populationSize);
         List<List<Transform>> populationList = new List<List<Transform>>();
         for (int j = 0; j < populationSize; j++)
         {
@@ -85,7 +85,7 @@ public class spawnerControllerNeural : MonoBehaviour
 
             //Debug.Log(populationList.Count);
         }
-        positionTracker.SetPositions(populationList);
+        scriptReader.GetComponent<neuralPositionTracker>().SetPositions(populationList);
     }
     // Update is called once per frame
     void Update()

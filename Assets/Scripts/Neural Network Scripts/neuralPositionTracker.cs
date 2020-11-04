@@ -9,8 +9,6 @@ public class neuralPositionTracker : MonoBehaviour
     int count = 0;
     static List<List<Transform>> positions = new List<List<Transform>>();
     static bool[] gameOvers;
-    static spawnerControllerNeural spawnerController = new spawnerControllerNeural();
-    //For point system
     public static bool[] completedRow;
     static int[] numberOfCompletedRows;
     public static int[] rowsForPoint;
@@ -60,11 +58,7 @@ public class neuralPositionTracker : MonoBehaviour
                 positions[j].Add(newPositions[j][i]);
             }
         }
-        for (int i = 0; i < positions.Count; i++)
-        {
-
-        }
-        //Debug.Log("okkk" + positions.Count);
+        // Debug.Log("okkk" + positions.Count + " okkkkkkk " + newPositions.Count);
     }
 
     public void SetPositionsForIndex(List<Transform> newPositions, int index)
@@ -89,6 +83,11 @@ public class neuralPositionTracker : MonoBehaviour
     public List<List<Transform>> GetPositions()
     {
         return positions;
+    }
+
+    public bool GetGameOver(int index)
+    {
+        return gameOvers[index];
     }
 
     private void Update()
@@ -130,7 +129,7 @@ public class neuralPositionTracker : MonoBehaviour
                         positions[a].Clear();
                     }
                     //spawnerController.SortNetworks();
-                    spawnerController.CreateBots();
+                    GameObject.Find("Spawner").GetComponent<spawnerControllerNeural>().CreateBots();
                     return;
                 }
                 for (int i = 0; i < positions[j].Count; i++)
