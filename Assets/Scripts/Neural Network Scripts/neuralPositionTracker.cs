@@ -129,7 +129,7 @@ public class neuralPositionTracker : MonoBehaviour
                         positions[a].Clear();
                     }
                     //spawnerController.SortNetworks();
-                    GameObject.Find("Spawner").GetComponent<spawnerControllerNeural>().CreateBots();
+                    GameObject.Find("Spawner").GetComponent<spawnerControllerNeural>().CreateBots2();
                     return;
                 }
                 for (int i = 0; i < positions[j].Count; i++)

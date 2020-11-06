@@ -87,6 +87,28 @@ public class spawnerControllerNeural : MonoBehaviour
         }
         scriptReader.GetComponent<neuralPositionTracker>().SetPositions(populationList);
     }
+
+    public void CreateBots2()
+    {
+        GameObject scriptReader = GameObject.Find("scriptReader");
+        scriptReader.GetComponent<neuralPositionTracker>().InitiatePosition(populationSize);
+        List<List<Transform>> populationList = new List<List<Transform>>();
+        for (int j = 0; j < populationSize; j++)
+        {
+            populationList.Add(new List<Transform>());
+        }
+
+        for (int i = 0; i < populationSize; i++)
+        {
+            assignNextObjs();
+
+            isFalling[i] = currentTetrimino.GetComponent<neuralController>().isActiveAndEnabled;
+            currentTetrimino.GetComponent<neuralController>().index = i;
+
+            //Debug.Log(populationList.Count);
+        }
+        scriptReader.GetComponent<neuralPositionTracker>().SetPositions(populationList);
+    }
     // Update is called once per frame
     void Update()
     {
