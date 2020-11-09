@@ -33,7 +33,9 @@ public class neuralController : MonoBehaviour
     KeyCode rotateRight = KeyCode.UpArrow;
     KeyCode holdKey = KeyCode.C;
 
+    public NeuralNetwork network;
     float[] outputs = new float[4];
+    private float[] input = new float[5];
 
     // Start is called before the first frame update
     void Start()
@@ -64,18 +66,25 @@ public class neuralController : MonoBehaviour
         brickLeft = CheckCollisionXLeft();
         brickRight = CheckCollisionXRight();
 
+        FeedForward();
+
         //Methods for tetrimino
         Hold();
         Mover();
         Rotater();
         Faller();
+        
     }
 
     void FeedForward()
     {
         if (neuralUpdateTimer > moveSpeed)
         {
-            //feedforward goes here
+            input = new float[200];
+            
+            scriptReader.GetComponent<neuralPositionTracker>().GetPositions1D()[index].CopyTo(input, 0);           //feedforward goes here
+            float[] output = network.FeedForward(input);//Call to network to feedforward
+            Debug.Log("output " + output);
             neuralUpdateTimer = 0;
         }
     }
@@ -103,7 +112,7 @@ public class neuralController : MonoBehaviour
         // O tetrimino will not be rotated
         if (!(this.name == "O TetriminoN(Clone)"))
         {
-            if (Input.GetKeyDown(rotateRight))
+            if (/*Input.GetKeyDown(rotateRight)*/ outputs[0] == 1)
             {
                 if (rotateNumber == 3)
                 {
@@ -128,6 +137,9 @@ public class neuralController : MonoBehaviour
                 }
 
                 Debug.Log("after rotate pos: " + transform.position);
+
+                //reset rotation button
+                outputs[0] = 0;
             }
         }
     }
@@ -139,7 +151,7 @@ public class neuralController : MonoBehaviour
         fallSpeed = OriginalFallSpeed;
 
         //accelerate the tetrimino by making the fall speed smaller
-        if (Input.GetKey(down) && !brickBelow)
+        if (/*Input.GetKey(down)*/ outputs[2] == 1 && !brickBelow)
         {
             fallSpeed = 0.05f;
         }
