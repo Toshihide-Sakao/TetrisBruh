@@ -12,7 +12,7 @@ public class neuralPositionTracker : MonoBehaviour
     public static bool[] completedRow;
     static int[] numberOfCompletedRows;
     public static int[] rowsForPoint;
-    List<int[]> positions1D;
+    List<List<int>> positions1D = new List<List<int>>();
 
     private void Start()
     {
@@ -54,7 +54,8 @@ public class neuralPositionTracker : MonoBehaviour
     {
         for (int index = 0; index < positions.Count; index++)
         {
-            positions1D.Add(new int[200]);
+            List<int> bruhhh = new List<int>();
+            positions1D.Add(new List<int>());
             int bruh = 0;
             for (int x = 0; x < 10; x++)
             {
@@ -64,7 +65,7 @@ public class neuralPositionTracker : MonoBehaviour
                     {
                         if (positions[index][i].position == new Vector3((float)x, (float)y, 0))
                         {
-                            positions1D[index][bruh] = 1;
+                            positions1D[index].Add(1);
                         }
                     }
                     bruh++;
@@ -72,7 +73,7 @@ public class neuralPositionTracker : MonoBehaviour
             }
         }
 
-        Debug.Log("in setpositions " + positions1D);
+        Debug.Log("in setpositions count" + positions1D.Count);
 
     }
 
