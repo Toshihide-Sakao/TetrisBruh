@@ -26,9 +26,11 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
 
     private void InitNeurons()//create empty storage array for the neurons in the network.
     {
+        // Creates list of float arrays.
         List<float[]> neuronsList = new List<float[]>();
         for (int i = 0; i < layers.Length; i++)
         {
+            // adds a float array with the size of layer
             neuronsList.Add(new float[layers[i]]);
         }
         neurons = neuronsList.ToArray();

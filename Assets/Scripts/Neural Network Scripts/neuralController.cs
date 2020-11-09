@@ -8,6 +8,7 @@ public class neuralController : MonoBehaviour
     float fallTimer;
     float rightTimer;
     float leftTimer;
+    float neuralUpdateTimer;
     public float moveSpeed = 0.1f;
     float fallSpeed = 0.8f;
     float OriginalFallSpeed;
@@ -32,9 +33,7 @@ public class neuralController : MonoBehaviour
     KeyCode rotateRight = KeyCode.UpArrow;
     KeyCode holdKey = KeyCode.C;
 
-    // ------ NOT USED YET -------
-    // KeyCode rotateLeft = KeyCode.Z;
-    // ------------------------------
+    float[] outputs = new float[4];
 
     // Start is called before the first frame update
     void Start()
@@ -59,6 +58,7 @@ public class neuralController : MonoBehaviour
         fallTimer += Time.deltaTime;
         rightTimer += Time.deltaTime;
         leftTimer += Time.deltaTime;
+        neuralUpdateTimer += Time.deltaTime;
 
         brickBelow = CheckCollisionY();
         brickLeft = CheckCollisionXLeft();
@@ -71,16 +71,25 @@ public class neuralController : MonoBehaviour
         Faller();
     }
 
+    void FeedForward()
+    {
+        if (neuralUpdateTimer > moveSpeed)
+        {
+            //feedforward goes here
+            neuralUpdateTimer = 0;
+        }
+    }
+
     //Method for moving on the x axis
     void Mover()
     {
-        if (Input.GetKey(right) && rightTimer > moveSpeed)
+        if (/*Input.GetKey(right)*/ outputs[1] == 1 && rightTimer > moveSpeed) // goes right
         {
             if (!brickRight)
                 transform.position += Vector3.right;
             rightTimer = 0;
         }
-        if (Input.GetKey(left) && leftTimer > moveSpeed)
+        if (/*Input.GetKey(left)*/ outputs[3] == 1 && leftTimer > moveSpeed) //goes left
         {
             if (!brickLeft)
                 transform.position += Vector3.left;
