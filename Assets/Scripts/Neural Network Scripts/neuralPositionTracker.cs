@@ -12,11 +12,10 @@ public class neuralPositionTracker : MonoBehaviour
     public static bool[] completedRow;
     static int[] numberOfCompletedRows;
     public static int[] rowsForPoint;
-    List<List<int>> positions1D = new List<List<int>>();
+    List<int[]> positions1D = new List<int[]>();
 
     private void Start()
     {
-
     }
 
     public void InitiatePosition(int population)
@@ -52,11 +51,17 @@ public class neuralPositionTracker : MonoBehaviour
 
     public void SetPositions1D(List<List<Transform>> positions)
     {
+        // for (int i = 0; i < positions.Count; i++)
+        // {
+        //     Debug.Log("positions1d.count: " + positions1D.Count);
+        //     List<int> okkys = new List<int>();
+        //     positions1D.Add(okkys);
+        // }
+
         for (int index = 0; index < positions.Count; index++)
         {
-            List<int> bruhhh = new List<int>();
-            positions1D.Add(new List<int>());
-            int bruh = 0;
+            positions1D.Add(new int[200]);
+            int counter = 0;
             for (int x = 0; x < 10; x++)
             {
                 for (int y = 0; y < 20; y++)
@@ -65,10 +70,13 @@ public class neuralPositionTracker : MonoBehaviour
                     {
                         if (positions[index][i].position == new Vector3((float)x, (float)y, 0))
                         {
-                            positions1D[index].Add(1);
+                            positions1D[index][counter] = 1;
+                        }
+                        else
+                        {
+                            positions1D[index][counter] = 0;
                         }
                     }
-                    bruh++;
                 }
             }
         }

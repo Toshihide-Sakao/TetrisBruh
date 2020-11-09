@@ -81,8 +81,10 @@ public class neuralController : MonoBehaviour
         if (neuralUpdateTimer > moveSpeed)
         {
             input = new float[200];
+            List<int[]> positions1D = scriptReader.GetComponent<neuralPositionTracker>().GetPositions1D();
             
-            scriptReader.GetComponent<neuralPositionTracker>().GetPositions1D()[index].CopyTo(input, 0);           //feedforward goes here
+            positions1D[index].CopyTo(input, 0);           //feedforward goes here
+            
             float[] output = network.FeedForward(input);//Call to network to feedforward
             Debug.Log("output " + output);
             neuralUpdateTimer = 0;
