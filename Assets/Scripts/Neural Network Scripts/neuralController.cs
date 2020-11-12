@@ -23,10 +23,6 @@ public class neuralController : MonoBehaviour
     bool brickLeft;
     bool brickRight;
 
-    // -- USE IF NEEDED
-    //int[,] map;
-    // -------------
-
     KeyCode right = KeyCode.RightArrow;
     KeyCode left = KeyCode.LeftArrow;
     KeyCode down = KeyCode.DownArrow;
@@ -36,6 +32,8 @@ public class neuralController : MonoBehaviour
     public NeuralNetwork network;
     float[] outputs = new float[4];
     private float[] input = new float[5];
+    public int[] layers = new int[3] { 200, 3, 2 };//initializing network to the right size
+
 
     // Start is called before the first frame update
     void Start()
@@ -86,6 +84,9 @@ public class neuralController : MonoBehaviour
             positions1D[index].CopyTo(input, 0);           //feedforward goes here
             
             //bug here, the bug is that network is null.
+            Debug.Log(network);
+            network = new NeuralNetwork(layers);
+            
             float[] output = network.FeedForward(input);//Call to network to feedforward
             Debug.Log("output " + output);
             neuralUpdateTimer = 0;

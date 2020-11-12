@@ -81,7 +81,7 @@ public class neuralPositionTracker : MonoBehaviour
             }
         }
 
-        Debug.Log("in setpositions count" + positions1D.Count);
+        //Debug.Log("in setpositions count" + positions1D.Count);
 
     }
 
