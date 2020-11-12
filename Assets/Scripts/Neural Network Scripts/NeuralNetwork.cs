@@ -77,17 +77,20 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
     {
         for (int i = 0; i < inputs.Length; i++)
         {
+            //Puts in the inputs in the first layer of neurons
             neurons[0][i] = inputs[i];
         }
+        //for loop from hidden layer to output layer
         for (int i = 1; i < layers.Length; i++)
         {
             int layer = i - 1;
+            //loops the amount of neurons in layer
             for (int j = 0; j < neurons[i].Length; j++)
             {
                 float value = 0f;
-                for (int k = 0; k < neurons[i - 1].Length; k++)
+                for (int k = 0; k < neurons[layer].Length; k++)
                 {
-                    value += weights[i - 1][j][k] * neurons[i - 1][k];
+                    value += weights[layer][j][k] * neurons[layer][k];
                 }
                 neurons[i][j] = activate(value + biases[i][j]);
             }

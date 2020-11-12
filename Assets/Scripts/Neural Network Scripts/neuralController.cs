@@ -85,6 +85,7 @@ public class neuralController : MonoBehaviour
             
             positions1D[index].CopyTo(input, 0);           //feedforward goes here
             
+            //bug here, the bug is that network is null.
             float[] output = network.FeedForward(input);//Call to network to feedforward
             Debug.Log("output " + output);
             neuralUpdateTimer = 0;
