@@ -10,7 +10,7 @@ public class neuralController : MonoBehaviour
     float leftTimer;
     float neuralUpdateTimer;
     public float moveSpeed = 0.1f;
-    float fallSpeed = 0.8f;
+    float fallSpeed = 0.2f;
     float OriginalFallSpeed;
     GameObject scriptReader;
     GameObject spawner;
@@ -32,7 +32,7 @@ public class neuralController : MonoBehaviour
     public NeuralNetwork network;
     float[] outputs = new float[4];
     private float[] input = new float[5];
-    public int[] layers = new int[3] { 200, 3, 2 };//initializing network to the right size
+    int[] layers = new int[3] { 200, 300, 4};//initializing network to the right size
 
 
     // Start is called before the first frame update
@@ -82,13 +82,16 @@ public class neuralController : MonoBehaviour
             List<int[]> positions1D = scriptReader.GetComponent<neuralPositionTracker>().GetPositions1D();
             
             positions1D[index].CopyTo(input, 0);           //feedforward goes here
+
+            outputs = network.FeedForward(input);//Call to network to feedforward
             
-            //bug here, the bug is that network is null.
-            Debug.Log(network);
-            network = new NeuralNetwork(layers);
-            
-            float[] output = network.FeedForward(input);//Call to network to feedforward
-            Debug.Log("output " + output);
+            //debug --------------
+            for (int i = 0; i < outputs.Length; i++)
+            {
+                Debug.Log("output" + i + ": " + outputs[i]);
+            }
+            //------------------------
+
             neuralUpdateTimer = 0;
         }
     }
@@ -140,7 +143,7 @@ public class neuralController : MonoBehaviour
                     //Debug.Log("fixed rotation: " + FixRotate());
                 }
 
-                Debug.Log("after rotate pos: " + transform.position);
+                //Debug.Log("after rotate pos: " + transform.position);
 
                 //reset rotation button
                 outputs[0] = 0;

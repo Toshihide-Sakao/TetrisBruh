@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Diagnostics;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ public class spawnerControllerNeural : MonoBehaviour
     public bool[] isFalling;
     //private List<Bot> bots = new List<Bot>();
     public List<NeuralNetwork> networks;
-    public int[] layers = new int[3] { 200, 3, 2 };//initializing network to the right size
+    int[] layers = new int[3] { 200, 300, 4 };//initializing network to the right size
 
     [Range(0.0001f, 1f)] public float MutationChance = 0.01f;
     [Range(0f, 1f)] public float MutationStrength = 0.5f;
@@ -77,7 +78,7 @@ public class spawnerControllerNeural : MonoBehaviour
 
             //Bot car = (Instantiate(prefab, new Vector3(0, 1.6f, -16), ).GetComponent<Bot>();
             // Debug.Log(currentTetrimino.network);
-            //currentTetrimino.network = networks[i];//deploys network to each learner
+            currentTetrimino.GetComponent<neuralController>().network = networks[i];//deploys network to each learner
             //bots.Add(currentTetrimino);
 
             isFalling[i] = currentTetrimino.GetComponent<neuralController>().isActiveAndEnabled;
@@ -123,9 +124,8 @@ public class spawnerControllerNeural : MonoBehaviour
     public void SpawnNewTetrimino(int index)
     {
         assignNextObjs();
-        //Debug.Log(spawnPos);
-        //Debug.Log(tetriminos);
         currentTetrimino = Instantiate(tetriminos[tetrimino], spawnPos[tetrimino], new Quaternion(0, 0, 0, 0));
+        currentTetrimino.GetComponent<neuralController>().network = networks[index];
         currentTetrimino.GetComponent<neuralController>().index = index;
     }
 

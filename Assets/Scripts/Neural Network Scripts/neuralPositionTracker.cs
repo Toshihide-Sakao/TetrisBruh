@@ -87,7 +87,6 @@ public class neuralPositionTracker : MonoBehaviour
 
     public List<int[]> GetPositions1D()
     {
-        Debug.Log("in getpositions " + positions1D);
         return positions1D;
     }
 

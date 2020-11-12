@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Diagnostics;
+using System.Collections.Generic;
 using System;
 using System.IO;
 
@@ -11,6 +12,7 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
     private int[] activations;//layers
 
     public float fitness = 0;//fitness
+    int allsdh;
 
     public NeuralNetwork(int[] layers)
     {
@@ -19,6 +21,7 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
         {
             this.layers[i] = layers[i];
         }
+        // layers is [200, 300, 4] here
         InitNeurons();
         InitBiases();
         InitWeights();
@@ -33,6 +36,7 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
             // adds a float array with the size of layer
             neuronsList.Add(new float[layers[i]]);
         }
+        // neuronlist is a list of three float arrays with the size of 200, 300 and 4
         neurons = neuronsList.ToArray();
     }
 
@@ -75,6 +79,7 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
 
     public float[] FeedForward(float[] inputs)//feed forward, inputs >==> outputs.
     {
+        //var bla = neurons[0][100];
         for (int i = 0; i < inputs.Length; i++)
         {
             //Puts in the inputs in the first layer of neurons
@@ -88,14 +93,38 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
             for (int j = 0; j < neurons[i].Length; j++)
             {
                 float value = 0f;
-                for (int k = 0; k < neurons[layer].Length; k++)
+                for (int k = 0; k < neurons[i - 1].Length; k++)
                 {
-                    value += weights[layer][j][k] * neurons[layer][k];
+                    value += weights[i - 1][j][k] * neurons[i - 1][k];
                 }
                 neurons[i][j] = activate(value + biases[i][j]);
             }
         }
-        return neurons[neurons.Length - 1];
+        return roundResults(neurons[neurons.Length - 1]);
+        //return neurons[neurons.Length - 1];
+    }
+
+    public int debugshit()
+    {
+        return allsdh;
+    }
+
+    public float[] roundResults(float[] rawOutputs)
+    {
+        float[] rounded = new float[rawOutputs.Length];
+
+        for (int i = 0; i < rawOutputs.Length; i++)
+        {
+            if (rawOutputs[i] > 0)
+            {
+                rounded[i] = 1;
+            }
+            else
+            {
+                rounded[i] = 0;
+            }
+        }
+        return rounded;
     }
 
     public float activate(float value)
