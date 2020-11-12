@@ -9,9 +9,9 @@ public class neuralPositionTracker : MonoBehaviour
     int count = 0;
     static List<List<Transform>> positions = new List<List<Transform>>();
     static bool[] gameOvers;
-    public static bool[] completedRow;
+    public bool[] completedRow;
     static int[] numberOfCompletedRows;
-    public static int[] rowsForPoint;
+    public int[] rowsForPoint;
     List<int[]> positions1D = new List<int[]>();
 
     private void Start()

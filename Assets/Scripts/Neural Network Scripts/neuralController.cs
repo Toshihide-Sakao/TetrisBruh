@@ -96,6 +96,11 @@ public class neuralController : MonoBehaviour
         }
     }
 
+    public void UpdateFitness()
+    {
+        network.fitness = GameObject.Find("scoreText").GetComponent<neuralScoring>().totalScore[index];//updates fitness of network for sorting
+    }
+
     //Method for moving on the x axis
     void Mover()
     {
@@ -197,7 +202,9 @@ public class neuralController : MonoBehaviour
             if (true) //not gameover
             {
                 Debug.Log("spawned for " + index);
+
                 spawner.GetComponent<spawnerControllerNeural>().SpawnNewTetrimino(index);
+                GameObject.Find("scoreText").GetComponent<neuralScoring>().totalScore[index] = 0;
             }
             enabled = false;
 
