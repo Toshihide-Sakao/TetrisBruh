@@ -226,6 +226,7 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
 
     public void Save(string path)//this is used for saving the biases and weights within the network to a file.
     {
+        UnityEngine.Debug.Log("burhhhhhhh");
         File.Create(path).Close();
         StreamWriter writer = new StreamWriter(path, true);
 

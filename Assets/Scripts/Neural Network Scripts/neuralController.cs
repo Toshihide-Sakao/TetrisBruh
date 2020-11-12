@@ -203,6 +203,8 @@ public class neuralController : MonoBehaviour
             {
                 Debug.Log("spawned for " + index);
 
+                UpdateFitness();//gets bots to set their corrosponding networks fitness
+
                 spawner.GetComponent<spawnerControllerNeural>().SpawnNewTetrimino(index);
                 GameObject.Find("scoreText").GetComponent<neuralScoring>().totalScore[index] = 0;
             }

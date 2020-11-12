@@ -168,10 +168,10 @@ public class spawnerControllerNeural : MonoBehaviour
 
     public void SortNetworks()
     {
-        for (int i = 0; i < populationSize; i++)
-        {
-            bots[i].UpdateFitness();//gets bots to set their corrosponding networks fitness
-        }
+        // for (int i = 0; i < populationSize; i++)
+        // {
+        //     bots[i].UpdateFitness();//gets bots to set their corrosponding networks fitness
+        // }
         networks.Sort();
         networks[populationSize - 1].Save("Assets/Save.txt");//saves networks weights and biases to file, to preserve network performance
         for (int i = 0; i < populationSize / 2; i++)
