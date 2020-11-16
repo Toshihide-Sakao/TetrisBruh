@@ -6,7 +6,7 @@ using UnityEngine;
 public class spawnerControllerNeural : MonoBehaviour
 {
     public List<GameObject> tetriminos;
-    public List<Vector2> spawnPos;
+    List<Vector2> spawnPos;
     //public bool isFalling = false;
     public GameObject currentTetrimino;
     int tetrimino = 0;
@@ -44,13 +44,13 @@ public class spawnerControllerNeural : MonoBehaviour
 
         spawnPos = new List<Vector2>()
         {
-            new Vector2(5f, 19), //I
-            new Vector2(5f, 19), //J
-            new Vector2(5f, 19), //L
-            new Vector2(6f, 19f), //O
-            new Vector2(5f, 19), //S
-            new Vector2(5f, 18.5f), //T
-            new Vector2(5f, 19f)  //Z
+            new Vector2(5f, 20f), //I
+            new Vector2(5f, 20f), //J
+            new Vector2(5f, 20f), //L
+            new Vector2(6f, 20f), //O
+            new Vector2(5f, 20f), //S
+            new Vector2(5f, 19.5f), //T
+            new Vector2(5f, 20f)  //Z
         };
 
         isFalling = new bool[populationSize];

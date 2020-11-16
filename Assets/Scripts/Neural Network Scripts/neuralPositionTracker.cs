@@ -167,7 +167,7 @@ public class neuralPositionTracker : MonoBehaviour
 
             float yRow = 0.5f;
 
-            while (yRow != 21.5f)
+            while (yRow != 22.5f)
             {
                 int gg = 0;
                 count[j] = 0;
@@ -181,9 +181,12 @@ public class neuralPositionTracker : MonoBehaviour
                             GameObject.Destroy(positions[a][b].gameObject);//if there are Prefabs in the scene this will get rid of them
                         }
                         positions[a].Clear();
+                        Debug.Log("cleared positions");
                     }
                     GameObject.Find("Spawner").GetComponent<spawnerControllerNeural>().SortNetworks();
                     GameObject.Find("Spawner").GetComponent<spawnerControllerNeural>().CreateBots2();
+
+                    Debug.Log("creat bots2 was called");
                     return;
                 }
                 for (int i = 0; i < positions[j].Count; i++)
@@ -207,7 +210,7 @@ public class neuralPositionTracker : MonoBehaviour
                     {
                         if (RoundPosition(positions[j][i].position).y == yRow)
                         {
-                            //Debug.Log("removing row: " + yRow);
+                            Debug.Log("removing row: " + yRow);
                             Destroy(positions[j][i].gameObject);
                         }
                     }

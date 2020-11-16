@@ -160,12 +160,14 @@ public class neuralController : MonoBehaviour
     void Faller()
     {
         //reverts back the speed, while not pressing down
-        fallSpeed = OriginalFallSpeed;
+        // fallSpeed = OriginalFallSpeed;
+
+        fallSpeed = 0.05f;
 
         //accelerate the tetrimino by making the fall speed smaller
         if (/*Input.GetKey(down)*/ outputs[2] == 1 && !brickBelow)
         {
-            fallSpeed = 0.05f;
+            fallSpeed = 0.02f;
         }
 
         brickBelow = CheckCollisionY();
@@ -199,7 +201,7 @@ public class neuralController : MonoBehaviour
         {
             ExportPosition();
             //Debug.Log("gameoverxs " + scriptReader.GetComponent<neuralPositionTracker>().GetGameOver(index));
-            if (!scriptReader.GetComponent<neuralPositionTracker>().GetGameOver(index)) //not gameover
+            if (/*transform.position.y <= 19*/true) //not gameover
             {
                 Debug.Log("spawned for " + index);
 
