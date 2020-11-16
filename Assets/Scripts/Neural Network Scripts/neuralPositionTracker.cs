@@ -6,7 +6,7 @@ using System.Linq;
 
 public class neuralPositionTracker : MonoBehaviour
 {
-    int count = 0;
+    int[] count;
     static List<List<Transform>> positions = new List<List<Transform>>();
     static bool[] gameOvers;
     public bool[] completedRow;
@@ -151,13 +151,14 @@ public class neuralPositionTracker : MonoBehaviour
         {
             completedRow[j] = false;
             numberOfCompletedRows[j] = 0;
+            count = new int[positions.Count];
 
             float yRow = 0.5f;
 
             while (yRow != 21.5f)
             {
                 int gg = 0;
-                count = 0;
+                count[j] = 0;
                 if (gameOvers.All(x => x))
                 {
                     Debug.Log("gameover for all");
@@ -182,11 +183,11 @@ public class neuralPositionTracker : MonoBehaviour
                     }
                     else if (RoundPosition(positions[j][i].position).y == yRow)
                     {
-                        count++;
+                        count[j]++;
                         //Debug.Log("count: " + count + " row: " + yRow + " gg: " + gg);
                     }
                 }
-                if (count >= 10)
+                if (count[j] >= 10)
                 {
                     completedRow[j] = true;
                     Debug.Log("Row complete, row: " + yRow);
@@ -229,6 +230,8 @@ public class neuralPositionTracker : MonoBehaviour
                 yRow++;
 
                 rowsForPoint[j] = numberOfCompletedRows[j];
+
+
             }
         }
         SetPositions1D(positions);
