@@ -81,7 +81,7 @@ public class neuralController : MonoBehaviour
             input = new float[200];
             List<int[]> positions1D = scriptReader.GetComponent<neuralPositionTracker>().GetPositions1D();
             
-            positions1D[index].CopyTo(input, 0);           //feedforward goes here
+            positions1D[index].CopyTo(input, 0);    //feedforward goes here
 
             outputs = network.FeedForward(input);//Call to network to feedforward
             
@@ -198,8 +198,8 @@ public class neuralController : MonoBehaviour
         if (timerTrigger > 0.5f)
         {
             ExportPosition();
-            Debug.Log("gameoverxs " + scriptReader.GetComponent<neuralPositionTracker>().GetGameOver(index));
-            if (true) //not gameover
+            //Debug.Log("gameoverxs " + scriptReader.GetComponent<neuralPositionTracker>().GetGameOver(index));
+            if (!scriptReader.GetComponent<neuralPositionTracker>().GetGameOver(index)) //not gameover
             {
                 Debug.Log("spawned for " + index);
 

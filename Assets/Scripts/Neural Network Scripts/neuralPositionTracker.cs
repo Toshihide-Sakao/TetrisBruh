@@ -128,7 +128,19 @@ public class neuralPositionTracker : MonoBehaviour
 
     public bool GetGameOver(int index)
     {
-        return gameOvers[index];
+        for (int i = 0; i < positions[index].Count; i++)
+        {
+            if (RoundPosition(positions[index][i].position).y >= 20)
+            {
+                Debug.Log("GAMEOVER! for " + index);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return false;
     }
 
     private void Update()
