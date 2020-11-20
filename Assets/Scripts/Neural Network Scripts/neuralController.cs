@@ -8,6 +8,7 @@ public class neuralController : MonoBehaviour
     float fallTimer;
     float rightTimer;
     float leftTimer;
+    float fitnessTimer;
     float neuralUpdateTimer;
     public float moveSpeed = 0.1f;
     float fallSpeed = 0.2f;
@@ -59,6 +60,7 @@ public class neuralController : MonoBehaviour
         rightTimer += Time.deltaTime;
         leftTimer += Time.deltaTime;
         neuralUpdateTimer += Time.deltaTime;
+        fitnessTimer += Time.deltaTime;
 
         brickBelow = CheckCollisionY();
         brickLeft = CheckCollisionXLeft();
@@ -98,7 +100,7 @@ public class neuralController : MonoBehaviour
 
     public void UpdateFitness()
     {
-        network.fitness = GameObject.Find("scoreText").GetComponent<neuralScoring>().totalScore[index];//updates fitness of network for sorting
+        network.fitness = fitnessTimer;//updates fitness of network for sorting
     }
 
     //Method for moving on the x axis
