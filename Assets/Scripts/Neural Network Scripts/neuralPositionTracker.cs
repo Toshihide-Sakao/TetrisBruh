@@ -171,7 +171,22 @@ public class neuralPositionTracker : MonoBehaviour
             {
                 int gg = 0;
                 count[j] = 0;
+                
+                for (int i = 0; i < positions[j].Count; i++)
+                {
+                    if (RoundPosition(positions[j][i].position).y >= 20)
+                    {
+                        Debug.Log("GAMEOVER! for " + j);
+                        gameOvers[j] = true;
+                    }
+                    else if (RoundPosition(positions[j][i].position).y == yRow)
+                    {
+                        count[j]++;
+                        //Debug.Log("count: " + count + " row: " + yRow + " gg: " + gg);
+                    }
+                }
                 if (gameOvers.All(x => x))
+                // if (gameOvers[0] && gameOvers[1] && gameOvers[2] && gameOvers[3] && gameOvers[4] && gameOvers[5])
                 {
                     Debug.Log("gameover for all");
                     for (int a = 0; a < positions.Count; a++)
@@ -188,19 +203,6 @@ public class neuralPositionTracker : MonoBehaviour
 
                     Debug.Log("creat bots2 was called");
                     return;
-                }
-                for (int i = 0; i < positions[j].Count; i++)
-                {
-                    if (RoundPosition(positions[j][i].position).y >= 20)
-                    {
-                        Debug.Log("GAMEOVER! for " + j);
-                        gameOvers[j] = true;
-                    }
-                    else if (RoundPosition(positions[j][i].position).y == yRow)
-                    {
-                        count[j]++;
-                        //Debug.Log("count: " + count + " row: " + yRow + " gg: " + gg);
-                    }
                 }
                 if (count[j] >= 10)
                 {

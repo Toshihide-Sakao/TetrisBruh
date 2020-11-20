@@ -665,7 +665,6 @@ MonoBehaviour:
   - {fileID: 3027427333084210654, guid: 87c557fa61744e34ca4ad577bdf79e18, type: 3}
   - {fileID: 1331712239093310938, guid: a5112d1cc1bdf074f97c890a5a0a9b24, type: 3}
   - {fileID: 3258572757495915661, guid: fd809fb48c31e084898a7683c1478425, type: 3}
-  spawnPos: []
   currentTetrimino: {fileID: 0}
   HaveHold: 0
   BackFromHold: 0
@@ -674,7 +673,7 @@ MonoBehaviour:
   tetriminoInHoldInt: 0
   populationSize: 1
   isFalling: 
-  MutationChance: 0.26
+  MutationChance: 0.505
   MutationStrength: 0.5
   originalRotationValue: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1246871914
