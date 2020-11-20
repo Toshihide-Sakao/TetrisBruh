@@ -101,6 +101,7 @@ public class neuralController : MonoBehaviour
     public void UpdateFitness()
     {
         network.fitness = fitnessTimer;//updates fitness of network for sorting
+        fitnessTimer = 0;
     }
 
     //Method for moving on the x axis
