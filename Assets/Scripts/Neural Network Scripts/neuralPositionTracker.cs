@@ -174,7 +174,7 @@ public class neuralPositionTracker : MonoBehaviour
                 
                 for (int i = 0; i < positions[j].Count; i++)
                 {
-                    if (RoundPosition(positions[j][i].position).y >= 20)
+                    if (RoundPosition(positions[j][i].position).y >= 19.5f)
                     {
                         Debug.Log("GAMEOVER! for " + j);
                         gameOvers[j] = true;
@@ -187,6 +187,7 @@ public class neuralPositionTracker : MonoBehaviour
                 }
                 if (gameOvers.All(x => x))
                 // if (gameOvers[0] && gameOvers[1] && gameOvers[2] && gameOvers[3] && gameOvers[4] && gameOvers[5])
+                // if (gameOvers[0] && gameOvers[1])
                 {
                     Debug.Log("gameover for all");
                     for (int a = 0; a < positions.Count; a++)

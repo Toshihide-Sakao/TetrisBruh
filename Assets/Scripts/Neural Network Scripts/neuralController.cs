@@ -32,7 +32,7 @@ public class neuralController : MonoBehaviour
 
     public NeuralNetwork network;
     float[] outputs = new float[4];
-    private float[] input = new float[5];
+    float[] input = new float[212];
     int[] layers = new int[3] { 200, 300, 4};//initializing network to the right size
 
 
@@ -80,10 +80,31 @@ public class neuralController : MonoBehaviour
     {
         if (neuralUpdateTimer > moveSpeed)
         {
-            input = new float[200];
+            input = new float[212];
+            List<Transform> currentPositionList = new List<Transform>();
+            foreach (Transform children in transform)
+            {
+                children.transform.position = RoundPosition(children.transform.position);
+                //Debug.Log(children.transform.position);
+                currentPositionList.Add(children.transform);
+            }
+            float[] currentPositionArray = new float[currentPositionList.Count * 2];
+            for (int i = 0; i < currentPositionList.Count; i++)
+            {
+                currentPositionArray[i] = currentPositionList[i].position.x;
+            }
+            for (int i = currentPositionList.Count; i < currentPositionArray.Length; i++)
+            {
+                currentPositionArray[i] = currentPositionList[i - currentPositionList.Count].position.y;
+            }
+
             List<int[]> positions1D = scriptReader.GetComponent<neuralPositionTracker>().GetPositions1D();
+            float[] inputRotations = GetRotation();
             
             positions1D[index].CopyTo(input, 0);    //feedforward goes here
+            Debug.Log("!" + input.Length);
+            inputRotations.CopyTo(input, positions1D[index].Length);
+            currentPositionArray.CopyTo(input, positions1D[index].Length + inputRotations.Length);
 
             outputs = network.FeedForward(input);//Call to network to feedforward
             
@@ -100,7 +121,8 @@ public class neuralController : MonoBehaviour
 
     public void UpdateFitness()
     {
-        network.fitness = fitnessTimer;//updates fitness of network for sorting
+        float score = GameObject.Find("scoreText").GetComponent<neuralScoring>().totalScore[index];
+        network.fitness = fitnessTimer + score;//updates fitness of network for sorting
         fitnessTimer = 0;
     }
 
@@ -157,6 +179,24 @@ public class neuralController : MonoBehaviour
                 outputs[0] = 0;
             }
         }
+    }
+
+    float[] GetRotation()
+    {
+        switch (rotateNumber)
+        {
+            case 0:
+                return new float[] {1, 0, 0, 0};
+            case 1:
+                return new float[] {0, 1, 0, 0};
+            case 2:
+                return new float[] {0, 0, 1, 0};
+            case 3:
+                return new float[] {0, 0, 0, 1};
+            default:
+                break;
+        }
+        return new float[] {0,0,0,0};
     }
 
     //Makes the tetrimino fall and possible to accelerate by pressing down
@@ -266,7 +306,6 @@ public class neuralController : MonoBehaviour
         Vector3 newPos = new Vector3(0, 0, 0);
         // Position for storing old positions
         Vector3 oldPos = new Vector3(0, 0, 0);
-
         string thingToRotate = this.name;
 
         foreach (Transform children in transform)
@@ -321,7 +360,6 @@ public class neuralController : MonoBehaviour
                     //Debug.Log("Collided with brick right " + newPos.x);
                 }
             }
-
             //Checking left side
             if (children.transform.position.x < 1)
             {
@@ -338,7 +376,6 @@ public class neuralController : MonoBehaviour
                 //Debug
                 //Debug.Log("Fixed Left Side " + newPos.x);
             }
-
             //Checking right side
             else if (children.transform.position.x > width)
             {
@@ -355,7 +392,6 @@ public class neuralController : MonoBehaviour
                 //Debug
                 //Debug.Log("Fixed Right Side " + newPos.x);
             }
-
             if (children.transform.position.y < 0)
             {
 
@@ -368,7 +404,6 @@ public class neuralController : MonoBehaviour
                 //Debug.Log("Fixed Down Side " + children.name + " " + newPos.y + " " + children.transform.position);
             }
         }
-
         //Returning vector3 which should be added to transform.position
         return newPos;
     }
@@ -424,7 +459,6 @@ public class neuralController : MonoBehaviour
                     }
                 }
             }
-
             if (botCollision.transform.position.y >= newPos.y)
             {
                 //Debug.Log("botCollision below me");
