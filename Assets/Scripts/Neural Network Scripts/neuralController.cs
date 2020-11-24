@@ -123,6 +123,8 @@ public class neuralController : MonoBehaviour
     {
         float score = GameObject.Find("scoreText").GetComponent<neuralScoring>().totalScore[index];
         network.fitness = fitnessTimer + score;//updates fitness of network for sorting
+
+        Debug.Log("fitness res: " + network.fitness);
         fitnessTimer = 0;
     }
 
@@ -244,7 +246,7 @@ public class neuralController : MonoBehaviour
         {
             ExportPosition();
             //Debug.Log("gameoverxs " + scriptReader.GetComponent<neuralPositionTracker>().GetGameOver(index));
-            if (/*transform.position.y <= 19*/true) //not gameover
+            if (/* !scriptReader.GetComponent<neuralPositionTracker>().GetGameOver(index)*/ true) //not gameover
             {
                 Debug.Log("spawned for " + index);
 

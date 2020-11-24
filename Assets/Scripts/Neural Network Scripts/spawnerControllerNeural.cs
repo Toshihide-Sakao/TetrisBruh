@@ -99,15 +99,15 @@ public class spawnerControllerNeural : MonoBehaviour
             populationList.Add(new List<Transform>());
         }
 
-        for (int i = 0; i < populationSize; i++)
-        {
-            assignNextObjs();
+        // for (int i = 0; i < populationSize; i++)
+        // {
+        //     assignNextObjs();
 
-            isFalling[i] = currentTetrimino.GetComponent<neuralController>().isActiveAndEnabled;
-            currentTetrimino.GetComponent<neuralController>().index = i;
+        //     isFalling[i] = currentTetrimino.GetComponent<neuralController>().isActiveAndEnabled;
+        //     currentTetrimino.GetComponent<neuralController>().index = i;
 
-            //Debug.Log(populationList.Count);
-        }
+        //     //Debug.Log(populationList.Count);
+        // }
         scriptReader.GetComponent<neuralPositionTracker>().SetPositions(populationList);
     }
     // Update is called once per frame
@@ -127,6 +127,8 @@ public class spawnerControllerNeural : MonoBehaviour
         currentTetrimino = Instantiate(tetriminos[tetrimino], spawnPos[tetrimino], new Quaternion(0, 0, 0, 0));
         currentTetrimino.GetComponent<neuralController>().network = networks[index];
         currentTetrimino.GetComponent<neuralController>().index = index;
+
+        UnityEngine.Debug.Log("spawned new tetrimino for: " + index + "  the index: " + currentTetrimino.GetComponent<neuralController>().index);
     }
 
     void assignNextObjs()

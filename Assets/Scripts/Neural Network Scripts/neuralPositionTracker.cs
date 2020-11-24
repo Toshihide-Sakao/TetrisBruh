@@ -14,6 +14,8 @@ public class neuralPositionTracker : MonoBehaviour
     public int[] rowsForPoint;
     List<int[]> positions1D = new List<int[]>();
 
+    bool allGameover = false;
+
     private void Start()
     {
     }
@@ -128,19 +130,21 @@ public class neuralPositionTracker : MonoBehaviour
 
     public bool GetGameOver(int index)
     {
-        for (int i = 0; i < positions[index].Count; i++)
-        {
-            if (RoundPosition(positions[index][i].position).y >= 20)
-            {
-                Debug.Log("GAMEOVER! for " + index);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        return false;
+        // for (int i = 0; i < positions[index].Count; i++)
+        // {
+        //     if (RoundPosition(positions[index][i].position).y >= 20)
+        //     {
+        //         Debug.Log("GAMEOVER! for " + index);
+        //         return true;
+        //     }
+        //     else
+        //     {
+        //         return false;
+        //     }
+        // }
+
+        return gameOvers[index];
+        // return false;
     }
 
     private void Update()
@@ -174,10 +178,15 @@ public class neuralPositionTracker : MonoBehaviour
                 
                 for (int i = 0; i < positions[j].Count; i++)
                 {
-                    if (RoundPosition(positions[j][i].position).y >= 19.5f)
+                    if (RoundPosition(positions[j][i].position).y >= 19f)
                     {
                         Debug.Log("GAMEOVER! for " + j);
                         gameOvers[j] = true;
+
+                        // if (gameOvers.All(x => x))
+                        // {
+                        //     allGameover = true;
+                        // }
                     }
                     else if (RoundPosition(positions[j][i].position).y == yRow)
                     {
@@ -199,10 +208,15 @@ public class neuralPositionTracker : MonoBehaviour
                         positions[a].Clear();
                         Debug.Log("cleared positions");
                     }
+
                     GameObject.Find("Spawner").GetComponent<spawnerControllerNeural>().SortNetworks();
                     GameObject.Find("Spawner").GetComponent<spawnerControllerNeural>().CreateBots2();
 
-                    Debug.Log("creat bots2 was called");
+                    Debug.Log("creat bots was called");
+
+                    gameOvers = new bool[positions.Count];
+                    allGameover = false;
+
                     return;
                 }
                 if (count[j] >= 10)
