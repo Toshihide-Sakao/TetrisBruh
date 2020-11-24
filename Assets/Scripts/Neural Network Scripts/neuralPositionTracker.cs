@@ -14,7 +14,7 @@ public class neuralPositionTracker : MonoBehaviour
     public int[] rowsForPoint;
     List<int[]> positions1D = new List<int[]>();
 
-    bool allGameover = false;
+    public bool allGameover = false;
 
     private void Start()
     {
@@ -130,21 +130,12 @@ public class neuralPositionTracker : MonoBehaviour
 
     public bool GetGameOver(int index)
     {
-        // for (int i = 0; i < positions[index].Count; i++)
-        // {
-        //     if (RoundPosition(positions[index][i].position).y >= 20)
-        //     {
-        //         Debug.Log("GAMEOVER! for " + index);
-        //         return true;
-        //     }
-        //     else
-        //     {
-        //         return false;
-        //     }
-        // }
-
         return gameOvers[index];
-        // return false;
+    }
+
+    public bool[] GetGameOvers()
+    {
+        return gameOvers;
     }
 
     private void Update()

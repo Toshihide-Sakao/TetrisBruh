@@ -673,7 +673,7 @@ MonoBehaviour:
   tetriminoInHoldInt: 0
   populationSize: 2
   isFalling: 
-  MutationChance: 1
+  MutationChance: 0.661
   MutationStrength: 0.667
   originalRotationValue: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1246871914

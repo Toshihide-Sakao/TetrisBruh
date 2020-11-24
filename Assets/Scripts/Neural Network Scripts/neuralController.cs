@@ -33,7 +33,7 @@ public class neuralController : MonoBehaviour
     public NeuralNetwork network;
     float[] outputs = new float[4];
     float[] input = new float[212];
-    int[] layers = new int[3] { 200, 300, 4};//initializing network to the right size
+    int[] layers = new int[3] { 200, 300, 4 };//initializing network to the right size
 
 
     // Start is called before the first frame update
@@ -73,7 +73,7 @@ public class neuralController : MonoBehaviour
         Mover();
         Rotater();
         Faller();
-        
+
     }
 
     void FeedForward()
@@ -100,14 +100,14 @@ public class neuralController : MonoBehaviour
 
             List<int[]> positions1D = scriptReader.GetComponent<neuralPositionTracker>().GetPositions1D();
             float[] inputRotations = GetRotation();
-            
+
             positions1D[index].CopyTo(input, 0);    //feedforward goes here
             Debug.Log("!" + input.Length);
             inputRotations.CopyTo(input, positions1D[index].Length);
             currentPositionArray.CopyTo(input, positions1D[index].Length + inputRotations.Length);
 
             outputs = network.FeedForward(input);//Call to network to feedforward
-            
+
             //debug --------------
             for (int i = 0; i < outputs.Length; i++)
             {
@@ -188,17 +188,17 @@ public class neuralController : MonoBehaviour
         switch (rotateNumber)
         {
             case 0:
-                return new float[] {1, 0, 0, 0};
+                return new float[] { 1, 0, 0, 0 };
             case 1:
-                return new float[] {0, 1, 0, 0};
+                return new float[] { 0, 1, 0, 0 };
             case 2:
-                return new float[] {0, 0, 1, 0};
+                return new float[] { 0, 0, 1, 0 };
             case 3:
-                return new float[] {0, 0, 0, 1};
+                return new float[] { 0, 0, 0, 1 };
             default:
                 break;
         }
-        return new float[] {0,0,0,0};
+        return new float[] { 0, 0, 0, 0 };
     }
 
     //Makes the tetrimino fall and possible to accelerate by pressing down
@@ -246,15 +246,21 @@ public class neuralController : MonoBehaviour
         {
             ExportPosition();
             //Debug.Log("gameoverxs " + scriptReader.GetComponent<neuralPositionTracker>().GetGameOver(index));
-            if (/* !scriptReader.GetComponent<neuralPositionTracker>().GetGameOver(index)*/ true) //not gameover
-            {
+            // bool[] gameOvers = scriptReader.GetComponent<neuralPositionTracker>().GetGameOvers();
+
+            // if (!scriptReader.GetComponent<neuralPositionTracker>().GetGameOver(index)) //not gameover
+            // {
                 Debug.Log("spawned for " + index);
 
                 UpdateFitness();//gets bots to set their corrosponding networks fitness
 
-                spawner.GetComponent<spawnerControllerNeural>().SpawnNewTetrimino(index);
+                // if (!gameOvers.All(x => x))
+                // {
+                    spawner.GetComponent<spawnerControllerNeural>().SpawnNewTetrimino(index);
+                // }
                 GameObject.Find("scoreText").GetComponent<neuralScoring>().totalScore[index] = 0;
-            }
+                
+            // }
             enabled = false;
 
             timerTrigger = 0;
