@@ -459,6 +459,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   completedRow: 
   rowsForPoint: 
+  allGameover: 0
 --- !u!4 &868327310
 Transform:
   m_ObjectHideFlags: 0
@@ -671,7 +672,7 @@ MonoBehaviour:
   JustMadeHold: 0
   tetriminoInHold: {fileID: 0}
   tetriminoInHoldInt: 0
-  populationSize: 2
+  populationSize: 5
   isFalling: 
   MutationChance: 0.661
   MutationStrength: 0.667
