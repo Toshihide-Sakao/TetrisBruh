@@ -36,6 +36,9 @@ public class neuralController : MonoBehaviour
     int[] layers = new int[3] { 200, 160, 4 };//initializing network to the right size
 
 
+    bool hasEvaluatedFitness = false;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -133,7 +136,7 @@ public class neuralController : MonoBehaviour
     public void EvaluateFitness()
     {
         float score = GameObject.Find("scoreText").GetComponent<neuralScoring>().totalScore[index];
-        network.fitness = fitnessTimer * 10 + score * 2;
+        network.fitness = score * 10;
         int wellHeight = 21;
         int wellWidth = 10;
 
@@ -163,8 +166,8 @@ public class neuralController : MonoBehaviour
             network.fitness += SquarePreservingSign(rowBalance);
         }
 
-        Debug.Log("fitness: " + network.fitness);
-        fitnessTimer = 0;
+        Debug.Log("fitness for index " + index + ": " + network.fitness);
+        // fitnessTimer = 0;
     }
 
     private long SquarePreservingSign(int rowBalance)
@@ -297,11 +300,12 @@ public class neuralController : MonoBehaviour
             {
                 children.transform.position = RoundPosition(children.transform.position);
                 //Debug.Log(children.transform.position);
-                if (children.transform.position.y >= 19f) //not gameover
+                if (children.transform.position.y >= 19f && hasEvaluatedFitness == false) //not gameover
                 {
                     // UpdateFitness();//gets bots to set their corrosponding networks fitness
                     EvaluateFitness();
                     Debug.Log("evaluate fitness is done for " + index);
+                    hasEvaluatedFitness = true;
                     break;
                 }
             }
