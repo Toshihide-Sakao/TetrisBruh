@@ -160,6 +160,9 @@ public class neuralPositionTracker : MonoBehaviour
             numberOfCompletedRows[j] = 0;
             count = new int[positions.Count];
 
+            // For bug
+            List<Vector3> countedPos = new List<Vector3>();
+
             float yRow = 0.5f;
 
             while (yRow != 22.5f)
@@ -181,7 +184,12 @@ public class neuralPositionTracker : MonoBehaviour
                     }
                     else if (RoundPosition(positions[j][i].position).y == yRow)
                     {
-                        count[j]++;
+                        if (!countedPos.Contains(RoundPosition(positions[j][i].position)))
+                        {
+                            count[j]++;
+                            countedPos.Add(RoundPosition(positions[j][i].position));
+                        }
+                        
                         //Debug.Log("count: " + count + " row: " + yRow + " gg: " + gg);
                     }
                 }
