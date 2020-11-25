@@ -128,8 +128,10 @@ public class neuralController : MonoBehaviour
         fitnessTimer = 0;
     }
 
-    void EvaluateFitness(long score) {
-        network.fitness = score;
+    void EvaluateFitness() 
+    {
+        float score = GameObject.Find("scoreText").GetComponent<neuralScoring>().totalScore[index];
+        network.fitness = fitnessTimer + score;
         int wellHeight = 20;
         int wellWidth = 10;
 
@@ -155,6 +157,7 @@ public class neuralController : MonoBehaviour
             network.fitness += SquarePreservingSign(rowBalance);
         }
 
+        fitnessTimer = 0;
     }
 
     private long SquarePreservingSign(int rowBalance)
@@ -290,7 +293,8 @@ public class neuralController : MonoBehaviour
             // {
                 Debug.Log("spawned for " + index);
 
-                UpdateFitness();//gets bots to set their corrosponding networks fitness
+                // UpdateFitness();//gets bots to set their corrosponding networks fitness
+                EvaluateFitness();
 
                 // if (!gameOvers.All(x => x))
                 // {
