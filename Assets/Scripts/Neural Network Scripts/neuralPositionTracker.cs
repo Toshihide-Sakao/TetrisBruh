@@ -133,7 +133,7 @@ public class neuralPositionTracker : MonoBehaviour
         return gameOvers[index];
     }
 
-    public bool[] GetGameOvers()
+    bool[] GetGameOvers()
     {
         return gameOvers;
     }
@@ -176,8 +176,6 @@ public class neuralPositionTracker : MonoBehaviour
                     {
                         Debug.Log("GAMEOVER! for " + j);
                         gameOvers[j] = true;
-
-                        
                         // want to put evaluatefitness here
                     }
                     else if (RoundPosition(positions[j][i].position).y == yRow)
@@ -198,7 +196,7 @@ public class neuralPositionTracker : MonoBehaviour
                     {
                         for (int b = 0; b < positions[a].Count; b++)
                         {
-                            GameObject.Destroy(positions[a][b].gameObject);//if there are Prefabs in the scene this will get rid of them
+                            GameObject.Destroy(positions[a][b].parent.gameObject);
                         }
                         positions[a].Clear();
                         // Debug.Log("cleared positions");

@@ -305,7 +305,6 @@ public class neuralController : MonoBehaviour
             spawner.GetComponent<spawnerControllerNeural>().SpawnNewTetrimino(index);
             GameObject.Find("scoreText").GetComponent<neuralScoring>().totalScore[index] = 0;
             enabled = false;
-
             timerTrigger = 0;
         }
     }
