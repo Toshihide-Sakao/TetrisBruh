@@ -287,15 +287,20 @@ public class neuralController : MonoBehaviour
 
         if (timerTrigger > 0.5f)
         {
+            foreach (Transform children in transform)
+            {
+                children.transform.position = RoundPosition(children.transform.position);
+                //Debug.Log(children.transform.position);
+                if (children.transform.position.y >= 19f) //not gameover
+                {
+                    // UpdateFitness();//gets bots to set their corrosponding networks fitness
+                    EvaluateFitness();
+                    Debug.Log("evaluate fitness is done for " + index);
+                    break;
+                }
+            }
             ExportPosition();
             // bool[] gameOvers = scriptReader.GetComponent<neuralPositionTracker>().GetGameOvers();
-            
-            if (scriptReader.GetComponent<neuralPositionTracker>().GetGameOver(index)) //not gameover
-            {
-                // UpdateFitness();//gets bots to set their corrosponding networks fitness
-                EvaluateFitness();
-                Debug.Log("evaluate fitness is done for " + index);
-            }
 
             spawner.GetComponent<spawnerControllerNeural>().SpawnNewTetrimino(index);
             GameObject.Find("scoreText").GetComponent<neuralScoring>().totalScore[index] = 0;
