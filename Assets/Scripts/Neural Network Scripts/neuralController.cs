@@ -280,6 +280,7 @@ public class neuralController : MonoBehaviour
         }
     }
 
+    //Stop them fall is to stop current tetrimino to fall, this should not be used to check if all tetriminos are dead
     void StopThemFall()
     {
         timerTrigger += Time.deltaTime;
