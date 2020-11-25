@@ -33,7 +33,7 @@ public class neuralController : MonoBehaviour
     public NeuralNetwork network;
     float[] outputs = new float[4];
     float[] input = new float[212];
-    int[] layers = new int[3] { 200, 300, 4 };//initializing network to the right size
+    int[] layers = new int[3] { 200, 160, 4 };//initializing network to the right size
 
 
     // Start is called before the first frame update
