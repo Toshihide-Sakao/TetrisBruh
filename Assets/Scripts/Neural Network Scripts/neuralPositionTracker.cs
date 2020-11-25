@@ -53,6 +53,7 @@ public class neuralPositionTracker : MonoBehaviour
 
     public void SetPositions1D(List<List<Transform>> positions)
     {
+        Debug.Log("set positions");
         // for (int i = 0; i < positions.Count; i++)
         // {
         //     Debug.Log("positions1d.count: " + positions1D.Count);
@@ -70,8 +71,11 @@ public class neuralPositionTracker : MonoBehaviour
                 {
                     for (int i = 0; i < positions[index].Count; i++)
                     {
-                        if (positions[index][i].position == new Vector3((float)x, (float)y, 0))
+                        Debug.Log("pos " + positions[index][i].position);
+                        Debug.Log("posv3 " + new Vector3((float)x + 0.5f, (float)y + 0.5f, 0));
+                        if (positions[index][i].position == new Vector3((float)x + 0.5f, (float)y + 0.5f, 0))
                         {
+                            Debug.Log("set value 1");
                             positions1D[index][counter] = 1;
                         }
                         else

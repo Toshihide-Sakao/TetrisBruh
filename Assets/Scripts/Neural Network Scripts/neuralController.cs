@@ -131,12 +131,15 @@ public class neuralController : MonoBehaviour
     public void EvaluateFitness()
     {
         float score = GameObject.Find("scoreText").GetComponent<neuralScoring>().totalScore[index];
-        network.fitness = fitnessTimer + score;
+        network.fitness = fitnessTimer * 10 + score * 2;
         int wellHeight = 20;
         int wellWidth = 10;
 
         List<int[]> positions1D = scriptReader.GetComponent<neuralPositionTracker>().GetPositions1D();
-
+        for (int i = 0; i < positions1D[0].Length; i++)
+        {
+            Debug.Log("value"+ positions1D[0][i]);
+        }
         for (int i = 0; i < wellHeight; i++)
         {
             int rowBalance = 0;
@@ -147,6 +150,7 @@ public class neuralController : MonoBehaviour
                 if (positions1D[index][j + (10 * i)] == 1)
                 {
                     rowBalance++;
+                    Debug.Log("some row balance");
                 }
                 else
                 {
