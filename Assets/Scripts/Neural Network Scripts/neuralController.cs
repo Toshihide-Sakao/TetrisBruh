@@ -416,7 +416,34 @@ public class neuralController : MonoBehaviour
         return newPos;
     }
 
+    void evaluateFitness(long score) {
+        network.fitness = score;
+        int wellHeight = 20;
+        int wellWidth = 10;
 
+        List<int[]> positions1D = scriptReader.GetComponent<neuralPositionTracker>().GetPositions1D();
+
+        for(int i = 0; i < wellHeight; i++)
+        {
+            int rowBalance = 0;
+
+            for(int j = 0; j < wellWidth; j++)
+            {
+                
+                if(positions1D[index][j + (10 * i)] == 1)
+                {
+                    rowBalance ++;
+                } 
+                else 
+                {
+                    rowBalance --;
+                }
+            }
+
+            network.fitness += squarePreservingSign(rowBalance);
+        }
+
+    }
 
     //Export positions to scriptreader
     void ExportPosition()

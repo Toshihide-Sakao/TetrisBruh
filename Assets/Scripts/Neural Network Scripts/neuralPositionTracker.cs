@@ -64,9 +64,9 @@ public class neuralPositionTracker : MonoBehaviour
         {
             positions1D.Add(new int[200]);
             int counter = 0;
-            for (int x = 0; x < 10; x++)
+            for (int y = 0; y < 20; y++)
             {
-                for (int y = 0; y < 20; y++)
+                for (int x = 0; x < 10; x++)
                 {
                     for (int i = 0; i < positions[index].Count; i++)
                     {
