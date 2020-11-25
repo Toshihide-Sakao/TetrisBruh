@@ -12,7 +12,7 @@ public class neuralPositionTracker : MonoBehaviour
     public bool[] completedRow;
     static int[] numberOfCompletedRows;
     public int[] rowsForPoint;
-    List<int[]> positions1D = new List<int[]>();
+    int[,] positions1D;
 
     public bool[] hasEvaluated;
 
@@ -60,39 +60,44 @@ public class neuralPositionTracker : MonoBehaviour
         //     List<int> okkys = new List<int>();
         //     positions1D.Add(okkys);
         // }
-
+        positions1D = new int[positions.Count, 200];
         for (int index = 0; index < positions.Count; index++)
         {
-            positions1D.Add(new int[200]);
-            int counter = 0;
             for (int y = 0; y < 20; y++)
             {
-                for (int x = 0; x < 10; x++)
+                for (int x = 1; x < 11; x++)
                 {
                     for (int i = 0; i < positions[index].Count; i++)
                     {
-                        Debug.Log("pos " + positions[index][i].position);
-                        Debug.Log("posv3 " + new Vector3((float)x + 0.5f, (float)y + 0.5f, 0));
-                        if (positions[index][i].position == new Vector3((float)x + 0.5f, (float)y + 0.5f, 0))
+                        string tja = (x - 1).ToString() + y.ToString();
+                        Debug.Log(tja);
+                        int.TryParse(tja, out int tjaResult);
+                        Debug.Log(tjaResult);
+                        if (positions[index][i].position == new Vector3((float)x, (float)y + 0.5f, 0))
                         {
-                            Debug.Log("set value 1");
-                            positions1D[index][counter] = 1;
+                            Debug.Log("set value 1 " + (x - 1) + ", " + y);
+                            Debug.Log( (x - 1) + "" + y);
+                            positions1D[index, tjaResult] = 1;
                         }
                         else
                         {
-                            positions1D[index][counter] = 0;
+                            Debug.Log("set value 0 " + (x - 1) + ", " + y);
+                            positions1D[index, tjaResult]= 0;
                         }
                     }
                 }
             }
         }
-
         //Debug.Log("in setpositions count" + positions1D.Count);
 
     }
 
-    public List<int[]> GetPositions1D()
+    public int[,] GetPositions1D()
     {
+        for (int i = 0; i < positions1D.GetLength(1); i++)
+        {
+            Debug.Log("tj " + i + "tj" + positions1D[0,i]);
+        }
         return positions1D;
     }
 

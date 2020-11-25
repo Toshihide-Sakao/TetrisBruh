@@ -98,13 +98,15 @@ public class neuralController : MonoBehaviour
                 currentPositionArray[i] = currentPositionList[i - currentPositionList.Count].position.y;
             }
 
-            List<int[]> positions1D = scriptReader.GetComponent<neuralPositionTracker>().GetPositions1D();
+            int[,] positions1D = scriptReader.GetComponent<neuralPositionTracker>().GetPositions1D();
             float[] inputRotations = GetRotation();
-
-            positions1D[index].CopyTo(input, 0);    //feedforward goes here
+            for (int i = 0; i < 200; i++)
+            {
+                input[i] = positions1D[index, i];
+            }
             // Debug.Log("!" + input.Length);
-            inputRotations.CopyTo(input, positions1D[index].Length);
-            currentPositionArray.CopyTo(input, positions1D[index].Length + inputRotations.Length);
+            inputRotations.CopyTo(input, 200);
+            currentPositionArray.CopyTo(input, 200 + inputRotations.Length);
 
             outputs = network.FeedForward(input);//Call to network to feedforward
 
@@ -132,22 +134,22 @@ public class neuralController : MonoBehaviour
     {
         float score = GameObject.Find("scoreText").GetComponent<neuralScoring>().totalScore[index];
         network.fitness = fitnessTimer * 10 + score * 2;
-        int wellHeight = 20;
+        int wellHeight = 21;
         int wellWidth = 10;
 
-        List<int[]> positions1D = scriptReader.GetComponent<neuralPositionTracker>().GetPositions1D();
-        for (int i = 0; i < positions1D[0].Length; i++)
+        int[,] positions1D = scriptReader.GetComponent<neuralPositionTracker>().GetPositions1D();
+        for (int i = 0; i < 200; i++)
         {
-            Debug.Log("value"+ positions1D[0][i]);
+            Debug.Log("value"+ positions1D[0,i]);
         }
-        for (int i = 0; i < wellHeight; i++)
+        for (int i = 1; i < wellHeight; i++)
         {
             int rowBalance = 0;
 
             for (int j = 0; j < wellWidth; j++)
             {
 
-                if (positions1D[index][j + (10 * i)] == 1)
+                if (positions1D[index,j+(10 * (i - 1))] == 1)
                 {
                     rowBalance++;
                     Debug.Log("some row balance");
