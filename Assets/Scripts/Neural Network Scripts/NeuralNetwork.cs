@@ -97,10 +97,10 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
                 {
                     value += weights[i - 1][j][k] * neurons[i - 1][k];
                 }
-                neurons[i][j] = activate(value + biases[i][j]);
+                neurons[i][j] = Activate(value + biases[i][j]);
             }
         }
-        return roundResults(neurons[neurons.Length - 1]);
+        return RoundResults(neurons[neurons.Length - 1]);
         //return neurons[neurons.Length - 1];
     }
 
@@ -109,7 +109,7 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
         return allsdh;
     }
 
-    public float[] roundResults(float[] rawOutputs)
+    public float[] RoundResults(float[] rawOutputs)
     {
         float[] rounded = new float[rawOutputs.Length];
 
@@ -127,7 +127,7 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
         return rounded;
     }
 
-    public float activate(float value)
+    public float Activate(float value)
     {
         return (float)Math.Tanh(value);
     }
@@ -166,7 +166,7 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
             return 0;
     }
 
-    public NeuralNetwork copy(NeuralNetwork nn) //For creatinga deep copy, to ensure arrays are serialzed.
+    public NeuralNetwork Copy(NeuralNetwork nn) //For creatinga deep copy, to ensure arrays are serialzed.
     {
         for (int i = 0; i < biases.Length; i++)
         {

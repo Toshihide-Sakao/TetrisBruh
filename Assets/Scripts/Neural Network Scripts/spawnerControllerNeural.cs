@@ -178,7 +178,7 @@ public class spawnerControllerNeural : MonoBehaviour
         networks[populationSize - 1].Save("Assets/Save.txt");//saves networks weights and biases to file, to preserve network performance
         for (int i = 0; i < populationSize / 2; i++)
         {
-            networks[i] = networks[i + populationSize / 2].copy(new NeuralNetwork(layers));
+            networks[i] = networks[i + populationSize / 2].Copy(new NeuralNetwork(layers));
             networks[i].Mutate((int)(1 / MutationChance), MutationStrength);
         }
     }
