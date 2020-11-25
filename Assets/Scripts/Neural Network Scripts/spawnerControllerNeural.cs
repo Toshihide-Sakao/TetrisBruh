@@ -19,7 +19,7 @@ public class spawnerControllerNeural : MonoBehaviour
     public bool[] isFalling;
     //private List<Bot> bots = new List<Bot>();
     public List<NeuralNetwork> networks;
-    int[] layers = new int[3] { 212, 300, 4 };//initializing network to the right size
+    int[] layers = new int[3] { 212, 160, 4 };//initializing network to the right size
 
     [Range(0.0001f, 1f)] public float MutationChance = 0.01f;
     [Range(0f, 1f)] public float MutationStrength = 0.5f;
