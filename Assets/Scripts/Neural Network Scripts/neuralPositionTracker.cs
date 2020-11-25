@@ -63,28 +63,31 @@ public class neuralPositionTracker : MonoBehaviour
         positions1D = new int[positions.Count, 200];
         for (int index = 0; index < positions.Count; index++)
         {
+            int counter = 0;
             for (int y = 0; y < 20; y++)
             {
-                for (int x = 1; x < 11; x++)
+                for (int x = 0; x < 10; x++)
                 {
                     for (int i = 0; i < positions[index].Count; i++)
                     {
-                        string tja = (x - 1).ToString() + y.ToString();
-                        Debug.Log(tja);
-                        int.TryParse(tja, out int tjaResult);
-                        Debug.Log(tjaResult);
-                        if (positions[index][i].position == new Vector3((float)x, (float)y + 0.5f, 0))
+                        // string tja = (x - 1).ToString() + y.ToString();
+                        // Debug.Log(tja);
+                        // int.TryParse(tja, out int tjaResult);
+                        // Debug.Log(tjaResult);
+                        if (positions[index][i].position == new Vector3((float)(x + 1), (float)y + 0.5f, 0))
                         {
-                            Debug.Log("set value 1 " + (x - 1) + ", " + y);
-                            Debug.Log( (x - 1) + "" + y);
-                            positions1D[index, tjaResult] = 1;
+                            Debug.Log("set value 1 " + x + ", " + y);
+                            Debug.Log( x + "" + y);
+                            positions1D[index, counter] = 1;
+                            break;
                         }
                         else
                         {
-                            Debug.Log("set value 0 " + (x - 1) + ", " + y);
-                            positions1D[index, tjaResult]= 0;
+                            Debug.Log("set value 0 " + x + ", " + y);
+                            positions1D[index, counter] = 0;
                         }
                     }
+                    counter++;
                 }
             }
         }
