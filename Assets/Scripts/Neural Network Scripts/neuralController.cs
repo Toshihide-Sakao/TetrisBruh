@@ -123,9 +123,18 @@ public class neuralController : MonoBehaviour
     {
         float score = GameObject.Find("scoreText").GetComponent<neuralScoring>().totalScore[index];
         network.fitness = fitnessTimer + score;//updates fitness of network for sorting
-
+        
         Debug.Log("fitness res: " + network.fitness);
         fitnessTimer = 0;
+    }
+
+    private long SquarePreservingSign(int rowBalance)
+    {
+        if (rowBalance == 0)
+        {
+            return rowBalance;
+        }
+        return (long)(Mathf.Pow(rowBalance, 2) * (Mathf.Abs(rowBalance)/rowBalance));
     }
 
     //Method for moving on the x axis
