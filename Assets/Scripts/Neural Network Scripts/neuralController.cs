@@ -102,7 +102,7 @@ public class neuralController : MonoBehaviour
             float[] inputRotations = GetRotation();
 
             positions1D[index].CopyTo(input, 0);    //feedforward goes here
-            Debug.Log("!" + input.Length);
+            // Debug.Log("!" + input.Length);
             inputRotations.CopyTo(input, positions1D[index].Length);
             currentPositionArray.CopyTo(input, positions1D[index].Length + inputRotations.Length);
 
@@ -111,7 +111,7 @@ public class neuralController : MonoBehaviour
             //debug --------------
             for (int i = 0; i < outputs.Length; i++)
             {
-                Debug.Log("output" + i + ": " + outputs[i]);
+                // Debug.Log("output" + i + ": " + outputs[i]);
             }
             //------------------------
 
@@ -123,12 +123,12 @@ public class neuralController : MonoBehaviour
     {
         float score = GameObject.Find("scoreText").GetComponent<neuralScoring>().totalScore[index];
         network.fitness = fitnessTimer + score;//updates fitness of network for sorting
-        
+
         Debug.Log("fitness res: " + network.fitness);
         fitnessTimer = 0;
     }
 
-    void EvaluateFitness() 
+    public void EvaluateFitness()
     {
         float score = GameObject.Find("scoreText").GetComponent<neuralScoring>().totalScore[index];
         network.fitness = fitnessTimer + score;
@@ -137,26 +137,27 @@ public class neuralController : MonoBehaviour
 
         List<int[]> positions1D = scriptReader.GetComponent<neuralPositionTracker>().GetPositions1D();
 
-        for(int i = 0; i < wellHeight; i++)
+        for (int i = 0; i < wellHeight; i++)
         {
             int rowBalance = 0;
 
-            for(int j = 0; j < wellWidth; j++)
+            for (int j = 0; j < wellWidth; j++)
             {
-                
-                if(positions1D[index][j + (10 * i)] == 1)
+
+                if (positions1D[index][j + (10 * i)] == 1)
                 {
-                    rowBalance ++;
-                } 
-                else 
+                    rowBalance++;
+                }
+                else
                 {
-                    rowBalance --;
+                    rowBalance--;
                 }
             }
 
             network.fitness += SquarePreservingSign(rowBalance);
         }
 
+        Debug.Log("fitness: " + network.fitness);
         fitnessTimer = 0;
     }
 
@@ -166,7 +167,7 @@ public class neuralController : MonoBehaviour
         {
             return rowBalance;
         }
-        return (long)(Mathf.Pow(rowBalance, 2) * (Mathf.Abs(rowBalance)/rowBalance));
+        return (long)(Mathf.Pow(rowBalance, 2) * (Mathf.Abs(rowBalance) / rowBalance));
     }
 
     //Method for moving on the x axis
@@ -286,23 +287,17 @@ public class neuralController : MonoBehaviour
         if (timerTrigger > 0.5f)
         {
             ExportPosition();
-            //Debug.Log("gameoverxs " + scriptReader.GetComponent<neuralPositionTracker>().GetGameOver(index));
             // bool[] gameOvers = scriptReader.GetComponent<neuralPositionTracker>().GetGameOvers();
-
-            // if (!scriptReader.GetComponent<neuralPositionTracker>().GetGameOver(index)) //not gameover
-            // {
-                Debug.Log("spawned for " + index);
-
+            
+            if (scriptReader.GetComponent<neuralPositionTracker>().GetGameOver(index)) //not gameover
+            {
                 // UpdateFitness();//gets bots to set their corrosponding networks fitness
                 EvaluateFitness();
+                Debug.Log("evaluate fitness is done for " + index);
+            }
 
-                // if (!gameOvers.All(x => x))
-                // {
-                    spawner.GetComponent<spawnerControllerNeural>().SpawnNewTetrimino(index);
-                // }
-                GameObject.Find("scoreText").GetComponent<neuralScoring>().totalScore[index] = 0;
-                
-            // }
+            spawner.GetComponent<spawnerControllerNeural>().SpawnNewTetrimino(index);
+            GameObject.Find("scoreText").GetComponent<neuralScoring>().totalScore[index] = 0;
             enabled = false;
 
             timerTrigger = 0;

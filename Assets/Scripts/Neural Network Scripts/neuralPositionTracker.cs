@@ -14,7 +14,7 @@ public class neuralPositionTracker : MonoBehaviour
     public int[] rowsForPoint;
     List<int[]> positions1D = new List<int[]>();
 
-    public bool allGameover = false;
+    public bool[] hasEvaluated;
 
     private void Start()
     {
@@ -177,10 +177,8 @@ public class neuralPositionTracker : MonoBehaviour
                         Debug.Log("GAMEOVER! for " + j);
                         gameOvers[j] = true;
 
-                        // if (gameOvers.All(x => x))
-                        // {
-                        //     allGameover = true;
-                        // }
+                        
+                        // want to put evaluatefitness here
                     }
                     else if (RoundPosition(positions[j][i].position).y == yRow)
                     {
@@ -194,8 +192,6 @@ public class neuralPositionTracker : MonoBehaviour
                     }
                 }
                 if (gameOvers.All(x => x))
-                // if (gameOvers[0] && gameOvers[1] && gameOvers[2] && gameOvers[3] && gameOvers[4] && gameOvers[5])
-                // if (gameOvers[0] && gameOvers[1])
                 {
                     Debug.Log("gameover for all");
                     for (int a = 0; a < positions.Count; a++)
@@ -205,16 +201,15 @@ public class neuralPositionTracker : MonoBehaviour
                             GameObject.Destroy(positions[a][b].gameObject);//if there are Prefabs in the scene this will get rid of them
                         }
                         positions[a].Clear();
-                        Debug.Log("cleared positions");
+                        // Debug.Log("cleared positions");
                     }
 
                     GameObject.Find("Spawner").GetComponent<spawnerControllerNeural>().SortNetworks();
                     GameObject.Find("Spawner").GetComponent<spawnerControllerNeural>().CreateBots2();
 
-                    Debug.Log("creat bots was called");
+                    // Debug.Log("creat bots was called");
 
                     gameOvers = new bool[positions.Count];
-                    allGameover = false;
 
                     return;
                 }
