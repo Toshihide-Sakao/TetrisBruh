@@ -28,6 +28,9 @@ public class spawnerControllerNeural : MonoBehaviour
 
     bool CreateBots2HasBeenCalled = false;
 
+
+    static int janneI = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -68,6 +71,8 @@ public class spawnerControllerNeural : MonoBehaviour
 
     public void CreateBots()
     {
+        
+
         GameObject scriptReader = GameObject.Find("scriptReader");
         scriptReader.GetComponent<neuralPositionTracker>().InitiatePosition(populationSize);
         List<List<Transform>> populationList = new List<List<Transform>>();
@@ -137,7 +142,7 @@ public class spawnerControllerNeural : MonoBehaviour
         currentTetrimino[index].GetComponent<neuralController>().network = networks[index];
         currentTetrimino[index].GetComponent<neuralController>().index = index;
 
-        UnityEngine.Debug.Log("spawned new tetrimino for: " + index + "  the index: " + tetrimino[index]);
+        // UnityEngine.Debug.Log("spawned new tetrimino for: " + index + "  the index: " + tetrimino[index]);
     }
 
     public void CheckStoppedTetrimino(int index) 
@@ -154,6 +159,7 @@ public class spawnerControllerNeural : MonoBehaviour
         currentTetrimino[index] = Instantiate(tetriminos[tetrimino[index]], spawnPos[tetrimino[index]], new Quaternion(0, 0, 0, 0));
         currentTetrimino[index].GetComponent<neuralController>().network = networks[index];
         currentTetrimino[index].GetComponent<neuralController>().index = index;
+        UnityEngine.Debug.Log("deployed network ");
 
         UnityEngine.Debug.Log("spawned new tetrimino for: " + index + "  the index: " + currentTetrimino[index].GetComponent<neuralController>().index);
     }
@@ -193,15 +199,20 @@ public class spawnerControllerNeural : MonoBehaviour
     {
         // for (int i = 0; i < populationSize; i++)
         // {
-        //     bots[i].UpdateFitness();//gets bots to set their corrosponding networks fitness
+        //     networks[i].UpdateFitness(); //gets bots to set their corrosponding networks fitness
         // }
         networks.Sort();
+        UnityEngine.Debug.Log("populationsioze " + populationSize);
         networks[populationSize - 1].Save("Assets/Save.txt"); // saves networks weights and biases to file, to preserve network performance
+        UnityEngine.Debug.Log("best bias 00" + networks[populationSize - 1].biases[0][0]);
         for (int i = 0; i < populationSize / 2; i++)
         {
             networks[i] = networks[i + populationSize / 2].Copy(new NeuralNetwork(layers));
+            
             networks[i].Mutate((int)(1 / MutationChance), MutationStrength);
         }
+
+        janneI++;
     }
 
     // public void HoldTetrimino()

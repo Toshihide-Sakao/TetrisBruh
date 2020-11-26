@@ -62,11 +62,11 @@ public class neuralController : MonoBehaviour
     void Update()
     {
         //Adds time to timer for falling
-        fallTimer += Time.deltaTime;
-        rightTimer += Time.deltaTime;
-        leftTimer += Time.deltaTime;
-        neuralUpdateTimer += Time.deltaTime;
-        fitnessTimer += Time.deltaTime;
+        fallTimer += Time.deltaTime * 2;
+        rightTimer += Time.deltaTime * 2;
+        leftTimer += Time.deltaTime * 2;
+        neuralUpdateTimer += Time.deltaTime * 2;
+        fitnessTimer += Time.deltaTime * 2;
 
         brickBelow = CheckCollisionY();
         brickLeft = CheckCollisionXLeft();
@@ -79,6 +79,8 @@ public class neuralController : MonoBehaviour
         Mover();
         Rotater();
         Faller();
+
+        Time.timeScale = 4f;
 
     }
 
@@ -113,6 +115,8 @@ public class neuralController : MonoBehaviour
             // Debug.Log("!" + input.Length);
             inputRotations.CopyTo(input, 200);
             currentPositionArray.CopyTo(input, 200 + inputRotations.Length);
+
+            Debug.Log("rounded res: " + input[18]);
 
             outputs = network.FeedForward(input);//Call to network to feedforward
 

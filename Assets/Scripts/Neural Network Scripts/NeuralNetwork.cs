@@ -7,7 +7,7 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
 {
     private int[] layers;//layers
     private float[][] neurons;//neurons
-    private float[][] biases;//biasses
+    public float[][] biases;//biasses
     private float[][][] weights;//weights
     private int[] activations;//layers
 
@@ -53,6 +53,8 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
             biasList.Add(bias);
         }
         biases = biasList.ToArray();
+
+        // UnityEngine.Debug.Log("initbiases" + biases[0][0]);
     }
 
     private void InitWeights()//initializes random array for the weights being held in the network.
@@ -75,6 +77,8 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
             weightsList.Add(layerWeightsList.ToArray());
         }
         weights = weightsList.ToArray();
+
+        UnityEngine.Debug.Log("initwrights" + weights[0][0][0]);
     }
 
     public float[] FeedForward(float[] inputs)//feed forward, inputs >==> outputs.
@@ -92,21 +96,19 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
             //loops the amount of neurons in layer
             for (int j = 0; j < neurons[i].Length; j++)
             {
+                // UnityEngine.Debug.Log("neurons layer" + i + " " + neurons[i].Length);
                 float value = 0f;
-                for (int k = 0; k < neurons[i - 1].Length; k++)
+                for (int k = 0; k < neurons[i - 1].Length; k++) // this loops so many times as la
                 {
                     value += weights[i - 1][j][k] * neurons[i - 1][k];
                 }
+                
                 neurons[i][j] = Activate(value + biases[i][j]);
             }
         }
+        
         return RoundResults(neurons[neurons.Length - 1]);
         //return neurons[neurons.Length - 1];
-    }
-
-    public int debugshit()
-    {
-        return allsdh;
     }
 
     public float[] RoundResults(float[] rawOutputs)
@@ -139,8 +141,10 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
             for (int j = 0; j < biases[i].Length; j++)
             {
                 biases[i][j] = (UnityEngine.Random.Range(0f, chance) <= 5) ? biases[i][j] += UnityEngine.Random.Range(-val, val) : biases[i][j];
+                
             }
         }
+        UnityEngine.Debug.Log("mutating " + biases[0][0]);
 
         for (int i = 0; i < weights.Length; i++)
         {
@@ -168,6 +172,7 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
 
     public NeuralNetwork Copy(NeuralNetwork nn) //For creatinga deep copy, to ensure arrays are serialzed.
     {
+        UnityEngine.Debug.Log("biasesFeedForward before" + biases[0][0]);
         for (int i = 0; i < biases.Length; i++)
         {
             for (int j = 0; j < biases[i].Length; j++)
@@ -175,6 +180,7 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
                 nn.biases[i][j] = biases[i][j];
             }
         }
+        UnityEngine.Debug.Log("biasesFeedForward after" + biases[0][0]);
         for (int i = 0; i < weights.Length; i++)
         {
             for (int j = 0; j < weights[i].Length; j++)
@@ -206,6 +212,7 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
                 for (int j = 0; j < biases[i].Length; j++)
                 {
                     biases[i][j] = float.Parse(ListLines[index]);
+                    // UnityEngine.Debug.Log("in lo0ad"+ float.Parse(ListLines[index]));
                     index++;
                 }
             }
@@ -224,8 +231,14 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
         }
     }
 
+    float[][] GetBiases()
+    {
+        return biases;
+    }
+
     public void Save(string path)//this is used for saving the biases and weights within the network to a file.
     {
+        float[][] realBiases = GetBiases();
         // UnityEngine.Debug.Log("burhhhhhhh");
         File.Create(path).Close();
         StreamWriter writer = new StreamWriter(path, true);
@@ -238,6 +251,7 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
             }
         }
 
+        UnityEngine.Debug.Log("savebias" + biases[0][0] + " realbias" + realBiases[0][0]);
         for (int i = 0; i < weights.Length; i++)
         {
             for (int j = 0; j < weights[i].Length; j++)
