@@ -240,7 +240,7 @@ public class neuralPositionTracker : MonoBehaviour
                     {
                         if (RoundPosition(positions[j][i].position).y == yRow)
                         {
-                            // Debug.Log("removing row: " + yRow);
+                            Debug.Log("removing row: " + yRow);
                             Destroy(positions[j][i].gameObject);
                         }
                     }
