@@ -8,7 +8,7 @@ public class spawnerControllerNeural : MonoBehaviour
     public List<GameObject> tetriminos;
     List<Vector2> spawnPos;
     //public bool isFalling = false;
-    public GameObject currentTetrimino;
+    public List<GameObject> currentTetrimino;
     public List<int> tetrimino;
     public bool HaveHold = false;
     public bool BackFromHold = false;
@@ -80,17 +80,17 @@ public class spawnerControllerNeural : MonoBehaviour
         {
             // assignNextObjs();
             UnityEngine.Debug.Log("okkkkkkk l" + i + " "+ tetrimino[i]);
-            currentTetrimino = Instantiate(tetriminos[tetrimino[i]], spawnPos[tetrimino[i]], new Quaternion(0, 0, 0, 0));//create botes
+            currentTetrimino.Add(Instantiate(tetriminos[tetrimino[i]], spawnPos[tetrimino[i]], new Quaternion(0, 0, 0, 0)));//create botes
 
             //Debug.Log($"spawn position: {spawnPos[tetrimino]}, tetrimino: {currentTetrimino}");
 
             //Bot car = (Instantiate(prefab, new Vector3(0, 1.6f, -16), ).GetComponent<Bot>();
             // Debug.Log(currentTetrimino.network);
-            currentTetrimino.GetComponent<neuralController>().network = networks[i];//deploys network to each learner
+            currentTetrimino[i].GetComponent<neuralController>().network = networks[i];//deploys network to each learner
             //bots.Add(currentTetrimino);
 
-            isFalling[i] = currentTetrimino.GetComponent<neuralController>().isActiveAndEnabled;
-            currentTetrimino.GetComponent<neuralController>().index = i;
+            isFalling[i] = currentTetrimino[i].GetComponent<neuralController>().isActiveAndEnabled;
+            currentTetrimino[i].GetComponent<neuralController>().index = i;
 
             //Debug.Log(populationList.Count);
         }
@@ -133,21 +133,29 @@ public class spawnerControllerNeural : MonoBehaviour
     public void SpawnNewTetrimino(int index)
     {
         assignNextObjs(index);
-        currentTetrimino = Instantiate(tetriminos[tetrimino[index]], spawnPos[tetrimino[index]], new Quaternion(0, 0, 0, 0));
-        currentTetrimino.GetComponent<neuralController>().network = networks[index];
-        currentTetrimino.GetComponent<neuralController>().index = index;
+        currentTetrimino[index] = Instantiate(tetriminos[tetrimino[index]], spawnPos[tetrimino[index]], new Quaternion(0, 0, 0, 0));
+        currentTetrimino[index].GetComponent<neuralController>().network = networks[index];
+        currentTetrimino[index].GetComponent<neuralController>().index = index;
 
         UnityEngine.Debug.Log("spawned new tetrimino for: " + index + "  the index: " + tetrimino[index]);
+    }
+
+    public void CheckStoppedTetrimino(int index) 
+    {
+        if (currentTetrimino[index].GetComponent<neuralController>().allahHelpMePls == true)
+        {
+            SpawnNewTetrimino(index);
+        }
     }
 
     public void SpawnNewTetriminoWhenGameOver(int index)
     {
         tetrimino[index] = 0;
-        currentTetrimino = Instantiate(tetriminos[tetrimino[index]], spawnPos[tetrimino[index]], new Quaternion(0, 0, 0, 0));
-        currentTetrimino.GetComponent<neuralController>().network = networks[index];
-        currentTetrimino.GetComponent<neuralController>().index = index;
+        currentTetrimino[index] = Instantiate(tetriminos[tetrimino[index]], spawnPos[tetrimino[index]], new Quaternion(0, 0, 0, 0));
+        currentTetrimino[index].GetComponent<neuralController>().network = networks[index];
+        currentTetrimino[index].GetComponent<neuralController>().index = index;
 
-        UnityEngine.Debug.Log("spawned new tetrimino for: " + index + "  the index: " + currentTetrimino.GetComponent<neuralController>().index);
+        UnityEngine.Debug.Log("spawned new tetrimino for: " + index + "  the index: " + currentTetrimino[index].GetComponent<neuralController>().index);
     }
 
     void assignNextObjs(int i)

@@ -666,14 +666,14 @@ MonoBehaviour:
   - {fileID: 3027427333084210654, guid: 87c557fa61744e34ca4ad577bdf79e18, type: 3}
   - {fileID: 1331712239093310938, guid: a5112d1cc1bdf074f97c890a5a0a9b24, type: 3}
   - {fileID: 3258572757495915661, guid: fd809fb48c31e084898a7683c1478425, type: 3}
-  currentTetrimino: {fileID: 0}
+  currentTetrimino: []
   tetrimino: 
   HaveHold: 0
   BackFromHold: 0
   JustMadeHold: 0
   tetriminoInHold: {fileID: 0}
   tetriminoInHoldInt: 0
-  populationSize: 4
+  populationSize: 6
   isFalling: 
   MutationChance: 1
   MutationStrength: 1

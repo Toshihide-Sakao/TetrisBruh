@@ -184,7 +184,7 @@ public class neuralPositionTracker : MonoBehaviour
                 
                 for (int i = 0; i < positions[j].Count; i++)
                 {
-                    if (RoundPosition(positions[j][i].position).y >= 19f)
+                    if (RoundPosition(positions[j][i].position).y >= 18.5f)
                     {
                         Debug.Log("GAMEOVER! for " + j);
                         gameOvers[j] = true;
@@ -201,6 +201,11 @@ public class neuralPositionTracker : MonoBehaviour
                         //Debug.Log("count: " + count + " row: " + yRow + " gg: " + gg);
                     }
                 }
+                if (gameOvers[j] == false)
+                {
+                    GameObject.Find("Spawner").GetComponent<spawnerControllerNeural>().CheckStoppedTetrimino(j);
+                }
+
                 if (gameOvers.All(x => x))
                 {
                     Debug.Log("gameover for all");

@@ -36,6 +36,9 @@ public class neuralController : MonoBehaviour
     int[] layers = new int[3] { 200, 160, 4 };//initializing network to the right size
 
 
+    public bool allahHelpMePls = false;
+
+
     bool hasEvaluatedFitness = false;
 
 
@@ -124,14 +127,14 @@ public class neuralController : MonoBehaviour
         }
     }
 
-    public void UpdateFitness()
-    {
-        float score = GameObject.Find("scoreText").GetComponent<neuralScoring>().totalScore[index];
-        network.fitness = fitnessTimer + score;//updates fitness of network for sorting
+    // public void UpdateFitness()
+    // {
+    //     float score = GameObject.Find("scoreText").GetComponent<neuralScoring>().totalScore[index];
+    //     network.fitness = fitnessTimer + score;//updates fitness of network for sorting
 
-        Debug.Log("fitness res: " + network.fitness);
-        fitnessTimer = 0;
-    }
+    //     Debug.Log("fitness res: " + network.fitness);
+    //     fitnessTimer = 0;
+    // }
 
     public void EvaluateFitness()
     {
@@ -299,21 +302,24 @@ public class neuralController : MonoBehaviour
             foreach (Transform children in transform)
             {
                 children.transform.position = RoundPosition(children.transform.position);
-                //Debug.Log(children.transform.position);
-                if (children.transform.position.y >= 19f) //not gameover
+                // Debug.Log("ok we are on the waya");
+                if (children.transform.position.y >= 17.5f && hasEvaluatedFitness == false) // gameover
                 {
                     // UpdateFitness();//gets bots to set their corrosponding networks fitness
                     EvaluateFitness();
                     Debug.Log("evaluate fitness is done for " + index);
                     hasEvaluatedFitness = true;
-
-                    enabled = false;
                     break;
                 }
-                else if (transform.position.y < 18.5f)
+                
+            }
+            foreach (Transform children in transform)
+            {
+                children.transform.position = RoundPosition(children.transform.position);
+                if (children.transform.position.y < 18.5f)
                 {
-                    spawner.GetComponent<spawnerControllerNeural>().SpawnNewTetrimino(index);
-                    Debug.Log("spawned new from controller");
+                    // spawner.GetComponent<spawnerControllerNeural>().SpawnNewTetrimino(index);
+                    allahHelpMePls = true;
                     break;
                 }
             }
