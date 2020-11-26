@@ -9,9 +9,11 @@ public class neuralController : MonoBehaviour
     float rightTimer;
     float leftTimer;
     float fitnessTimer;
+    float rotateTimer;
     float neuralUpdateTimer;
     public float moveSpeed = 0.1f;
     float fallSpeed = 0.2f;
+    float rotateSpeed = 0.3f;
     float OriginalFallSpeed;
     GameObject scriptReader;
     GameObject spawner;
@@ -67,6 +69,7 @@ public class neuralController : MonoBehaviour
         leftTimer += Time.deltaTime * 2;
         neuralUpdateTimer += Time.deltaTime * 2;
         fitnessTimer += Time.deltaTime * 2;
+        rotateTimer += Time.deltaTime;
 
         brickBelow = CheckCollisionY();
         brickLeft = CheckCollisionXLeft();
@@ -209,7 +212,7 @@ public class neuralController : MonoBehaviour
         // O tetrimino will not be rotated
         if (!(this.name == "O TetriminoN(Clone)"))
         {
-            if (/*Input.GetKeyDown(rotateRight)*/ outputs[0] == 1)
+            if (/*Input.GetKeyDown(rotateRight)*/ outputs[0] == 1 && rotateTimer > rotateSpeed)
             {
                 if (rotateNumber == 3)
                 {
@@ -237,6 +240,7 @@ public class neuralController : MonoBehaviour
 
                 //reset rotation button
                 outputs[0] = 0;
+                rotateTimer = 0;
             }
         }
     }
