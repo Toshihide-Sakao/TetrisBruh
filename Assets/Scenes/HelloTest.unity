@@ -673,7 +673,7 @@ MonoBehaviour:
   JustMadeHold: 0
   tetriminoInHold: {fileID: 0}
   tetriminoInHoldInt: 0
-  populationSize: 10
+  populationSize: 2
   isFalling: 
   MutationChance: 0.04
   MutationStrength: 0.514

@@ -131,60 +131,60 @@ public class neuralController : MonoBehaviour
         }
     }
 
-    // public void UpdateFitness()
-    // {
-    //     float score = GameObject.Find("scoreText").GetComponent<neuralScoring>().totalScore[index];
-    //     network.fitness = fitnessTimer + score;//updates fitness of network for sorting
-
-    //     Debug.Log("fitness res: " + network.fitness);
-    //     fitnessTimer = 0;
-    // }
-
     public void EvaluateFitness()
     {
         float score = GameObject.Find("scoreText").GetComponent<neuralScoring>().totalScore[index];
-        network.fitness = score * 10;
-        int wellHeight = 9;
-        int wellWidth = 10;
+        network.fitness = fitnessTimer + score;//updates fitness of network for sorting
 
-        int[,] positions1D = scriptReader.GetComponent<neuralPositionTracker>().GetPositions1D();
-        // for (int i = 0; i < 200; i++)
-        // {
-        //     Debug.Log("value"+ positions1D[0,i]);
-        // }
-        for (int i = 1; i < wellHeight; i++)
-        {
-            int rowBalance = 0;
-
-            for (int j = 0; j < wellWidth; j++)
-            {
-
-                if (positions1D[index,j+(10 * (i - 1))] == 1)
-                {
-                    rowBalance++;
-                    // Debug.Log("some row balance");
-                }
-                else
-                {
-                    rowBalance--;
-                }
-            }
-
-            network.fitness += SquarePreservingSign(rowBalance);
-        }
-
-        Debug.Log("fitness for index " + index + ": " + network.fitness);
-        // fitnessTimer = 0;
+        Debug.Log("fitness res: " + network.fitness);
+        fitnessTimer = 0;
     }
 
-    private long SquarePreservingSign(int rowBalance)
-    {
-        if (rowBalance == 0)
-        {
-            return rowBalance;
-        }
-        return (long)(Mathf.Pow(rowBalance, 2) * (Mathf.Abs(rowBalance) / rowBalance));
-    }
+    // public void EvaluateFitness()
+    // {
+    //     float score = GameObject.Find("scoreText").GetComponent<neuralScoring>().totalScore[index];
+    //     network.fitness = score * 10;
+    //     int wellHeight = 9;
+    //     int wellWidth = 10;
+
+    //     int[,] positions1D = scriptReader.GetComponent<neuralPositionTracker>().GetPositions1D();
+    //     // for (int i = 0; i < 200; i++)
+    //     // {
+    //     //     Debug.Log("value"+ positions1D[0,i]);
+    //     // }
+    //     for (int i = 1; i < wellHeight; i++)
+    //     {
+    //         int rowBalance = 0;
+
+    //         for (int j = 0; j < wellWidth; j++)
+    //         {
+
+    //             if (positions1D[index,j+(10 * (i - 1))] == 1)
+    //             {
+    //                 rowBalance++;
+    //                 // Debug.Log("some row balance");
+    //             }
+    //             else
+    //             {
+    //                 rowBalance--;
+    //             }
+    //         }
+
+    //         network.fitness += SquarePreservingSign(rowBalance);
+    //     }
+
+    //     Debug.Log("fitness for index " + index + ": " + network.fitness);
+    //     // fitnessTimer = 0;
+    // }
+
+    // private long SquarePreservingSign(int rowBalance)
+    // {
+    //     if (rowBalance == 0)
+    //     {
+    //         return rowBalance;
+    //     }
+    //     return (long)(Mathf.Pow(rowBalance, 2) * (Mathf.Abs(rowBalance) / rowBalance));
+    // }
 
     //Method for moving on the x axis
     void Mover()
@@ -307,7 +307,7 @@ public class neuralController : MonoBehaviour
             {
                 children.transform.position = RoundPosition(children.transform.position);
                 // Debug.Log("ok we are on the waya");
-                if (children.transform.position.y >= 6.5f && hasEvaluatedFitness == false) // gameover
+                if (children.transform.position.y >= 5.5f && hasEvaluatedFitness == false) // gameover
                 {
                     // UpdateFitness();//gets bots to set their corrosponding networks fitness
                     EvaluateFitness();
@@ -320,7 +320,7 @@ public class neuralController : MonoBehaviour
             foreach (Transform children in transform)
             {
                 children.transform.position = RoundPosition(children.transform.position);
-                if (children.transform.position.y < 6.5f)
+                if (children.transform.position.y < 5.5f)
                 {
                     // spawner.GetComponent<spawnerControllerNeural>().SpawnNewTetrimino(index);
                     allahHelpMePls = true;
