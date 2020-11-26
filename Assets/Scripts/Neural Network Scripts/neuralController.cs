@@ -300,19 +300,26 @@ public class neuralController : MonoBehaviour
             {
                 children.transform.position = RoundPosition(children.transform.position);
                 //Debug.Log(children.transform.position);
-                if (children.transform.position.y >= 19f && hasEvaluatedFitness == false) //not gameover
+                if (children.transform.position.y >= 19f) //not gameover
                 {
                     // UpdateFitness();//gets bots to set their corrosponding networks fitness
                     EvaluateFitness();
                     Debug.Log("evaluate fitness is done for " + index);
                     hasEvaluatedFitness = true;
+
+                    enabled = false;
+                    break;
+                }
+                else if (transform.position.y < 18.5f)
+                {
+                    spawner.GetComponent<spawnerControllerNeural>().SpawnNewTetrimino(index);
+                    Debug.Log("spawned new from controller");
                     break;
                 }
             }
             ExportPosition();
             // bool[] gameOvers = scriptReader.GetComponent<neuralPositionTracker>().GetGameOvers();
-
-            spawner.GetComponent<spawnerControllerNeural>().SpawnNewTetrimino(index);
+            // spawner.GetComponent<spawnerControllerNeural>().SpawnNewTetrimino(index);
             GameObject.Find("scoreText").GetComponent<neuralScoring>().totalScore[index] = 0;
             enabled = false;
             timerTrigger = 0;

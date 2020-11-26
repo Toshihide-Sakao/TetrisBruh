@@ -212,6 +212,10 @@ public class neuralPositionTracker : MonoBehaviour
                         }
                         positions[a].Clear();
                         // Debug.Log("cleared positions");
+
+
+                        GameObject.Find("Spawner").GetComponent<spawnerControllerNeural>().SpawnNewTetriminoWhenGameOver(a);
+                        Debug.Log("spawned new from tracker");
                     }
 
                     GameObject.Find("Spawner").GetComponent<spawnerControllerNeural>().SortNetworks();

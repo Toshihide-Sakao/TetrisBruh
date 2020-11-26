@@ -16,7 +16,6 @@ public class neuralScoring : MonoBehaviour
 
         int populationSize = GameObject.Find("Spawner").GetComponent<spawnerControllerNeural>().populationSize;
         totalScore = new int[populationSize];
-        
     }
 
     // Update is called once per frame

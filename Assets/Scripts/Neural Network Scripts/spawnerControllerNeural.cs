@@ -9,7 +9,7 @@ public class spawnerControllerNeural : MonoBehaviour
     List<Vector2> spawnPos;
     //public bool isFalling = false;
     public GameObject currentTetrimino;
-    int tetrimino = 0;
+    public List<int> tetrimino;
     public bool HaveHold = false;
     public bool BackFromHold = false;
     public bool JustMadeHold = false;
@@ -25,6 +25,8 @@ public class spawnerControllerNeural : MonoBehaviour
     [Range(0f, 1f)] public float MutationStrength = 0.5f;
 
     public Quaternion originalRotationValue;
+
+    bool CreateBots2HasBeenCalled = false;
 
     // Start is called before the first frame update
     void Start()
@@ -53,6 +55,11 @@ public class spawnerControllerNeural : MonoBehaviour
             new Vector2(5f, 20f)  //Z
         };
 
+        for (int i = 0; i < populationSize; i++)
+        {
+            tetrimino.Add(0);
+        }
+
         isFalling = new bool[populationSize];
 
         InitNetworks();
@@ -71,8 +78,9 @@ public class spawnerControllerNeural : MonoBehaviour
 
         for (int i = 0; i < populationSize; i++)
         {
-            assignNextObjs();
-            currentTetrimino = Instantiate(tetriminos[tetrimino], spawnPos[tetrimino], new Quaternion(0, 0, 0, 0));//create botes
+            // assignNextObjs();
+            UnityEngine.Debug.Log("okkkkkkk l" + i + " "+ tetrimino[i]);
+            currentTetrimino = Instantiate(tetriminos[tetrimino[i]], spawnPos[tetrimino[i]], new Quaternion(0, 0, 0, 0));//create botes
 
             //Debug.Log($"spawn position: {spawnPos[tetrimino]}, tetrimino: {currentTetrimino}");
 
@@ -108,6 +116,7 @@ public class spawnerControllerNeural : MonoBehaviour
 
         //     //Debug.Log(populationList.Count);
         // }
+        CreateBots2HasBeenCalled = true;
         scriptReader.GetComponent<neuralPositionTracker>().SetPositions(populationList);
     }
     // Update is called once per frame
@@ -123,31 +132,35 @@ public class spawnerControllerNeural : MonoBehaviour
 
     public void SpawnNewTetrimino(int index)
     {
-        assignNextObjs();
-        currentTetrimino = Instantiate(tetriminos[tetrimino], spawnPos[tetrimino], new Quaternion(0, 0, 0, 0));
+        assignNextObjs(index);
+        currentTetrimino = Instantiate(tetriminos[tetrimino[index]], spawnPos[tetrimino[index]], new Quaternion(0, 0, 0, 0));
+        currentTetrimino.GetComponent<neuralController>().network = networks[index];
+        currentTetrimino.GetComponent<neuralController>().index = index;
+
+        UnityEngine.Debug.Log("spawned new tetrimino for: " + index + "  the index: " + tetrimino[index]);
+    }
+
+    public void SpawnNewTetriminoWhenGameOver(int index)
+    {
+        tetrimino[index] = 0;
+        currentTetrimino = Instantiate(tetriminos[tetrimino[index]], spawnPos[tetrimino[index]], new Quaternion(0, 0, 0, 0));
         currentTetrimino.GetComponent<neuralController>().network = networks[index];
         currentTetrimino.GetComponent<neuralController>().index = index;
 
         UnityEngine.Debug.Log("spawned new tetrimino for: " + index + "  the index: " + currentTetrimino.GetComponent<neuralController>().index);
     }
 
-    void assignNextObjs()
+    void assignNextObjs(int i)
     {
-        if (tetrimino == 0)
-        {
-            // int random = Random.Range(0, 2);
-            // tetriminos.Sort((a, b) => 1 - 2 * random);
-            // spawnPos.Sort((a, b) => 1 - 2 * random);
-        }
-        if (tetrimino == 6)
-        {
-            tetrimino = 0;
-        }
-        else
-        {
-            tetrimino++;
-        }
-
+            if (tetrimino[i] == 6)
+            {
+                tetrimino[i] = 0;
+            }
+            else
+            {
+                tetrimino[i]++;
+                UnityEngine.Debug.Log("tetrimino is added " + i + " " + tetrimino[i]);
+            }
     }
 
     void updateNextObjs(int[] nextObjs)
@@ -175,7 +188,7 @@ public class spawnerControllerNeural : MonoBehaviour
         //     bots[i].UpdateFitness();//gets bots to set their corrosponding networks fitness
         // }
         networks.Sort();
-        networks[populationSize - 1].Save("Assets/Save.txt");//saves networks weights and biases to file, to preserve network performance
+        networks[populationSize - 1].Save("Assets/Save.txt"); // saves networks weights and biases to file, to preserve network performance
         for (int i = 0; i < populationSize / 2; i++)
         {
             networks[i] = networks[i + populationSize / 2].Copy(new NeuralNetwork(layers));
