@@ -184,7 +184,7 @@ public class neuralPositionTracker : MonoBehaviour
                 
                 for (int i = 0; i < positions[j].Count; i++)
                 {
-                    if (RoundPosition(positions[j][i].position).y >= 18.5f)
+                    if (RoundPosition(positions[j][i].position).y >= 6.5f)
                     {
                         Debug.Log("GAMEOVER! for " + j);
                         gameOvers[j] = true;
@@ -220,7 +220,7 @@ public class neuralPositionTracker : MonoBehaviour
 
 
                         GameObject.Find("Spawner").GetComponent<spawnerControllerNeural>().SpawnNewTetriminoWhenGameOver(a);
-                        Debug.Log("spawned new from tracker");
+                        // Debug.Log("spawned new from tracker");
                     }
 
                     GameObject.Find("Spawner").GetComponent<spawnerControllerNeural>().SortNetworks();
@@ -240,7 +240,7 @@ public class neuralPositionTracker : MonoBehaviour
                     {
                         if (RoundPosition(positions[j][i].position).y == yRow)
                         {
-                            Debug.Log("removing row: " + yRow);
+                            // Debug.Log("removing row: " + yRow);
                             Destroy(positions[j][i].gameObject);
                         }
                     }

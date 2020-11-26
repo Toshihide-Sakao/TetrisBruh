@@ -78,7 +78,7 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
         }
         weights = weightsList.ToArray();
 
-        UnityEngine.Debug.Log("initwrights" + weights[0][0][0]);
+        // UnityEngine.Debug.Log("initwrights" + weights[0][0][0]);
     }
 
     public float[] FeedForward(float[] inputs)//feed forward, inputs >==> outputs.
@@ -144,7 +144,7 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
                 
             }
         }
-        UnityEngine.Debug.Log("mutating " + biases[0][0]);
+        // UnityEngine.Debug.Log("mutating " + biases[0][0]);
 
         for (int i = 0; i < weights.Length; i++)
         {
@@ -172,7 +172,7 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
 
     public NeuralNetwork Copy(NeuralNetwork nn) //For creatinga deep copy, to ensure arrays are serialzed.
     {
-        UnityEngine.Debug.Log("biasesFeedForward before" + biases[0][0]);
+        // UnityEngine.Debug.Log("biasesFeedForward before" + biases[0][0]);
         for (int i = 0; i < biases.Length; i++)
         {
             for (int j = 0; j < biases[i].Length; j++)
@@ -180,7 +180,7 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
                 nn.biases[i][j] = biases[i][j];
             }
         }
-        UnityEngine.Debug.Log("biasesFeedForward after" + biases[0][0]);
+        // UnityEngine.Debug.Log("biasesFeedForward after" + biases[0][0]);
         for (int i = 0; i < weights.Length; i++)
         {
             for (int j = 0; j < weights[i].Length; j++)
@@ -251,7 +251,7 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
             }
         }
 
-        UnityEngine.Debug.Log("savebias" + biases[0][0] + " realbias" + realBiases[0][0]);
+        // UnityEngine.Debug.Log("savebias" + biases[0][0] + " realbias" + realBiases[0][0]);
         for (int i = 0; i < weights.Length; i++)
         {
             for (int j = 0; j < weights[i].Length; j++)

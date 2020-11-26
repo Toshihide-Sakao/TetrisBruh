@@ -116,7 +116,7 @@ public class neuralController : MonoBehaviour
             inputRotations.CopyTo(input, 200);
             currentPositionArray.CopyTo(input, 200 + inputRotations.Length);
 
-            Debug.Log("rounded res: " + input[18]);
+            // Debug.Log("rounded res: " + input[18]);
 
             outputs = network.FeedForward(input);//Call to network to feedforward
 
@@ -144,14 +144,14 @@ public class neuralController : MonoBehaviour
     {
         float score = GameObject.Find("scoreText").GetComponent<neuralScoring>().totalScore[index];
         network.fitness = score * 10;
-        int wellHeight = 21;
+        int wellHeight = 9;
         int wellWidth = 10;
 
         int[,] positions1D = scriptReader.GetComponent<neuralPositionTracker>().GetPositions1D();
-        for (int i = 0; i < 200; i++)
-        {
-            Debug.Log("value"+ positions1D[0,i]);
-        }
+        // for (int i = 0; i < 200; i++)
+        // {
+        //     Debug.Log("value"+ positions1D[0,i]);
+        // }
         for (int i = 1; i < wellHeight; i++)
         {
             int rowBalance = 0;
@@ -162,7 +162,7 @@ public class neuralController : MonoBehaviour
                 if (positions1D[index,j+(10 * (i - 1))] == 1)
                 {
                     rowBalance++;
-                    Debug.Log("some row balance");
+                    // Debug.Log("some row balance");
                 }
                 else
                 {
@@ -307,11 +307,11 @@ public class neuralController : MonoBehaviour
             {
                 children.transform.position = RoundPosition(children.transform.position);
                 // Debug.Log("ok we are on the waya");
-                if (children.transform.position.y >= 17.5f && hasEvaluatedFitness == false) // gameover
+                if (children.transform.position.y >= 6.5f && hasEvaluatedFitness == false) // gameover
                 {
                     // UpdateFitness();//gets bots to set their corrosponding networks fitness
                     EvaluateFitness();
-                    Debug.Log("evaluate fitness is done for " + index);
+                    // Debug.Log("evaluate fitness is done for " + index);
                     hasEvaluatedFitness = true;
                     break;
                 }
@@ -320,7 +320,7 @@ public class neuralController : MonoBehaviour
             foreach (Transform children in transform)
             {
                 children.transform.position = RoundPosition(children.transform.position);
-                if (children.transform.position.y < 18.5f)
+                if (children.transform.position.y < 6.5f)
                 {
                     // spawner.GetComponent<spawnerControllerNeural>().SpawnNewTetrimino(index);
                     allahHelpMePls = true;

@@ -84,7 +84,7 @@ public class spawnerControllerNeural : MonoBehaviour
         for (int i = 0; i < populationSize; i++)
         {
             // assignNextObjs();
-            UnityEngine.Debug.Log("okkkkkkk l" + i + " "+ tetrimino[i]);
+            // UnityEngine.Debug.Log("okkkkkkk l" + i + " "+ tetrimino[i]);
             currentTetrimino.Add(Instantiate(tetriminos[tetrimino[i]], spawnPos[tetrimino[i]], new Quaternion(0, 0, 0, 0)));//create botes
 
             //Debug.Log($"spawn position: {spawnPos[tetrimino]}, tetrimino: {currentTetrimino}");
@@ -159,9 +159,9 @@ public class spawnerControllerNeural : MonoBehaviour
         currentTetrimino[index] = Instantiate(tetriminos[tetrimino[index]], spawnPos[tetrimino[index]], new Quaternion(0, 0, 0, 0));
         currentTetrimino[index].GetComponent<neuralController>().network = networks[index];
         currentTetrimino[index].GetComponent<neuralController>().index = index;
-        UnityEngine.Debug.Log("deployed network ");
+        // UnityEngine.Debug.Log("deployed network ");
 
-        UnityEngine.Debug.Log("spawned new tetrimino for: " + index + "  the index: " + currentTetrimino[index].GetComponent<neuralController>().index);
+        // UnityEngine.Debug.Log("spawned new tetrimino for: " + index + "  the index: " + currentTetrimino[index].GetComponent<neuralController>().index);
     }
 
     void assignNextObjs(int i)
@@ -173,7 +173,7 @@ public class spawnerControllerNeural : MonoBehaviour
             else
             {
                 tetrimino[i]++;
-                UnityEngine.Debug.Log("tetrimino is added " + i + " " + tetrimino[i]);
+                // UnityEngine.Debug.Log("tetrimino is added " + i + " " + tetrimino[i]);
             }
     }
 
@@ -202,9 +202,9 @@ public class spawnerControllerNeural : MonoBehaviour
         //     networks[i].UpdateFitness(); //gets bots to set their corrosponding networks fitness
         // }
         networks.Sort();
-        UnityEngine.Debug.Log("populationsioze " + populationSize);
+        // UnityEngine.Debug.Log("populationsioze " + populationSize);
         networks[populationSize - 1].Save("Assets/Save.txt"); // saves networks weights and biases to file, to preserve network performance
-        UnityEngine.Debug.Log("best bias 00" + networks[populationSize - 1].biases[0][0]);
+        // UnityEngine.Debug.Log("best bias 00" + networks[populationSize - 1].biases[0][0]);
         for (int i = 0; i < populationSize / 2; i++)
         {
             networks[i] = networks[i + populationSize / 2].Copy(new NeuralNetwork(layers));
