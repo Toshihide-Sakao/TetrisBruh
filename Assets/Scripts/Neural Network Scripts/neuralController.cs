@@ -11,7 +11,7 @@ public class neuralController : MonoBehaviour
     float fitnessTimer;
     float rotateTimer;
     float neuralUpdateTimer;
-    public float moveSpeed = 0.1f;
+    float moveSpeed = 0.6f;
     float fallSpeed = 0.2f;
     float rotateSpeed = 0.3f;
     float OriginalFallSpeed;
