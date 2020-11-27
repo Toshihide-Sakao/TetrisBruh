@@ -29,6 +29,7 @@ public class neuralScoring : MonoBehaviour
             if (completeRow[i])
             {
                 totalScore[i] += lineScore(1, rows[i]);
+                Debug.Log("row added score: " + totalScore[i]);
             }
         }
         scoreText.text = "Score1: " + totalScore[0].ToString();

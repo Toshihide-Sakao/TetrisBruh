@@ -137,9 +137,43 @@ public class neuralController : MonoBehaviour
     public void EvaluateFitness()
     {
         float score = GameObject.Find("scoreText").GetComponent<neuralScoring>().totalScore[index];
-        network.fitness = fitnessTimer * 4 + score;//updates fitness of network for sorting
+        int[,] positions1D = scriptReader.GetComponent<neuralPositionTracker>().GetPositions1D();
+        float fitnessBox = 0;
+        float fitnessHeight = 0;
 
-        Debug.Log("fitness res: " + network.fitness);
+        for (int i = 0; i < positions1D.GetLength(1); i++)
+        {
+            if (positions1D[index, i] == 0 && i + 10 < positions1D.GetLength(1))
+            {
+                if (positions1D[index, i + 10] == 1)
+                {
+                    fitnessBox -= 7;
+                }
+            }
+        }
+
+        bool[] checkedd = new bool[20];
+        List<float> fitnessHeights = new List<float>();
+        for (int i = 0; i < positions1D.GetLength(1); i++)
+        {
+            int yValue = i == 0 ? 0 : i / 10;
+            if (positions1D[index, i] == 1 && checkedd[yValue] == false)
+            {
+                fitnessHeights.Add(0f);
+                checkedd[yValue] = true;
+            }
+            else if (positions1D[index, i] == 1)
+            {
+                fitnessHeights[yValue] += 10;
+            }
+        }
+        fitnessHeight = fitnessHeights.Count > 0 ? fitnessHeights.Average() : 0f;
+
+        network.fitness = fitnessTimer * 4 + score + fitnessBox + fitnessHeight;//updates fitness of network for sorting
+        // network.fitness = score * 3 + fitnessBox + fitnessHeight;
+
+        Debug.Log("fitness res: " + network.fitness + " timer: " + (fitnessTimer * 4) + " score: " + (score) + " box: " + fitnessBox + " height: " + fitnessHeight);
+        // Debug.Log("fitness res: " + network.fitness + " score: " + (score * 3) + " box: " + fitnessBox + " height: " + fitnessHeight);
         fitnessTimer = 0;
     }
 
@@ -315,6 +349,9 @@ public class neuralController : MonoBehaviour
                 {
                     // UpdateFitness();//gets bots to set their corrosponding networks fitness
                     EvaluateFitness();
+
+                    GameObject.Find("scoreText").GetComponent<neuralScoring>().totalScore[index] = 0;
+                    // Debug.Log("row reset points");
                     // Debug.Log("evaluate fitness is done for " + index);
                     hasEvaluatedFitness = true;
                     break;
@@ -334,7 +371,6 @@ public class neuralController : MonoBehaviour
             ExportPosition();
             // bool[] gameOvers = scriptReader.GetComponent<neuralPositionTracker>().GetGameOvers();
             // spawner.GetComponent<spawnerControllerNeural>().SpawnNewTetrimino(index);
-            GameObject.Find("scoreText").GetComponent<neuralScoring>().totalScore[index] = 0;
             enabled = false;
             timerTrigger = 0;
         }

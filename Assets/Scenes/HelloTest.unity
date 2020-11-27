@@ -673,10 +673,10 @@ MonoBehaviour:
   JustMadeHold: 0
   tetriminoInHold: {fileID: 0}
   tetriminoInHoldInt: 0
-  populationSize: 15
+  populationSize: 1
   isFalling: 
-  MutationChance: 0.04
-  MutationStrength: 0.514
+  MutationChance: 0.047
+  MutationStrength: 0.482
   originalRotationValue: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1246871914
 GameObject:
