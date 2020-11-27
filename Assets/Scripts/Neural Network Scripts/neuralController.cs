@@ -137,7 +137,7 @@ public class neuralController : MonoBehaviour
     public void EvaluateFitness()
     {
         float score = GameObject.Find("scoreText").GetComponent<neuralScoring>().totalScore[index];
-        network.fitness = fitnessTimer * 4 + score;//updates fitness of network for sorting
+        network.fitness = fitnessTimer * 2 + score;//updates fitness of network for sorting
 
         Debug.Log("fitness res: " + network.fitness);
         fitnessTimer = 0;
@@ -311,7 +311,7 @@ public class neuralController : MonoBehaviour
             {
                 children.transform.position = RoundPosition(children.transform.position);
                 // Debug.Log("ok we are on the waya");
-                if (children.transform.position.y >= 10.5f && hasEvaluatedFitness == false) // gameover
+                if (children.transform.position.y >= 15.5f && hasEvaluatedFitness == false) // gameover
                 {
                     // UpdateFitness();//gets bots to set their corrosponding networks fitness
                     EvaluateFitness();
@@ -324,7 +324,7 @@ public class neuralController : MonoBehaviour
             foreach (Transform children in transform)
             {
                 children.transform.position = RoundPosition(children.transform.position);
-                if (children.transform.position.y < 10.5f)
+                if (children.transform.position.y < 15.5f)
                 {
                     // spawner.GetComponent<spawnerControllerNeural>().SpawnNewTetrimino(index);
                     allahHelpMePls = true;
