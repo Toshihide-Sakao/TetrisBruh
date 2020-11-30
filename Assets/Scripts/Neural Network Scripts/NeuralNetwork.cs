@@ -12,7 +12,6 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
     private int[] activations;//layers
 
     public float fitness = 0;//fitness
-    int allsdh;
 
     public NeuralNetwork(int[] layers)
     {
@@ -102,11 +101,11 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
                 {
                     value += weights[i - 1][j][k] * neurons[i - 1][k];
                 }
-                
+
                 neurons[i][j] = Activate(value + biases[i][j]);
             }
         }
-        
+
         return RoundResults(neurons[neurons.Length - 1]);
         //return neurons[neurons.Length - 1];
     }
@@ -141,7 +140,7 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
             for (int j = 0; j < biases[i].Length; j++)
             {
                 biases[i][j] = (UnityEngine.Random.Range(0f, chance) <= 5) ? biases[i][j] += UnityEngine.Random.Range(-val, val) : biases[i][j];
-                
+
             }
         }
         // UnityEngine.Debug.Log("mutating " + biases[0][0]);
@@ -212,7 +211,6 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
                 for (int j = 0; j < biases[i].Length; j++)
                 {
                     biases[i][j] = float.Parse(ListLines[index]);
-                    // UnityEngine.Debug.Log("in lo0ad"+ float.Parse(ListLines[index]));
                     index++;
                 }
             }
@@ -223,7 +221,7 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
                 {
                     for (int k = 0; k < weights[i][j].Length; k++)
                     {
-                        weights[i][j][k] = float.Parse(ListLines[index]); ;
+                        weights[i][j][k] = float.Parse(ListLines[index]);
                         index++;
                     }
                 }
