@@ -140,6 +140,7 @@ public class neuralController : MonoBehaviour
         int[,] positions1D = scriptReader.GetComponent<neuralPositionTracker>().GetPositions1D();
         float fitnessBox = 0;
         float fitnessHeight = 0;
+        float fitnessWidth = 0;
 
         for (int i = 0; i < positions1D.GetLength(1); i++)
         {
@@ -147,14 +148,29 @@ public class neuralController : MonoBehaviour
             {
                 if (positions1D[index, i + 10] == 1)
                 {
-                    fitnessBox -= 7;
+                    fitnessBox -= 3;
                 }
             }
         }
 
         bool[] checkedd = new bool[20];
-        float[] fitnessHeights = new float[10];
+        List<float> fitnessWidths = new List<float>();
+        for (int i = 0; i < positions1D.GetLength(1); i++)
+        {
+            int yValue = i == 0 ? 0 : i / 10;
+            if (positions1D[index, i] == 1 && checkedd[yValue] == false)
+            {
+                fitnessWidths.Add(0f);
+                checkedd[yValue] = true;
+            }
+            else if (positions1D[index, i] == 1)
+            {
+                fitnessWidths[yValue] += 10;
+            }
+        }
+        fitnessWidth = fitnessWidths.Count > 0 ? fitnessWidths.Average() : 0f;
 
+        float[] fitnessHeights = new float[10];
         bool hejehj = false;
         for (int x = 0; x < 10; x++)
         {
@@ -162,17 +178,17 @@ public class neuralController : MonoBehaviour
             {
                 int pos = i + x;
                 int y = i == 0 ? 0 : i / 10;
-                Debug.Log("position " + pos);
+                // Debug.Log("position " + pos);
                 
                 if (positions1D[index, pos] == 1)
                 {
-                    Debug.Log("hejhejhej");
+                    // Debug.Log("hejhejhej");
                     hejehj = true;
                     // fitnessHeights[x] = y - 1;
                 }
                 if (hejehj == true && positions1D[index, pos] == 0)
                 {
-                    Debug.Log("recorded height: (" + x + ", " + y + ")");
+                    // Debug.Log("recorded height: (" + x + ", " + y + ")");
                     fitnessHeights[x] = y - 1;
                     hejehj = false;
                 }
@@ -180,14 +196,15 @@ public class neuralController : MonoBehaviour
         }
         // Debug.Log("fitness " + fitnessHeights[0]);
         fitnessHeight = Mathf.Abs(fitnessHeights[0] - fitnessHeights[1]) + Mathf.Abs(fitnessHeights[1] - fitnessHeights[2]) + Mathf.Abs(fitnessHeights[2] - fitnessHeights[3]) + Mathf.Abs(fitnessHeights[3] - fitnessHeights[4]) + Mathf.Abs(fitnessHeights[4] - fitnessHeights[5]) + Mathf.Abs(fitnessHeights[5] - fitnessHeights[6]) + Mathf.Abs(fitnessHeights[6] - fitnessHeights[7]) + Mathf.Abs(fitnessHeights[7] - fitnessHeights[8]) + Mathf.Abs(fitnessHeights[8] - fitnessHeights[9]);
+        // fitnessHeight = -(20 - fitnessHeights.Min());
 
         // network.fitness = fitnessTimer * 4 + score + fitnessBox + fitnessHeight; //updates fitness of network for sorting
-        // network.fitness = score * 3 + fitnessBox + fitnessHeight;
-        network.fitness = fitnessBox + fitnessHeight;
+        network.fitness = score * 3 + fitnessBox + fitnessHeight * -3 + fitnessWidth * 3;
+        // network.fitness = fitnessBox + fitnessHeight;
 
         // Debug.Log("fitness res: " + network.fitness + " timer: " + (fitnessTimer * 4) + " score: " + (score) + " box: " + fitnessBox + " height: " + fitnessHeight);
-        // Debug.Log("fitness res: " + network.fitness + " score: " + (score * 3) + " box: " + fitnessBox + " height: " + fitnessHeight);
-        Debug.Log("fitness res: " + network.fitness + " box: " + fitnessBox + " height: " + fitnessHeight);
+        Debug.Log("fitness res: " + network.fitness + " score: " + (score * 3) + " box: " + fitnessBox + " height: " + fitnessHeight * -2 + " width: " + fitnessWidth * 3);
+        // Debug.Log("fitness res: " + network.fitness + " box: " + fitnessBox + " height: " + fitnessHeight);
 
         fitnessTimer = 0;
     }
@@ -360,7 +377,7 @@ public class neuralController : MonoBehaviour
             {
                 children.transform.position = RoundPosition(children.transform.position);
                 // Debug.Log("ok we are on the waya");
-                if (children.transform.position.y >= 10.5f && hasEvaluatedFitness == false) // gameover
+                if (children.transform.position.y >= 19.5f && hasEvaluatedFitness == false) // gameover
                 {
                     // UpdateFitness();//gets bots to set their corrosponding networks fitness
                     EvaluateFitness();
@@ -376,7 +393,7 @@ public class neuralController : MonoBehaviour
             foreach (Transform children in transform)
             {
                 children.transform.position = RoundPosition(children.transform.position);
-                if (children.transform.position.y < 10.5f)
+                if (children.transform.position.y < 19.5f)
                 {
                     // spawner.GetComponent<spawnerControllerNeural>().SpawnNewTetrimino(index);
                     allahHelpMePls = true;

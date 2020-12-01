@@ -184,9 +184,9 @@ public class neuralPositionTracker : MonoBehaviour
                 
                 for (int i = 0; i < positions[j].Count; i++)
                 {
-                    if (RoundPosition(positions[j][i].position).y >= 10.5f)
+                    if (RoundPosition(positions[j][i].position).y >= 19.5f)
                     {
-                        Debug.Log("GAMEOVER! for " + j);
+                        // Debug.Log("GAMEOVER! for " + j);
                         gameOvers[j] = true;
                         // want to put evaluatefitness here
                     }
