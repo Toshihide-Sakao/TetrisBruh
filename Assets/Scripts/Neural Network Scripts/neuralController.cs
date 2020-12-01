@@ -201,11 +201,11 @@ public class neuralController : MonoBehaviour
         // fitnessHeight = -(20 - fitnessHeights.Min());
 
         // network.fitness = fitnessTimer * 4 + score + fitnessBox + fitnessHeight; //updates fitness of network for sorting
-        network.fitness = score * 3 + fitnessBox + fitnessHeight * -3 + fitnessWidth * 3;
+        network.fitness = score * 3 + fitnessBox + fitnessHeight * -2 + fitnessWidth * 4;
         // network.fitness = fitnessBox + fitnessHeight;
 
         // Debug.Log("fitness res: " + network.fitness + " timer: " + (fitnessTimer * 4) + " score: " + (score) + " box: " + fitnessBox + " height: " + fitnessHeight);
-        Debug.Log("fitness res: " + network.fitness + " score: " + (score * 3) + " box: " + fitnessBox + " height: " + fitnessHeight * -2 + " width: " + fitnessWidth * 3);
+        Debug.Log("fitness res: " + network.fitness + " score: " + (score * 3) + " box: " + fitnessBox + " height: " + fitnessHeight * -2 + " width: " + fitnessWidth * 4);
         // Debug.Log("fitness res: " + network.fitness + " box: " + fitnessBox + " height: " + fitnessHeight);
 
         fitnessTimer = 0;
