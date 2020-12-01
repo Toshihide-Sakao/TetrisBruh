@@ -34,8 +34,8 @@ public class neuralController : MonoBehaviour
 
     public NeuralNetwork network;
     float[] outputs = new float[4];
-    float[] input = new float[212];
-    int[] layers = new int[3] { 200, 160, 4 };//initializing network to the right size
+    float[] input = new float[213];
+    int[] layers = new int[3] { 213, 160, 4 };//initializing network to the right size
 
 
     public bool allahHelpMePls = false;
@@ -91,7 +91,7 @@ public class neuralController : MonoBehaviour
     {
         if (neuralUpdateTimer > moveSpeed)
         {
-            input = new float[212];
+            input = new float[213];
             List<Transform> currentPositionList = new List<Transform>();
             foreach (Transform children in transform)
             {
@@ -108,6 +108,7 @@ public class neuralController : MonoBehaviour
             {
                 currentPositionArray[i] = currentPositionList[i - currentPositionList.Count].position.y;
             }
+            int currentTetrimino = spawner.GetComponent<spawnerControllerNeural>().tetrimino[index];
 
             int[,] positions1D = scriptReader.GetComponent<neuralPositionTracker>().GetPositions1D();
             float[] inputRotations = GetRotation();
@@ -118,6 +119,7 @@ public class neuralController : MonoBehaviour
             // Debug.Log("!" + input.Length);
             inputRotations.CopyTo(input, 200);
             currentPositionArray.CopyTo(input, 200 + inputRotations.Length);
+            input[212] = currentTetrimino;
 
             // Debug.Log("rounded res: " + input[18]);
 
@@ -373,6 +375,8 @@ public class neuralController : MonoBehaviour
 
         if (timerTrigger > 0.5f)
         {
+            ExportPosition();
+
             foreach (Transform children in transform)
             {
                 children.transform.position = RoundPosition(children.transform.position);
@@ -400,7 +404,7 @@ public class neuralController : MonoBehaviour
                     break;
                 }
             }
-            ExportPosition();
+            
             // bool[] gameOvers = scriptReader.GetComponent<neuralPositionTracker>().GetGameOvers();
             // spawner.GetComponent<spawnerControllerNeural>().SpawnNewTetrimino(index);
             enabled = false;
