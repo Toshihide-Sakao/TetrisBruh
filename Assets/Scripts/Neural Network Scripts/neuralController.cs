@@ -148,9 +148,27 @@ public class neuralController : MonoBehaviour
         {
             if (positions1D[index, i] == 0 && i + 10 < positions1D.GetLength(1))
             {
-                if (positions1D[index, i + 10] == 1)
+                if (positions1D[index, i + 10] == 1) // there is one above
                 {
                     fitnessBox -= 3;
+
+                    int counterhere = 0;
+                    for (int y = i - 10; y >= 0; y -= 10)
+                    {
+                        if (positions1D[index, y] == 1)
+                        {
+                            fitnessBox = fitnessBox - (counterhere * -3);
+                            counterhere = 0;
+                        }
+                        else if (y - 10 < 0)
+                        {
+                            fitnessBox = fitnessBox - ((counterhere + 1) * -3);
+                        }
+                        else
+                        {
+                            counterhere++;
+                        }
+                    }
                 }
             }
         }
@@ -181,7 +199,7 @@ public class neuralController : MonoBehaviour
                 int pos = i + x;
                 int y = i == 0 ? 0 : i / 10;
                 // Debug.Log("position " + pos);
-                
+
                 if (positions1D[index, pos] == 1)
                 {
                     // Debug.Log("hejhejhej");
@@ -404,7 +422,7 @@ public class neuralController : MonoBehaviour
                     break;
                 }
             }
-            
+
             // bool[] gameOvers = scriptReader.GetComponent<neuralPositionTracker>().GetGameOvers();
             // spawner.GetComponent<spawnerControllerNeural>().SpawnNewTetrimino(index);
             enabled = false;
