@@ -8,7 +8,7 @@ public class neuralController : MonoBehaviour
     float fallTimer;
     float rightTimer;
     float leftTimer;
-    float fitnessTimer;
+    public float fitnessTimer;
     float rotateTimer;
     float neuralUpdateTimer;
     public float moveSpeed = 0.3f;
@@ -150,19 +150,19 @@ public class neuralController : MonoBehaviour
             {
                 if (positions1D[index, i + 10] == 1) // there is one above
                 {
-                    fitnessBox -= 3;
+                    fitnessBox -= 1;
 
                     int counterhere = 0;
                     for (int y = i - 10; y >= 0; y -= 10)
                     {
                         if (positions1D[index, y] == 1)
                         {
-                            fitnessBox = fitnessBox - (counterhere * -3);
+                            fitnessBox = fitnessBox + (counterhere * -1);
                             counterhere = 0;
                         }
                         else if (y - 10 < 0)
                         {
-                            fitnessBox = fitnessBox - ((counterhere + 1) * -3);
+                            fitnessBox = fitnessBox + ((counterhere + 1) * -1);
                         }
                         else
                         {
@@ -180,7 +180,8 @@ public class neuralController : MonoBehaviour
             int yValue = i == 0 ? 0 : i / 10;
             if (positions1D[index, i] == 1 && checkedd[yValue] == false)
             {
-                fitnessWidths.Add(0f);
+                fitnessWidths.Add(10);
+                // Debug.Log("width added on " + yValue);
                 checkedd[yValue] = true;
             }
             else if (positions1D[index, i] == 1)
@@ -188,6 +189,11 @@ public class neuralController : MonoBehaviour
                 fitnessWidths[yValue] += 10;
             }
         }
+        // Debug.Log(fitnessWidths.Count + " width count");
+        // foreach (var item in fitnessWidths)
+        // {
+        //     Debug.Log("width" + item);
+        // }
         fitnessWidth = fitnessWidths.Count > 0 ? fitnessWidths.Average() : 0f;
 
         float[] fitnessHeights = new float[10];
@@ -218,12 +224,12 @@ public class neuralController : MonoBehaviour
         fitnessHeight = Mathf.Abs(fitnessHeights[0] - fitnessHeights[1]) + Mathf.Abs(fitnessHeights[1] - fitnessHeights[2]) + Mathf.Abs(fitnessHeights[2] - fitnessHeights[3]) + Mathf.Abs(fitnessHeights[3] - fitnessHeights[4]) + Mathf.Abs(fitnessHeights[4] - fitnessHeights[5]) + Mathf.Abs(fitnessHeights[5] - fitnessHeights[6]) + Mathf.Abs(fitnessHeights[6] - fitnessHeights[7]) + Mathf.Abs(fitnessHeights[7] - fitnessHeights[8]) + Mathf.Abs(fitnessHeights[8] - fitnessHeights[9]);
         // fitnessHeight = -(20 - fitnessHeights.Min());
 
-        // network.fitness = fitnessTimer * 4 + score + fitnessBox + fitnessHeight; //updates fitness of network for sorting
-        network.fitness = score * 3 + fitnessBox + fitnessHeight * -2 + fitnessWidth * 4;
+        network.fitness = score * 3 + fitnessBox + fitnessWidth * 4; //updates fitness of network for sorting
+        // network.fitness = score * 3 + fitnessBox + fitnessHeight * -2 + fitnessWidth * 5;
         // network.fitness = fitnessBox + fitnessHeight;
 
-        // Debug.Log("fitness res: " + network.fitness + " timer: " + (fitnessTimer * 4) + " score: " + (score) + " box: " + fitnessBox + " height: " + fitnessHeight);
-        Debug.Log("fitness res: " + network.fitness + " score: " + (score * 3) + " box: " + fitnessBox + " height: " + fitnessHeight * -2 + " width: " + fitnessWidth * 4);
+        Debug.Log("fitness res: " + network.fitness + " width: " + (fitnessWidth * 2) + " score: " + (score * 3) + " box: " + fitnessBox);
+        // Debug.Log("fitness res: " + network.fitness + " score: " + (score * 3) + " box: " + fitnessBox + " height: " + fitnessHeight * -2 + " width: " + fitnessWidth * 5);
         // Debug.Log("fitness res: " + network.fitness + " box: " + fitnessBox + " height: " + fitnessHeight);
 
         fitnessTimer = 0;
