@@ -49,7 +49,10 @@ public class neuralController : MonoBehaviour
     {
         foreach (Transform child in transform)
         {
-            child.GetComponent<SpriteRenderer>().enabled = false;
+            if (index != 0)
+            {
+                child.GetComponent<SpriteRenderer>().enabled = false;
+            }
         }
         //Find Script Reader for exporting positions
         scriptReader = GameObject.Find("scriptReader");
