@@ -47,6 +47,10 @@ public class neuralController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        foreach (Transform child in transform)
+        {
+            child.GetComponent<SpriteRenderer>().enabled = false;
+        }
         //Find Script Reader for exporting positions
         scriptReader = GameObject.Find("scriptReader");
 
