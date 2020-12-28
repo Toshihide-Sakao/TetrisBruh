@@ -17,6 +17,7 @@ public class spawnerControllerNeural : MonoBehaviour
     public int tetriminoInHoldInt;
     public int populationSize;
     public bool[] isFalling;
+    public int showingIndex = 0;
     //private List<Bot> bots = new List<Bot>();
     public List<NeuralNetwork> networks;
     int[] layers = new int[3] { 213, 160, 4 };//initializing network to the right size

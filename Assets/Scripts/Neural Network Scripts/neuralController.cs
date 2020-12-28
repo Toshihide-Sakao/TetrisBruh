@@ -47,18 +47,19 @@ public class neuralController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        foreach (Transform child in transform)
-        {
-            if (index != 0)
-            {
-                child.GetComponent<SpriteRenderer>().enabled = false;
-            }
-        }
         //Find Script Reader for exporting positions
         scriptReader = GameObject.Find("scriptReader");
 
         //Find Spawner for holding
         spawner = GameObject.Find("Spawner");
+
+        foreach (Transform child in transform)
+        {
+            if (index != spawner.GetComponent<spawnerControllerNeural>().showingIndex)
+            {
+                child.GetComponent<SpriteRenderer>().enabled = false;
+            }
+        }
 
         //Record fallspeed so it is reversable
         OriginalFallSpeed = fallSpeed;
