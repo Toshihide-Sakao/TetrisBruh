@@ -673,8 +673,9 @@ MonoBehaviour:
   JustMadeHold: 0
   tetriminoInHold: {fileID: 0}
   tetriminoInHoldInt: 0
-  populationSize: 15
+  populationSize: 30
   isFalling: 
+  showingIndex: 0
   MutationChance: 0.047
   MutationStrength: 0.482
   originalRotationValue: {x: 0, y: 0, z: 0, w: 0}
