@@ -676,8 +676,8 @@ MonoBehaviour:
   populationSize: 30
   isFalling: 
   showingIndex: 0
-  MutationChance: 0.047
-  MutationStrength: 0.482
+  MutationChance: 0.072
+  MutationStrength: 0.506
   originalRotationValue: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1246871914
 GameObject:
